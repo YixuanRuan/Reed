@@ -12,7 +12,9 @@ import VueDraggable from 'vue-draggable'
 import echarts from 'echarts'
 import captcha from 'vue-social-captcha'
 import scroll from 'vue-seamless-scroll'
+import VueParticles from 'vue-particles'
 
+Vue.use(VueParticles)
 Vue.prototype.$echarts = echarts
 require('echarts-wordcloud')
 Vue.use(VueAxios, axios)

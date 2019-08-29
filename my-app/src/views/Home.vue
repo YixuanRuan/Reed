@@ -54,6 +54,25 @@
 
       </v-col>
     </v-row>
+    <vue-particles
+      color="#2EC4B6"
+      :particleOpacity="0.7"
+      :particlesNumber="80"
+      shapeType="circle"
+      :particleSize="4"
+      linesColor="#2EC4B6"
+      :linesWidth="1"
+      :lineLinked="true"
+      :lineOpacity="0.4"
+      :linesDistance="150"
+      :moveSpeed="3"
+      :hoverEffect="true"
+      hoverMode="grab"
+      :clickEffect="true"
+      clickMode="push"
+      style="z-index:-1; margin-bottom: -765px;"
+    >
+    </vue-particles>
     <SegText :text="hot" class="segtext-hot"/>
     <div style="width: 100%; display:-webkit-box; -webkit-box-pack:center; background-color: white">
       <div class="hot-content">
@@ -81,15 +100,14 @@
       <div style="height: 100px"></div>
 
     </div>
-
   </div>
 </template>
 
 <script>
-import SegText from '../components/SegText';
-import Comments from '../components/Comments';
-import HistoryComment from '../components/HistoryComment';
-import BackGroundVideo from '../components/BackGroundVideo';
+import SegText from '../components/SegText'
+import Comments from '../components/Comments'
+import HistoryComment from '../components/HistoryComment'
+import BackGroundVideo from '../components/BackGroundVideo'
 
 export default {
 
@@ -166,18 +184,18 @@ export default {
               setTimeout(function () {
                 that.password_wrong_show = false
                 that.$forceUpdate()
-              }, 2000);
+              }, 2000)
               this.$store.commit('clear')
             }
             // 登录成功
             else {
-              this.$router.push({path: '/selfinfo'});
-              this.$store.commit("logined");
-              this.$store.dispatch("changeAC", this.info.data.user.account);
-              this.$store.dispatch("changeInro", this.info.data.user.introduction);
-              this.$store.dispatch("changeSelfAvatar", "http://114.115.151.96:8666/ProfilePicture/UserAccount/" + this.info.data.user.account);
+              this.$router.push({ path: '/selfinfo' })
+              this.$store.commit('logined')
+              this.$store.dispatch('changeAC', this.info.data.user.account)
+              this.$store.dispatch('changeInro', this.info.data.user.introduction)
+              this.$store.dispatch('changeSelfAvatar', 'http://114.115.151.96:8666/ProfilePicture/UserAccount/' + this.info.data.user.account)
             }
-          });
+          })
         }
         // 处于注册态
         else {
@@ -195,9 +213,8 @@ export default {
               this.info = body
               // 注册成功
               if (this.info.data == 1) {
-                this.$store.commit("logined")
-                this.$router.push({path: '/selfinfo'})
-
+                this.$store.commit('logined')
+                this.$router.push({ path: '/selfinfo' })
               }
               // 用户名已存在
               else {
@@ -205,58 +222,58 @@ export default {
                 this.password_wrong_show = true
                 var that = this
                 setTimeout(function () {
-                  that.password_wrong_show = false;
-                  that.$forceUpdate();
-                }, 2000);
-                this.$store.commit("clearall");
+                  that.password_wrong_show = false
+                  that.$forceUpdate()
+                }, 2000)
+                this.$store.commit('clearall')
               }
-            });
+            })
           }
           // 两次密码输入不正确
           else {
             this.error_img = '两次密码不相同'
             this.password_wrong_show = true
-            var that = this;
+            var that = this
             setTimeout(function () {
-              that.password_wrong_show = false;
-              that.$forceUpdate();
-            }, 2000);
-            this.$store.commit("clear");
+              that.password_wrong_show = false
+              that.$forceUpdate()
+            }, 2000)
+            this.$store.commit('clear')
           }
         }
       }
     }
   },
-  computed:{
-    today_hot_content:{
-      get(){
+  computed: {
+    today_hot_content: {
+      get () {
         return this.$store.state.today_hot_content
       },
-      set(newVal) {
+      set (newVal) {
         this.$store.commit('handleTodayHotContent', newVal)
       }
     },
-    username:{
-      get(){
+    username: {
+      get () {
         return this.$store.state.username
       },
-      set(newVal) {
+      set (newVal) {
         this.$store.commit('handleUsername', newVal)
       }
     },
-    password:{
-      get(){
+    password: {
+      get () {
         return this.$store.state.password
       },
-      set(newVal) {
+      set (newVal) {
         this.$store.commit('handlePassword', newVal)
       }
     },
-    re_password:{
-      get(){
+    re_password: {
+      get () {
         return this.$store.state.re_password
       },
-      set(newVal) {
+      set (newVal) {
         this.$store.commit('handleRePassword', newVal)
       }
     }
@@ -266,8 +283,8 @@ export default {
     Comments,
     HistoryComment,
     BackGroundVideo
-  },
-};
+  }
+}
 </script>
 
 <style scoped>

@@ -79,7 +79,6 @@
             <v-list-item
               v-for="(item, index) in massage_content"
               :key="index"
-              @click=""
               style="background-color:#CACACA; margin-top: 5px"
             >
               <v-row style="width: 300px; height: 105px;">
@@ -116,7 +115,6 @@
               <v-list-item
                 v-for="(item, index) in like_content"
                 :key="index"
-                @click=""
                 style="background-color:#CACACA; margin-top: 5px"
               >
                 <v-row style="width: 300px; height: 100px;">
@@ -231,8 +229,6 @@ export default {
   }
 }
 </script>
-
-
 
 <style scoped>
 

@@ -1,42 +1,28 @@
 <template>
-  <vue-seamless-scroll :data="newsList" :class-option="optionLeft" class="seamless-warp2">
-    <ul class="item">
-      <li v-for="item in newsList" v-text="item.title"></li>
-    </ul>
-  </vue-seamless-scroll>
+  <div id="app">
+    <vue-particles
+      color="#2EC4B6"
+      :particleOpacity="0.7"
+      :particlesNumber="80"
+      shapeType="circle"
+      :particleSize="4"
+      linesColor="#2EC4B6"
+      :linesWidth="1"
+      :lineLinked="true"
+      :lineOpacity="0.4"
+      :linesDistance="150"
+      :moveSpeed="3"
+      :hoverEffect="true"
+      hoverMode="grab"
+      :clickEffect="true"
+      clickMode="push"
+    >
+    </vue-particles>
+  </div>
 </template>
-<style lang="scss" scoped>
-  .seamless-warp2 {
-    overflow: hidden;
-    height: 25px;
-    width: 100px;
-    ul.item {
-      width: 180px;
-      li {
-        float: left;
-        margin-right: 10px;
-      }
-    }
-  }
+<style scoped>
+
 </style>
 <script>
-  export default {
-    data () {
-      return {
-        newsList: [{
-          'title': 'A simple, seamless scrolling for Vue.js'
-        }, {
-          'title': 'A simple, seamless scrolling for Vue.js'
-        }]
-      }
-    },
-    computed: {
-      optionLeft () {
-        return {
-          direction: 2,
-          limitMoveNum: 2
-        }
-      }
-    }
-  }
+
 </script>
