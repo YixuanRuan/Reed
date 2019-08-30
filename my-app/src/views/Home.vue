@@ -54,25 +54,27 @@
 
       </v-col>
     </v-row>
-    <vue-particles
-      color="#2EC4B6"
-      :particleOpacity="0.7"
-      :particlesNumber="80"
-      shapeType="circle"
-      :particleSize="4"
-      linesColor="#2EC4B6"
-      :linesWidth="1"
-      :lineLinked="true"
-      :lineOpacity="0.4"
-      :linesDistance="150"
-      :moveSpeed="3"
-      :hoverEffect="true"
-      hoverMode="grab"
-      :clickEffect="true"
-      clickMode="push"
-      style="z-index:-1; margin-bottom: -765px;"
-    >
-    </vue-particles>
+    <div>
+      <vue-particles
+        color="#2EC4B6"
+        :particleOpacity="0.7"
+        :particlesNumber="80"
+        shapeType="circle"
+        :particleSize="4"
+        linesColor="#2EC4B6"
+        :linesWidth="1"
+        :lineLinked="true"
+        :lineOpacity="0.4"
+        :linesDistance="150"
+        :moveSpeed="3"
+        :hoverEffect="true"
+        hoverMode="grab"
+        :clickEffect="true"
+        clickMode="push"
+        style="z-index:-1;margin-bottom: -765px"
+      >
+      </vue-particles>
+    </div>
     <SegText :text="hot" class="segtext-hot"/>
     <div style="width: 100%; display:-webkit-box; -webkit-box-pack:center; background-color: white">
       <div class="hot-content">
@@ -332,7 +334,6 @@ export default {
   .segtext-hot{
     position: relative;
     z-index: 2;
-    margin-top: 80px;
   }
 
   .comments{
