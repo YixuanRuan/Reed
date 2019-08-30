@@ -38,6 +38,34 @@
               background-color="#eee"
               style="opacity: 0.8"
             ></v-text-field>
+            <v-text-field
+              :value="Phonenumber"
+              v-if="register"
+              v-model="re_password"
+              label="Please enter your phone number"
+              type="Password"
+              filled
+              background-color="#eee"
+              style="opacity: 0.8"
+            ></v-text-field>
+            <v-row>
+              <v-col cols="6">
+              <v-text-field
+                :value="Phonenumber"
+                v-if="register"
+                v-model="re_password"
+                label="Verification Code"
+                type="Password"
+                filled
+                background-color="#eee"
+                style="width:160px ;height: 60px;opacity: 0.8"
+              ></v-text-field>
+              </v-col>
+              <v-col col="6">
+              <v-btn style="height: 60px" v-if="register" v-show="show" v-on:click="getCode" block color="secondary" dark>Get Code</v-btn>
+              <v-btn style="height: 60px" v-show="!show" class="count" block color="secondary" dark>{{count}} s</v-btn>
+              </v-col>
+            </v-row>
             <v-row>
               <v-col cols="12">
                 <v-btn v-on:click="login" block color="secondary" dark>Login / Register</v-btn>
@@ -115,6 +143,9 @@ export default {
 
   data () {
     return {
+      show: true,
+      count: '',
+      timer: null,
       error_img: '',
       password_wrong_show: false,
       info: '',
@@ -146,6 +177,22 @@ export default {
     })
   },
   methods: {
+    getCode(){
+      const TIME_COUNT = 60;
+      if (!this.timer) {
+        this.count = TIME_COUNT;
+        this.show = false;
+        this.timer = setInterval(() => {
+          if (this.count > 0 && this.count <= TIME_COUNT) {
+          this.count--;
+        } else {
+          this.show = true;
+          clearInterval(this.timer);
+          this.timer = null;
+        }
+      }, 1000)
+      }
+    },
     unshow () {
       this.password_wrong_show = false
     },
