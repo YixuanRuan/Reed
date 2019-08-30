@@ -18,6 +18,11 @@
       <v-col cols="4">
       </v-col>
     </v-row>
+    <v-row>
+      <v-col>
+        <p>{{this.$store.state.datas}}</p>
+      </v-col>
+    </v-row>
     <v-tabs-items v-model="tab">
       <v-tab-item
         v-for="i in tabs"

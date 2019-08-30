@@ -17,12 +17,14 @@
       <v-tab to="/selfinfo">我的</v-tab>
       <div style="width: 42%"></div>
       <v-text-field
-        @keyup.enter="submit"
+        @keyup.enter="submit(keyword)"
         class="mx-xl-n7"
         flat
         hide-details
         label="Search"
         solo-inverted
+        v-model="keyword"
+        :value="keyword"
         style="margin-top: 2px;margin-bottom: 2px;margin-right: 5px;border-radius: 0px"
       ></v-text-field>
     </v-tabs>
@@ -42,6 +44,7 @@ export default {
       centered: false,
       grow: false,
       vertical: false,
+      keyword:"",
       prevIcon: false,
       nextIcon: false,
       right: false,
@@ -50,8 +53,11 @@ export default {
   },
   methods:{
     submit: function (keyword){
-      this.$router.commit("changeKeyword",keyword)
-      this.$router.push({path:'/search'})
+      if(keyword.length==0){
+        keyword="everything"
+      }
+      this.$store.commit('changeKeyword',keyword)
+      this.$router.push('/search')
     }
   },
   computed:{

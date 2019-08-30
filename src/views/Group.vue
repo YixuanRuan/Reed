@@ -1,7 +1,6 @@
 <template>
   <div>
     <GroupHead></GroupHead>
-
   </div>
 </template>
 
@@ -12,8 +11,8 @@ import Comments from "../components/Comments"
 export default {
   name: "Group",
   components: {
-    GroupHead,
-  }
+    GroupHead
+  },
 }
 </script>
 

@@ -84,7 +84,8 @@ export default {
       this.$router.push({ path: '/forum',  query:  { commentId: commentId}})
     },
     goToTeam(groupId){
-      this.$router.push({  path: 'group', query: { groupId: groupId}})
+      this.$store.commit("changeGroup",groupId)
+      this.$router.push('group')
     }
   },
   props: {

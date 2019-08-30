@@ -10,15 +10,16 @@
           </v-col>
         </v-row>
         <v-row>
-          <v-col cols="4" v-for="i in $store.state.myGroup.comments.length" :key="i">
+          <v-col cols="4" v-for="i in $store.state.myGroup.comments[page-1].length" :key="i">
             <Comments
               class="comments"
-              :name="$store.state.myGroup.comments[i-1]['username']"
-              :avatar_img="imgg+$store.state.myGroup.comments[i-1]['account']"
-              :team_name="$store.state.myGroup.comments[i-1]['teamName']"
-              :team_img="imgg+$store.state.myGroup.comments[i-1]['teamId']"
-              :title="$store.state.myGroup.comments[i-1]['title']"
-              :content="$store.state.myGroup.comments[i-1]['content']"
+              :group-id="$store.state.myGroup.comments[page-1][i-1]['teamId']"
+              :name="$store.state.myGroup.comments[page-1][i-1]['username']"
+              :avatar_img="imgg+$store.state.myGroup.comments[page-1][i-1]['account']"
+              :team_name="$store.state.myGroup.comments[page-1][i-1]['teamName']"
+              :team_img="imgg+$store.state.myGroup.comments[page-1][i-1]['teamId']"
+              :title="$store.state.myGroup.comments[page-1][i-1]['title']"
+              :content="$store.state.myGroup.comments[page-1][i-1]['content']"
             ></Comments>
           </v-col>
         </v-row>
@@ -26,7 +27,7 @@
           <v-pagination
             v-model='page'
             :disabled='disabled'
-            :length='pageNum'
+            :length='$store.state.myGroup.pageNum'
             :next-icon='nextIcon'
             :prev-icon='prevIcon'
             :page= "page"
@@ -69,7 +70,6 @@ export default {
   data(){
     return {
       imgg: "http://114.115.151.96:8666/ProfilePicture/UserAccount/",
-      pageNum: 10,
       page: 1,
       circle: false,
       disabled: false,
@@ -87,8 +87,9 @@ export default {
       this.$router.push({ path: '/groupCreate'})
     }
   },
-  mounted() {
+  created() {
     this.$store.commit('handleMyGroup')
+    console.log(1)
   }
 }
 </script>

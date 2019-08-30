@@ -15,20 +15,35 @@ export default new Vuex.Store({
       joinedNum: 1,
       myGroups:[{
         id:"5d65f9b259f000353446afbb",
-        teamName:"我是打几把babababbcwe"
+        teamName:"我是打小天才babababbcwe"
       },{
         id:"5d65f9b259f000353446afbb",
-        teamName:"我是打几把babababbcwe"
+        teamName:"我是小天才babababbcwe"
       },{
         id:"5d65f9b259f000353446afbb",
-        teamName:"我是打几把babababbcwe"
+        teamName:"我是小天才babababbcwe"
       },{
         id:"5d65f9b259f000353446afbb",
-        teamName:"我是打几把babababbcwe"
+        teamName:"我是小天才babababbcwe"
       }]
     },
     datas: {
-      hello: 'shiiiit',
+      hello: 'hiiiit',
+    },
+    group: {
+      groupId: {
+        dafalut: "1"
+      },
+      isMygroup: {
+        default: false
+      },
+      groupName: {
+        default: "诗与远方"
+      },
+      groupMotto: {
+        default: "交流着诗意的人生"
+      },
+      imgSrc: "http://114.115.151.96:8666/ProfilePicture/UserAccount/"
     },
     groupFind: {
       tabsNum: 6,
@@ -37,41 +52,17 @@ export default new Vuex.Store({
       num: 0,
       data: []
     },
+    groupCreate: {
+      name: "",
+      intro: "",
+      tags: ['Hobby', 'Emotion', 'Movie', 'Literature', 'Academic', 'Life'],
+      tagsChecked: [ false, true, false, false, false, false],
+      succeed: false
+    },
     myGroup: {
-      comments:{
-        default:[
-          {groupId:{
-              default: 0
-            },
-            commentId:{
-              default: 0
-            },
-            avatar_img:{
-              default: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2579313585,1854004294&fm=26&gp=0.jpg'
-            },
-            name: {
-              default: 'Evan You'
-            },
-            team_img: {
-              default: 'https://upload-images.jianshu.io/upload_images/2707438-61bec868c535b5d2.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/640/format/webp'
-            },
-            team_name:{
-              default: '诗和远方'
-            },
-            title:{
-              default: '大家更喜欢什么风格的诗呢？'
-            },
-            content:{
-              default: '"Turns out semicolon-less style is easier and safer in TS because most gotcha edge cases are type invalid as well."'
-            },
-            num_comment:{
-              default: 256
-            },
-            num_like: {
-              default: 45
-            }}
-        ]
-      }
+      pageSize: 10,
+      pageNum: 1,
+      comments:[]
     },
     search: {
       keyword: '11',
@@ -160,29 +151,87 @@ export default new Vuex.Store({
         account: state.userId
       })
         .then(function (response) {
-          state.myGroup.comments = response.data
-          state.datas = response.data
+          state.myGroup.pageNum = Math.ceil(response.data.length/state.myGroup.pageSize)
+          var lenn = 0
+          var i = 0
+          for (i = 0;i < state.myGroup.pageNum-1; i++){
+            lenn = i * state.myGroup.pageSize
+            state.myGroup.comments.push(response.data.slice(lenn,lenn+state.myGroup.pageSize))
+          }
+          lenn = i*state.myGroup.pageSize
+          state.myGroup.comments.push(response.data.slice(lenn,response.data.length))
+        })
+        .catch(function (error) {
+          state.datas = { tit: error }
+        })
+      console.log(2)
+    },
+    changeGroupCreateName(state,newVal){
+      state.groupCreate.name = newVal
+    },
+    changeGroupCreateIntro(state,newVal){
+      state.groupCreate.intro = newVal
+    },
+    changeGroup(state, groupId){
+      state.group.groupId = groupId
+      console.log(groupId)
+      axios.post('http://114.115.151.96:8666/Team/FindOne', {
+        id: groupId
+      })
+        .then(function (response) {
+          console.log(response.data)
+          state.group.groupName = response.data.teamName
+          state.group.groupMotto = response.data.introduction
         })
         .catch(function (error) {
           state.datas = { tit: error }
         })
     },
     changeKeyword(state, keyword){
-      state.search.keyword=keyword
+      console.log(keyword)
     },
     handleSearch(state){
+      console.log(state.search.keyword)
       axios.post('http://114.115.151.96:8666/search/find', {
         name: state.search.keyword
       })
         .then(function (response) {
           state.search.dataShow = response.data
+          console.log(response)
           state.datas = response.data
         })
         .catch(function (error) {
           state.datas = { tit: error }
         })
+    },,
+    changeGroupCreatSucceed(state){
+      state.groupCreate.succeed=false
     }
   },
   actions: {
+  groupCreate(context,tags){
+    var ttags=[]
+    for (var i=0;i<tags.length;i++){
+      ttags.push(context.state.groupCreate.tags[ttags[i]])
+    }
+    return new Promise((resolve, reject) =>{
+      axios.post('http://114.115.151.96:8666/Team/Add', {
+        introduction: context.state.groupCreate.intro,
+        teamName: context.state.groupCreate.name,
+        account: context.state.userId,
+        tags: ttags
+      })
+        .then(function (response) {
+          console.log(response)
+          commit(context.state.groupCreate.succeed=true
+          resolve("succeed")
+        })
+        .catch(function (error) {
+          context.state.datas = { tit: error }
+          state.groupCreate.succeed=false
+          reject("error")
+        })
+    })
+  }
   }
 })

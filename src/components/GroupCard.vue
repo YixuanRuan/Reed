@@ -10,7 +10,7 @@
 <script>
 export default {
   name: "GroupCard",
-  props: ['img', 'groupName', 'groupMotto']
+  props: ['img', 'groupName', 'groupMotto','groupId'],
 }
 </script>
 

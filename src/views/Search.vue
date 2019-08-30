@@ -12,7 +12,10 @@ export default {
   },
   data: () => ({
   }
-  )
+  ),
+  mounted() {
+    this.$store.commit('handleSearch')
+  }
 }
 
 </script>
