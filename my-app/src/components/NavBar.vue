@@ -194,7 +194,7 @@ export default {
       this.$router.push({
         name: `forum`,
         params: {
-          postId: this.$store.state.massage_content[index].information.id
+          postId: this.$store.state.massage_content[index].information.postingId
         }
       })
     },
