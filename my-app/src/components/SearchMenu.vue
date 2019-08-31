@@ -34,6 +34,7 @@
           :title="bar['bookName']"
           :fstl="'作者：'+bar['author']+' ISBN：'+bar['isbn']"
           :scdl="'介绍：'+bar['intro']"
+          :score="bar['score']"
         ></SearchBar>
       </v-tab-item>
       <v-tab-item
@@ -50,6 +51,7 @@
           :title="bar['filmName']"
           :fstl="'导演：'+bar['director']+' 国家：'+bar['country']+' 语言：'+bar['language']+' 主演：'+bar['starring']"
           :scdl="bar['intro']"
+          :score="bar['score']"
         ></SearchBar>
       </v-tab-item>
       <v-tab-item

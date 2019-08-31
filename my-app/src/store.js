@@ -20,6 +20,7 @@ export default new Vuex.Store({
     true_verificationCode: 'root',
     logined: '',
     error_img: '',
+    isSuper: false,
     account: '',
     introduction: '',
     selfComments: [],
@@ -304,6 +305,9 @@ export default new Vuex.Store({
     }
   },
   mutations: {
+    handleIsSuper (state, newVal) {
+      state.isSuper = newVal
+    },
     handleCurrentPage (state, newVal) {
       this.state.search.currentPage = newVal
       this.methods.getSearchResult()
@@ -517,9 +521,15 @@ export default new Vuex.Store({
     },
     changeMassage(state, newList) {
       state.massage_content = newList
+    },
+    changeIsSuper(state) {
+      state.isSuper = true
     }
   },
   actions: {
+    changeSuper(context){
+      context.commit('changeIsSuper')
+    },
     changeMassageData(context, newList) {
       context.commit('changeMassage', newList)
     },
