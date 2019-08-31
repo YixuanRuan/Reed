@@ -41,75 +41,75 @@
 </template>
 
 <script>
-  import HistoryComment from '../components/HistoryComment'
-  import WonderfulComment from '../components/WonderfulComment'
-  import draggable from 'vuedraggable'
-  import SideBar from './SideBar';
-  import Swiper from '../components/Swiper';
+import HistoryComment from '../components/HistoryComment'
+import WonderfulComment from '../components/WonderfulComment'
+import draggable from 'vuedraggable'
+import SideBar from './SideBar'
+import Swiper from '../components/Swiper'
 
-  export default {
-    name: "BKHome",
-    components: {
-      HistoryComment,
-      WonderfulComment,
-      draggable,
-      SideBar,
-      Swiper
-    },
-    data () {
-      return {
-        wonderfulComments:[
-          {},
-          {},
-          {}
-        ],
+export default {
+  name: 'BKHome',
+  components: {
+    HistoryComment,
+    WonderfulComment,
+    draggable,
+    SideBar,
+    Swiper
+  },
+  data () {
+    return {
+      wonderfulComments: [
+        {},
+        {},
+        {}
+      ]
+    }
+  },
+  mounted () {
+    this.axios({
+      method: 'post',
+      url: 'http://114.115.151.96:8666/search/filmlikelist',
+      data: {
+        pagesCount: 20
+      },
+      crossDomain: true
+    }).then(body => {
+      this.info = body
+      this.$store.dispatch('getTodayRecommend', this.info.data)
+      console.log(this.info.data)
+    })
+  },
+  computed: {
+    today_hot_content: {
+      get () {
+        return this.$store.state.today_hot_content
+      },
+      set (newVal) {
+        this.$store.commit('handleTodayHotContent', newVal)
       }
     },
-    mounted () {
-      this.axios({
-        method: 'post',
-        url: 'http://114.115.151.96:8666/search/filmlikelist',
-        data: {
-          pagesCount: 20
-        },
-        crossDomain: true
-      }).then(body => {
-        this.info = body
-        this.$store.dispatch('getTodayRecommend', this.info.data)
-        console.log(this.info.data)
-      });
+    today_recommend_content: {
+      get () {
+        return this.$store.state.today_recommend_content
+      },
+      set (newVal) {
+        this.$store.commit('handleTodayRecommendContent', newVal)
+      }
     },
-    computed: {
-      today_hot_content: {
-        get () {
-          return this.$store.state.today_hot_content
-        },
-        set (newVal) {
-          this.$store.commit('handleTodayHotContent', newVal)
-        }
+    today_new_content: {
+      get () {
+        return this.$store.state.today_new_content
       },
-      today_recommend_content: {
-        get() {
-          return this.$store.state.today_recommend_content
-        },
-        set(newVal) {
-          this.$store.commit('handleTodayRecommendContent', newVal)
-        }
-      },
-      today_new_content: {
-        get () {
-          return this.$store.state.today_new_content
-        },
-        set (newVal) {
-          this.$store.commit('handleTodayNewContent', newVal)
-        }
-      },
-    },
-    methods:{
-
+      set (newVal) {
+        this.$store.commit('handleTodayNewContent', newVal)
+      }
     }
+  },
+  methods: {
 
   }
+
+}
 </script>
 
 <style scoped>

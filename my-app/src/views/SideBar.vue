@@ -15,7 +15,6 @@
               <div class="tag-rank">{{data.rank}}. {{data.name}}</div>
               <div class="tag-view">{{data.view}}</div>
             </div>
-            <v-icon
             <v-icon v-if="data.trending===0" size="16px" style="color:green">mdi-trending-up</v-icon>
             <v-icon v-if="data.trending===1" size="16px" style="color:#aaa">mdi-minus</v-icon>
             <v-icon v-if="data.trending===2" size="16px" style="color:red">mdi-trending-down</v-icon>

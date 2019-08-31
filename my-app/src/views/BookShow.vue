@@ -1,12 +1,12 @@
 <template>
   <div>
-    <Showcard :poster_img="poster_img" :filmName="filmName" :director="director" :starring="starring" :filmTime="filmTime" :finalScore="finalScore"/>
+    <BookShowCard :poster_img="$store.state.book_img_prefix+info.id" :bookName="info.bookName" :author="info.author" :publisher="info.publisher" :isbn="info.isbn" :finalScore="info.finalScore"/>
     <v-row class="intro_outer">
       <v-col cols="4" class="intro-left">
         <div class="intro">简介</div>
       </v-col>
       <v-col cols="7" class="intro-right">
-        <div class="intro-content">{{intro}}</div>
+        <div class="intro-content">{{info.intro}}</div>
       </v-col>
     </v-row>
     <CommentsStar :star_reply_name="star_reply_name" :reply_content="reply_content"
@@ -23,7 +23,7 @@
 
 <script>
   import NavBar from '../components/NavBar';
-  import Showcard from '../components/Showcard';
+  import BookShowCard from '../components/BookShowCard';
   import CommentsStar from '../components/Comments-star';
   import ScoreBar from '../components/ScoreBar';
   import HistoryComment from '../components/HistoryComment';
@@ -33,22 +33,12 @@
     data () {
       return {
 
+        info:{},
         flag:false,
         type:'1',
 
         // reply
         bm_id:'',
-
-
-        // Showcard
-        intro:'《寄生虫》讲述了发生在身份地位悬殊的两个家庭身上的故事：宋康昊饰演的无业游民父亲基泽，让寄托了家人生计希望的大儿子（崔宇植 饰）前往IT公司老总朴社长（李善均 饰）家应聘课外教师，随之发生了一连串意外事件。',
-        filmName: '',
-        director:'',
-        starring:'',
-        filmTime:'',
-        finalScore:'',
-        poster_img:'',
-        img_prefix:'http://114.115.151.96:8666/PosterPicture/MovieAccount/',
 
         // CommentsStar
         avatar_img:'',
@@ -67,7 +57,7 @@
     },
     components: {
       NavBar,
-      Showcard,
+      BookShowCard,
       CommentsStar,
       ScoreBar,
       PostReply,
@@ -110,13 +100,7 @@
           crossDomain: true
         }).then(body =>{
           console.log(body)
-          this.intro = body.data.intro;
-          this.filmName = body.data.filmName;
-          this.director = body.data.director;
-          this.starring = body.data.starring;
-          this.filmTime = body.data.filmTime;
-          this.finalScore = body.data.finalScore;
-          this.poster_img = this.img_prefix + body.data.id;
+          this.info = body.data;
         });
       },
       initBestReply: function(){

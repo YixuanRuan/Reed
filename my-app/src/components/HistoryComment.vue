@@ -20,7 +20,7 @@
               :key="index"
             >
               <div @click="getBMId(data)">
-              <InfoCard style="margin-right: 2px" :poster_img="img_prefix+data.id" :name="data.filmName"
+              <InfoCard style="margin-right: 2px" :poster_img="$store.state.movie_img_prefix+data.id" :name="data.filmName"
                         :score="data.score" :director="data.director" :Starring="data.starring"
                         :duration="data.filmTime" :brief="data.intro" :looked="data.looked" />
               </div>
@@ -39,8 +39,7 @@ import draggable from 'vuedraggable'
 export default {
   name: "HistoryComment",
   data: () => ({
-    model: null,
-    img_prefix:'http://114.115.151.96:8666/PosterPicture/MovieAccount/'
+    model: null
   }),
   methods:{
     getBMId: function (data) {

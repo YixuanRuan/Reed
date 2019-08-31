@@ -320,11 +320,17 @@ export default {
             // 登录成功
             else {
               if (this.$store.state.verify === true) {
-                this.$router.push({path: '/selfinfo'})
                 this.$store.commit('logined')
                 this.$store.dispatch('changeAC', this.info.data.user.account)
                 this.$store.dispatch('changeInro', this.info.data.user.introduction)
                 this.$store.dispatch('changeSelfAvatar', 'http://114.115.151.96:8666/ProfilePicture/UserAccount/' + this.info.data.user.account)
+                if (this.info.data.user.superuser) {
+                  this.$store.commit('IsSuper')
+                  this.$router.push({path: '/manage'})
+                }
+                else {
+                  this.$router.push({path: '/selfinfo'})
+                }
               }
               else {
                 this.password_wrong_show = true
