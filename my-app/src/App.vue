@@ -23,12 +23,16 @@ import PostReply from './components/PostReply'
 import ScoreBar from './components/ScoreBar'
 import WonderfulComment from './components/WonderfulComment'
 import Footer from './components/Footer'
+import Geet from './components/Geet'
+import Gtpage from './components/GtPage'
 
 export default {
   name: 'App',
   components: {
     NavBar,
-    Footer
+    SegText,
+    Geet,
+    Gtpage
   },
   data: () => ({
     hot: '今日热门'

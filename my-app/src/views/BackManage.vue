@@ -42,9 +42,12 @@
     <div class="add-content">
       <div class="title">处理举报</div>
       <v-row>
-        <v-col v-for="(data,index) in reported" :key="index">
+        <v-col v-for="(data,index) in $store.state.reported" :key="index">
           <div class="report-manage">
-            <SelfComments></SelfComments>
+            <Comments :name="data.Posting.account" :team_name="data.Team.teamName" :title="data.Posting.title"
+                      :content="data.Posting.content" :avatar_img="img_prefix + data.Posting.account"
+                      :team_img="img_prefix + data.Team.id" :id="data.Posting.id" :userType="userType"
+                      :reportId="data.report.id" :onsubmit="getReport"></Comments>
           </div>
         </v-col>
       </v-row>
@@ -53,47 +56,64 @@
 </template>
 
 <script>
-import SelfComments from "../components/SelfComments";
+import Comments from '../components/Comments'
 export default {
-  components:{
-    SelfComments,
+  components: {
+    Comments
   },
-  data (){
-      return {
-        swipers:[
-            {
-                index:1,
-                content:'某个活动1',
-                picUrl:''
-            },{
-                index:2,
-                content:'某个推送2',
-                picUrl:''
-            },{
-                index:3,
-                content:'某个东西3',
-                picUrl:''
-            },{
-                index:4,
-                content:'某个东西4',
-                picUrl:''
-            },
-        ],reported:[
-              {
-                  index:1,
-                  content:'zzyy1',
-              },{
-                  index:2,
-                  content:'yhsq2',
-              },{
-                  index:3,
-                  content:'xxbl3',
-              },{
-                  index:4,
-                  content:'fd4',
-              },
-          ]
+  data () {
+    return {
+      img_prefix: 'http://114.115.151.96:8666/ProfilePicture/UserAccount/',
+      avatar_img: '',
+      team_img: '',
+      userType: 1,
+      swipers: [
+        {
+          index: 1,
+          content: '某个活动1',
+          picUrl: ''
+        }, {
+          index: 2,
+          content: '某个推送2',
+          picUrl: ''
+        }, {
+          index: 3,
+          content: '某个东西3',
+          picUrl: ''
+        }, {
+          index: 4,
+          content: '某个东西4',
+          picUrl: ''
+        }
+      ]
+    }
+  },
+  mounted () {
+    this.getReport()
+  },
+  computed: {
+    reported: {
+      get () {
+        return this.$store.state.reported
+      },
+      set (newVal) {
+        this.$store.commit('handleReported', newVal)
       }
+    }
+  },
+  methods: {
+    getReport () {
+      this.axios({
+        method: 'post',
+        url: 'http://114.115.151.96:8666/report/list',
+        data: {
+        },
+        crossDomain: true
+      }).then(body => {
+        this.$store.dispatch('changeReported', body.data)
+        console.log('reported', this.$store.state.reported)
+      })
+    }
   }
 }
 </script>
