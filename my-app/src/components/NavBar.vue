@@ -15,8 +15,8 @@
       </router-link>
       <div class="link-text" ><v-tab to="/" :aria-selected="grow" style="height: 100%">主页</v-tab></div>
       <div class="link-text" ><v-tab to="/bmhome" style="height: 100%">书籍</v-tab></div>
-      <div class="link-text" ><v-tab to="/forum" style="height: 100%">影视</v-tab></div>
-      <div class="link-text" ><v-tab to="/group" style="height: 100%">小组</v-tab></div>
+      <div class="link-text" ><v-tab to="/bmhome" style="height: 100%">影视</v-tab></div>
+      <div class="link-text" ><v-tab :to="group" style="height: 100%">小组</v-tab></div>
       <div class="link-text" ><v-tab to="/selfinfo" style="height: 100%">我的</v-tab></div>
       <div style="width: 35%"></div>
 <!-------------------------------------------------------------浏览历史------------------------------------------------------------->
@@ -143,13 +143,15 @@
 <!------------------------------------------------------------------------------------------------------------------------------>
 
       <v-text-field
+        @keyup.enter="submit(keyword)"
         class="mx-xl-n7"
         flat
         hide-details
         label="Search"
         solo-inverted
         style="margin-right: 10px;border-radius: 3px;height: 30px"
-        @keyup.enter="submit"
+        v-model="keyword"
+        :value="keyword"
       ></v-text-field>
     </v-tabs>
   </v-card>
@@ -180,6 +182,7 @@ export default {
       text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
       icons: false,
       centered: false,
+      keyword:"",
       grow: false,
       vertical: false,
       prevIcon: false,
@@ -189,8 +192,12 @@ export default {
     }
   },
   methods:{
-    submit: function(){
-      this.$router.replace({path:'/search'})
+    submit: function (keyword){
+      if(keyword.length==0){
+        keyword="everything"
+      }
+      this.$store.commit('changeKeyword',keyword)
+      this.$router.push('/search/')
     },
     like: function () {
       this.like_color = (this.like_color === '') ? 'red' : ''
@@ -206,6 +213,15 @@ export default {
     }
   },
   computed: {
+    group: {
+      get () {
+        if(this.$store.state.groupStatus.joinedNum==0){
+          return "/groupFind"
+        }else{
+          return "/myGroup"
+        }
+      }
+    },
     collection: {
       get () {
         return this.$store.state.collection

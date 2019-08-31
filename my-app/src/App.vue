@@ -4,12 +4,9 @@
       <NavBar />
     </div>
     <div style="height: 48px"></div>
-    <router-view/>
+    <router-view style="min-height: 85vh;"/>
     <Footer/>
   </v-app>
-  <!--<v-app>-->
-    <!--<InfoCard/>-->
-  <!--</v-app>-->
 </template>
 
 <script>
@@ -31,17 +28,6 @@ export default {
   name: 'App',
   components: {
     NavBar,
-    // SegText,
-    // InfoCard,
-    // Comments,
-    // UserInfo,
-    // TeamManage,
-    // Post,
-    // HistoryComment,
-    // PostReply,
-    // SelfComments,
-    // ScoreBar,
-    // WonderfulComment,
     Footer
   },
   data: () => ({
