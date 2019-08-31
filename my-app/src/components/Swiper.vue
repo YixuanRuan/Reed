@@ -53,17 +53,17 @@ export default {
       content: [
         {
           index: 1,
-          imgUrl: 'https://image.gcores.com/9d01e1c7-6d8b-441b-9d07-625078dc5765.jpg',
+          imgUrl: require('../imgs/swiper-ontheroad.jpg'),
           text: '1'
         },
         {
           index: 2,
-          imgUrl: 'https://image.gcores.com/4eb4d9c5-b979-430b-99f3-069f1dd1d5cb.jpg',
+          imgUrl: require('../imgs/swiper-roma.jpg'),
           text: '1'
         },
         {
           index: 3,
-          imgUrl:'https://image.gcores.com/e5d34cf1-70cf-4a3f-91cc-bc0391031949.jpg',
+          imgUrl: require('../imgs/swiper-string.jpg'),
           text: '1'
         },
     ]
