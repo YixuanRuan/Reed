@@ -148,6 +148,7 @@ export default {
       error_img: '',
       password_wrong_show: false,
       info: '',
+      bookInfo: '',
       hot: '今日热门',
       topic: '今日话题',
       height: '560px',
@@ -232,13 +233,19 @@ export default {
     initTodayBookRecommend(){
       this.axios({
         method: 'post',
-        url: 'http://114.115.151.96:8666/book/findAll',
+        url: 'http://114.115.151.96:8666/search/booktimelist',
         data: {
+          pagesCount: 20
         },
         crossDomain: true
       }).then(body => {
-        this.info = body
-        this.$store.dispatch('getTodayBookRecommend', this.info.data)
+        console.log("hello")
+        console.log(body)
+        this.bookInfo = body
+        this.$store.dispatch('getTodayBookRecommend', this.bookInfo.data)
+      }).catch(error => {
+        console.log(error)
+        console.log("book error")
       })
     },
     initComments(){

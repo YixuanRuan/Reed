@@ -119,13 +119,13 @@ export default {
   },
   methods: {
     reset () {
-        this.$refs.form.reset()
+      this.$refs.form.reset()
     },
     submit (tagsChecked) {
-        var tags = []
+      var tags = []
       for (var i = 0; i < this.tagsChecked.length; i++) {
         if (this.tagsChecked[i]){
-            tags.push(i)
+          tags.push(i)
         }
       }
       console.log(tags)

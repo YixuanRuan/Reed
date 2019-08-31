@@ -18,7 +18,7 @@ export default new Vuex.Store({
     phoneNumber: '',
     verificationCode: '',
     true_verificationCode: 'root',
-    logined: '',
+    logined: false,
     error_img: '',
     isSuper: false,
     account: '',
