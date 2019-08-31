@@ -32,11 +32,9 @@
 </template>
 
 <script>
-import NavBar from '../components/NavBar'
 import BookShowCard from '../components/BookShowCard'
 import CommentsStar from '../components/Comments-star'
 import ScoreBar from '../components/ScoreBar'
-import HistoryComment from '../components/HistoryComment'
 import PostReply from '../components/PostReply'
 import SelfComments from '../components/SelfComments'
 export default {
@@ -66,12 +64,10 @@ export default {
     }
   },
   components: {
-    NavBar,
     BookShowCard,
     CommentsStar,
     ScoreBar,
     PostReply,
-    HistoryComment,
     SelfComments
   },
   mounted () {
@@ -81,6 +77,11 @@ export default {
     this.bm_id = this.$store.state.currentId
   },
   methods: {
+    refresh (state) {
+      if (state == 'done') {
+        this.initComments()
+      }
+    },
     listenToMyBoy: function (somedata) {
       this.flag = somedata
       if (this.flag) {
@@ -93,77 +94,44 @@ export default {
         method: 'post',
         url: 'http://114.115.151.96:8666/reply/list',
         data: {
-          id: '5d65eeccd4a370186cdac7d4'
+          id: this.$store.state.currentBookId
         },
         crossDomain: true
       }).then(body => {
-        this.comments = body.data.replylist
+        console.log('comments')
+        console.log(body)
+        this.comments = body.data
       })
     },
-
-    mounted () {
-      this.initBMInfo()
-      this.initBestReply()
-      this.initComments()
-      this.bm_id = this.$store.state.currentBookId
+    initBMInfo: function () {
+      this.axios({
+        method: 'post',
+        url: 'http://114.115.151.96:8666/book/find',
+        data: {
+          id: this.$store.state.currentBookId
+        },
+        crossDomain: true
+      }).then(body => {
+        console.log(body)
+        this.info = body.data
+      })
     },
-    methods: {
-      refresh (state) {
-        if (state == 'done') {
-          this.initComments()
-        }
-      },
-      listenToMyBoy: function (somedata) {
-        this.flag = somedata
-        if (this.flag) {
-          this.initComments()
-          this.flag = false
-        }
-      },
-      initComments: function () {
-        this.axios({
-          method: 'post',
-          url: 'http://114.115.151.96:8666/reply/list',
-          data: {
-            id: this.$store.state.currentBookId
-          },
-          crossDomain: true
-        }).then(body => {
-          console.log('comments')
-          console.log(body)
-          this.comments = body.data
-        })
-      },
-      initBMInfo: function () {
-        this.axios({
-          method: 'post',
-          url: 'http://114.115.151.96:8666/book/find',
-          data: {
-            id: this.$store.state.currentBookId
-          },
-          crossDomain: true
-        }).then(body => {
-          console.log(body)
-          this.info = body.data
-        })
-      },
-      initBestReply: function () {
-        this.axios({
-          method: 'post',
-          url: 'http://114.115.151.96:8666/search/likebestReply',
-          data: {
-            id: this.$store.state.currentBookId
-          },
-          crossDomain: true
-        }).then(body =>{
-          console.log(body);
-          this.star_reply_name = body.data.reply.id;
-          this.reply_content = body.data.reply.content;
-          this.like_num = body.data.likes;
-          this.comment_num = '255';
-          this.avatar_img = this.$store.state.avatar_img_prefix + body.data.reply.id;
-        });
-      }
+    initBestReply: function () {
+      this.axios({
+        method: 'post',
+        url: 'http://114.115.151.96:8666/search/likebestReply',
+        data: {
+          id: this.$store.state.currentBookId
+        },
+        crossDomain: true
+      }).then(body =>{
+        console.log(body);
+        this.star_reply_name = body.data.reply.id;
+        this.reply_content = body.data.reply.content;
+        this.like_num = body.data.likes;
+        this.comment_num = '255';
+        this.avatar_img = this.$store.state.avatar_img_prefix + body.data.reply.id;
+      });
     }
   }
 }
