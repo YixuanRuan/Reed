@@ -20,8 +20,8 @@
         >
           <div @click="getBMId(data)">
           <InfoCard style="margin-right: 2px" :poster_img="img_prefix+data.id" :name="data.filmName"
-                    :score="data.scoreFinal" :director="data.director" :Starring="data.starring"
-                    :duration="dataTime" :brief="data.intro" :looked="data.looked" />
+                    :score="data.score" :director="data.director" :Starring="data.starring"
+                    :duration="data.filmTime" :brief="data.intro" :looked="data.looked" />
           </div>
         </v-flex>
       </draggable>

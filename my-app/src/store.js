@@ -188,29 +188,29 @@ export default new Vuex.Store({
     ],
     collection: [
       {
-        filmId: "5d65eeccd4a370186cdac7d4",
-        name: "你好，吸血鬼小姐1",
+        id: "5d65eeccd4a370186cdac7d4",
+        filmName: "你好，吸血鬼小姐1",
         score: "37.6",
         account: "abcd"
       },
-      {
-        filmId: "5d65eeccd4a370186cdac7d3",
-        name: "九五二班",
-        score: "37.6",
-        account: "abcd"
-      },
-      {
-        filmId: "5d65eeccd4a370186cdac7d2",
-        name: "拜见女仆大人",
-        score: "37.6",
-        account: "abcd"
-      },
-      {
-        filmId: "5d65eeccd4a370186cdac7d1",
-        name: "心跳 Hart Beat",
-        score: "37.6",
-        account: "abcd"
-      }
+      // {
+      //   id: "5d65eeccd4a370186cdac7d3",
+      //   filmName: "九五二班",
+      //   score: "37.6",
+      //   account: "abcd"
+      // },
+      // {
+      //   id: "5d65eeccd4a370186cdac7d2",
+      //   filmName: "拜见女仆大人",
+      //   score: "37.6",
+      //   account: "abcd"
+      // },
+      // {
+      //   id: "5d65eeccd4a370186cdac7d1",
+      //   filmName: "心跳 Hart Beat",
+      //   score: "37.6",
+      //   account: "abcd"
+      // }
     ]
   },
   mutations: {
@@ -229,8 +229,11 @@ export default new Vuex.Store({
     handleTodayHotContent (state, newVal) {
       state.today_hot_content = newVal
     },
-    handleLikeContent (state, newVal) {
+    handleCollection (state, newVal) {
       state.collection = newVal
+      for (i = 0; i < state.collection.length; i++) {
+        state.collection[i].account = state.account
+      }
     },
     handleMassageContent (state, newVal) {
       state.massage_content = newVal

@@ -212,7 +212,7 @@ export default {
         crossDomain: true
       }).then(body => {
         this.topics = body.data
-        console.log(this.topics)
+        console.log('topics', this.topics)
       })
     },
     login () {

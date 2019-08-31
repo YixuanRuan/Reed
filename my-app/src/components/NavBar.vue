@@ -117,18 +117,18 @@
                 :key="index"
                 style="background-color:#CACACA; margin-top: 5px"
               >
-                <v-row style="width: 300px; height: 100px;">
+                <v-row style="width: 330px; height: 100px;">
                   <v-col cols="4">
                     <v-img
                       class="poster"
-                      :src="item.poster_img"
+                      :src="film_prefix+item.id"
                     ></v-img>
                   </v-col>
-                  <v-col cols="5">
-                    <p class="poster-name">{{item.name}}</p>
-                    <ScoreBar class="scoreBar"/>
+                  <v-col cols="6">
+                    <p class="poster-name">{{item.filmName}}</p>
+                    <ScoreBar class="scoreBar" :score="item.score"/>
                   </v-col>
-                  <v-col cols="3">
+                  <v-col cols="2">
                     <v-btn dark icon class="icon-delete" v-on:click="deleteItem(index)">
                       <v-icon large dark >mdi-delete</v-icon>
                     </v-btn>
@@ -166,7 +166,7 @@ export default {
   },
   data () {
     return {
-      movie_img_prefix: '',
+      film_prefix: 'http://114.115.151.96:8666/PosterPicture/MovieAccount/',
       test: '1',
       massage_color: '',
       like_color: '',
@@ -209,7 +209,7 @@ export default {
         return this.$store.state.collection
       },
       set (newVal) {
-        this.$store.commit('handleLikeContent', newVal)
+        this.$store.commit('handleCollection', newVal)
       }
     },
     massage_content: {
@@ -249,13 +249,14 @@ export default {
 
 .icon-delete{
   margin-top: 20px;
-  margin-left: 10px;
+  margin-left: 0px;
 }
 
 .poster-name{
   color:white;
-  font-size: 28px;
+  font-size: 18px;
   margin-left: -25px;
+  margin-bottom: 30px;
 }
 .logo-header{
   width: 70px;
