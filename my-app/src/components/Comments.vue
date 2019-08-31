@@ -60,9 +60,8 @@
     <v-card-text class="text-content" @click="goToComments">
       {{content}}
     </v-card-text>
-
-    <v-card-actions style="padding-bottom: 0px">
-      <v-menu bottom offset-y nudge-bottom="10" :close-on-content-click="closeOnContentClick" max-height="300" style="float:left !important;">
+    <div class="option-menu">
+      <v-menu bottom offset-y nudge-bottom="10" :close-on-content-click="closeOnContentClick" max-height="300" style="float:left !important" absolute open-on-click>
         <template v-slot:activator="{ on }">
           <v-btn
             dark
@@ -80,20 +79,22 @@
           <v-list-item @click="" class="card-option justify-center">设为精华</v-list-item>
         </v-list>
       </v-menu>
-      <v-list-item class="grow" style="margin-left: -40px">
-        <v-row
-          align="center"
-          justify="end"
-          class="comment-bottom"
-        >
-          <v-icon class="mr-1" color="white" @click="routerTo()">mdi-comment</v-icon>
-          <span class="subheading mr-2">{{num_comment}}</span>
-          <span class="mr-1"></span>
-          <v-icon class="mr-1" color="white">mdi-thumb-up</v-icon>
-          <span class="subheading">{{num_like}}</span>
-        </v-row>
-      </v-list-item>
-    </v-card-actions>
+      <v-card-actions class="justify-end" style="padding-bottom: 0px; width: 100%">
+        <v-list-item class="grow" style="width:100px">
+          <v-row
+            align="center"
+            justify="end"
+            class="comment-bottom"
+          >
+            <v-icon class="mr-1" color="white" @click="routerTo()">mdi-comment</v-icon>
+            <span class="subheading mr-2">{{num_comment}}</span>
+            <span class="mr-1"></span>
+            <v-icon class="mr-1" color="white">mdi-thumb-up</v-icon>
+            <span class="subheading">{{num_like}}</span>
+          </v-row>
+        </v-list-item>
+      </v-card-actions>
+    </div>
   </v-card>
 </template>
 
@@ -211,5 +212,21 @@ export default {
   .comment-bottom{
     color: white;
     margin-right: 0px;
+  }
+
+  .card-option{
+    margin-top: 3px;
+    font-size: 13px;
+    color: #646464;
+    text-align: center;
+    height: 20px;
+  }
+
+  .option-menu{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    padding-left: 10px;
   }
 </style>
