@@ -27,6 +27,7 @@
             icon
             v-on="on"
             style="margin-top:6px; margin-right: 20px"
+            @click="getSearchHistory"
           >
             <v-icon>mdi-history</v-icon>
           </v-btn>
@@ -43,13 +44,17 @@
 
         <v-tabs-items v-model="tab">
           <v-tab-item>
+            <!----------------------------------------------------->
             <div class="history-forum">
               <v-icon color="#aaa" style="margin-right: 20px">mdi-comment</v-icon>
               <div style="font-size: 14px;margin: 10px;width:200px;overflow: hidden">帖子标题标题标题标题</div>
               <v-icon color="#aaa" style="float: right">mdi-delete</v-icon>
             </div>
+            <!----------------------------------------------------->
           </v-tab-item>
           <v-tab-item>
+
+            <!---------------------------------------------------->
             <div class="history-bm">
               <v-img
                 :src="poster_img"
@@ -60,6 +65,7 @@
               <div style="font-size: 14px;margin: 10px;width:200px;overflow: hidden">标题标题标题</div>
               <v-icon color="#aaa" style="float: right">mdi-delete</v-icon>
             </div>
+            <!---------------------------------------------------->
           </v-tab-item>
         </v-tabs-items>
       </v-menu>
@@ -219,8 +225,6 @@ export default {
       this.$store.dispatch('deleteLikeItem', index)
     },
     deleteMassage: function (index) {
-      this.$store.dispatch('deleteMassageItem', index)
-
       this.axios({
         method: 'post',
         url: 'http://114.115.151.96:8666/Information/Del',
@@ -228,6 +232,8 @@ export default {
           id: this.$store.state.massage_content[index].information.id
         },
         crossDomain: true
+      }).then(body => {
+        this.$store.dispatch('deleteMassageItem', index)
       })
     },
     getInformation () {
@@ -277,6 +283,9 @@ export default {
       }).then(body => {
         this.$store.dispatch('changeCollection', body.data)
       })
+    },
+    getHistory () {
+      
     },
     addCollection () {
       var i = 0

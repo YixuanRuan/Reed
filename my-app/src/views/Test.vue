@@ -1,6 +1,6 @@
 <template>
   <div>
-    {{info}}
+    {{info.data.booklist}}
   </div>
 </template>
 
@@ -14,10 +14,21 @@ export default {
     }
   },
   mounted () {
-    this.testCollectionGet()
-
+    this.testHistory()
   },
   methods: {
+    testHistory () {
+      this.axios({
+        method: 'post',
+        url: 'http://114.115.151.96:8666//reply/findFilmAndBookByReply',
+        data: {
+          id: 'abcd'
+        },
+        crossDomain: true
+      }).then(body => {
+        this.info = body
+      })
+    },
     testReport () {
       this.axios({
         method: 'post',
@@ -29,7 +40,7 @@ export default {
         this.info = body
       })
     },
-    testLogin(){
+    testLogin () {
       this.axios({
         method: 'post',
         url: 'http://114.115.151.96:8666/User/Login',
@@ -42,7 +53,7 @@ export default {
         this.info = body
       })
     },
-    testCollectionDel(){
+    testCollectionDel () {
       this.axios({
         method: 'post',
         url: 'http://114.115.151.96:8666/Collection/Del',
@@ -54,7 +65,7 @@ export default {
         this.info = body
       })
     },
-    testCollectionGet(){
+    testCollectionGet () {
       this.axios({
         method: 'post',
         url: 'http://114.115.151.96:8666/Collection/Get',
@@ -64,9 +75,9 @@ export default {
         crossDomain: true
       }).then(body => {
         this.info = body
-      });
+      })
     },
-    testCollectionAdd(){
+    testCollectionAdd () {
       var i = 0
       for (i = 0; i < this.$store.state.collection.length; i++) {
         this.axios({
@@ -76,7 +87,7 @@ export default {
             id: this.$store.state.collection[i].id,
             filmName: this.$store.state.collection[i].filmName,
             score: this.$store.state.collection[i].score,
-            account: 'abcd',
+            account: 'abcd'
           },
           crossDomain: true
         }).then(body => {
@@ -84,19 +95,19 @@ export default {
         })
       }
     },
-    testInformationGet(){
+    testInformationGet () {
       this.axios({
         method: 'post',
         url: 'http://114.115.151.96:8666/Information/Get',
         data: {
-          account: 'abcd',
+          account: 'abcd'
         },
         crossDomain: true
       }).then(body => {
         this.info = body
-      });
+      })
     },
-    testInformationAdd(){
+    testInformationAdd () {
       this.axios({
         method: 'post',
         url: 'http://114.115.151.96:8666/Information/Add',
@@ -106,7 +117,7 @@ export default {
         crossDomain: true
       }).then(body => {
         this.info = body
-      });
+      })
     }
   }
 

@@ -100,23 +100,6 @@ export default new Vuex.Store({
       currentSearchTab: 0
     },
     massage_content: [
-      {
-        massage_title: '消息通知',
-        massage_content: '您在诗与远方发表的评论得到回复，点击查看 >'
-      },
-      {
-        massage_title: '消息通知',
-        massage_content: '您在诗与远方发表的评论得到回复，点击查看 >'
-      },
-      {
-        massage_title: '消息通知',
-        massage_content: '您在诗与远方发表的评论得到回复，点击查看 >'
-      },
-      {
-        massage_title: '消息通知',
-        massage_content: '您在诗与远方发表的评论得到回复，点击查看 >'
-      }
-
     ],
 
     // 今日推荐

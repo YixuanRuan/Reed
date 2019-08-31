@@ -147,14 +147,14 @@ export default {
           id: this.$store.state.currentBookId
         },
         crossDomain: true
-      }).then(body =>{
-        console.log(body);
-        this.star_reply_name = body.data.reply.id;
-        this.reply_content = body.data.reply.content;
-        this.like_num = body.data.likes;
-        this.comment_num = '255';
-        this.avatar_img = this.$store.state.avatar_img_prefix + body.data.reply.id;
-      });
+      }).then(body => {
+        console.log(body)
+        this.star_reply_name = body.data.reply.id
+        this.reply_content = body.data.reply.content
+        this.like_num = body.data.likes
+        this.comment_num = '255'
+        this.avatar_img = this.$store.state.avatar_img_prefix + body.data.reply.id
+      })
     }
   }
 }
