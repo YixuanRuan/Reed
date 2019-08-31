@@ -20,30 +20,30 @@ export default {
     GroupHead,
       SelfComments
   },
-    data () {
-        return {
-            selfComments: [
-                {
-                    "reply": 0,
-                    "toptag": 1,
-                },
-                {
-                    "reply": 0,
-                    "toptag": 1,
-                },
-                {
-                    "reply": 1,
-                },
-                {
-                    "reply": 0,
-                    "toptag": 2,
-                },
-                {
-                    "reply": 2
-                }
-            ]
+  data () {
+    return {
+      selfComments: [
+        {
+          "reply": 0,
+          "toptag": 1,
+        },
+        {
+          "reply": 0,
+          "toptag": 1,
+        },
+        {
+          "reply": 1,
+        },
+        {
+          "reply": 0,
+          "toptag": 2,
+        },
+        {
+          "reply": 2
         }
-    },
+      ]
+    }
+  },
 }
 </script>
 

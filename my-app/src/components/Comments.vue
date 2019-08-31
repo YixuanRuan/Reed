@@ -9,19 +9,26 @@
 
     <v-card-actions>
       <v-list-item class="grow">
+        <v-row>
+
+          <v-col cols="3">
         <v-list-item-avatar tile color="grey darken-3" style="width: 60px;height: 60px">
           <v-img
             :src="avatar_img"
           ></v-img>
         </v-list-item-avatar>
+          </v-col>
 
-        <v-list-item-content class="user-name">
+          <v-col cols="3">
+          <v-list-item-content class="user-name">
           <v-list-item-title class="user-name-text">{{name}}</v-list-item-title>
         </v-list-item-content>
+          </v-col>
 
-        <v-list-item-content class="team-name">
+          <v-col cols="3">
+          <v-list-item-content class="team-name">
 
-          <v-list-item-title >
+          <v-list-item-title @click="goToTeam(groupId)">
             <div class="from">
               <p>来自</p>
             </div>
@@ -31,23 +38,26 @@
 
           </v-list-item-title>
         </v-list-item-content>
+          </v-col>
+          <v-col cols="3">
 
-        <v-list-item-avatar tile color="grey darken-3" style="width: 50px;height: 50px">
+        <v-list-item-avatar tile color="grey darken-3" @click="goToTeam(groupId)" style="width: 50px;height: 50px">
           <v-img
             class=" team-avatar"
             :src="team_img"
           ></v-img>
         </v-list-item-avatar>
-
+          </v-col>
+        </v-row>
 
 
       </v-list-item>
     </v-card-actions>
-    <v-card-text class="text-title font-weight-bold">
+    <v-card-text class="text-title font-weight-bold" @click="goToComments">
        {{title}}
     </v-card-text>
 
-    <v-card-text class="text-content">
+    <v-card-text class="text-content" @click="goToComments">
       {{content}}
     </v-card-text>
 
@@ -88,51 +98,66 @@
 </template>
 
 <script>
-    export default {
-      name: "Comments",
-      data: () => ({
-        //
-      }),
-      props: {
-        avatar_img:{
-          default: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2579313585,1854004294&fm=26&gp=0.jpg'
-        },
-        name: {
-          default: 'Evan You'
-        },
-        team_img: {
-          default: 'https://upload-images.jianshu.io/upload_images/2707438-61bec868c535b5d2.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/640/format/webp'
-        },
-        team_name:{
-          default: '诗和远方'
-        },
-        title:{
-          default: '大家更喜欢什么风格的诗呢？'
-        },
-        content:{
-          default: '"Turns out semicolon-less style is easier and safer in TS because most gotcha edge cases are type invalid as well."'
-        },
-        num_comment:{
-          default: 256
-        },
-        num_like: {
-          default: 45
-        },
-        id:{
-          default: ''
-        }
-      },
-      methods: {
-        routerTo() {
-          this.$router.push({
-            name: `forum`,
-            params: {
-              postId: this.id
-            }
-          })
-        }
-      }
+export default {
+  name: "Comments",
+  data: () => ({
+    //
+  }),
+  props: {
+    groupId:{
+      default: 0
+    },
+    avatar_img:{
+      default: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2579313585,1854004294&fm=26&gp=0.jpg'
+    },
+    name: {
+      default: 'Evan You'
+    },
+    team_img: {
+      default: 'https://upload-images.jianshu.io/upload_images/2707438-61bec868c535b5d2.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/640/format/webp'
+    },
+    team_name:{
+      default: '诗和远方'
+    },
+    title:{
+      default: '大家更喜欢什么风格的诗呢？'
+    },
+    content:{
+      default: '"Turns out semicolon-less style is easier and safer in TS because most gotcha edge cases are type invalid as well."'
+    },
+    num_comment:{
+      default: 256
+    },
+    num_like: {
+      default: 45
+    },
+    id:{
+      default: ''
     }
+  },
+  methods: {
+    goToComments () {
+      this.$router.push({
+        name: `forum`,
+        params: {
+          postId: this.id
+        }
+      })
+    },
+    goToTeam(groupId){
+      this.$store.commit("changeGroup",groupId)
+      this.$router.push('group')
+    },
+    routerTo() {
+      this.$router.push({
+        name: `forum`,
+        params: {
+          postId: this.id
+        }
+      })
+    }
+  }
+}
 </script>
 
 <style scoped>
