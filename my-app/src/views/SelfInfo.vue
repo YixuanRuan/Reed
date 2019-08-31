@@ -36,7 +36,9 @@
       >
         <v-col v-for="(data, index) in selfComments" :key="index">
           <SelfComments :name="data.account" :avatar_img="$store.state.selfAvatar"
-                        :comment="data.content" :title="data.title" :id="data.id"/>
+                        :comment="data.content" :title="data.title" :id="data.id"
+                        :type="comment_type"
+          />
         </v-col>
       </v-row>
     </div>
@@ -56,6 +58,7 @@ export default {
     name: "SelfInfo",
     data () {
       return {
+        comment_type: 4,
         info:'',
         history: '发帖历史',
         comment_book:[

@@ -17,7 +17,7 @@
           <v-img src="../imgs/tim_logo.png" height="200px" width="200px" style="margin-top:10px;"></v-img>
           <v-card style="margin-top: 20px; color: white;background-color: transparent;font-size: 24px" elevation="0" tile justify="center">{{groupName}}</v-card>
           <v-card style="margin-top: 5px;margin-bottom: 20px;color: white;background-color: transparent;font-size: 14px" elevation="0" tile justify="center">{{groupMotto}}</v-card>
-          <v-btn class="btn" text>加入小组</v-btn>
+          <v-btn class="btn" text @click="joinAndPost">{{btn_text}}</v-btn>
         </v-card>
       </v-col>
       <v-col cols="3" sm="4" md="5"></v-col>
@@ -43,8 +43,18 @@
 export default {
   name: 'GroupHead',
   data: () => ({
-    groupName:"诗与远方",
-    groupMotto:"交流着事宜的人生",
-  })
+    groupName: "诗与远方",
+    groupMotto: "交流着事宜的人生",
+    btn_text:"加入小组",
+    join_text: "加入小组",
+    post_text: "创建帖子"
+  }),
+  methods:{
+    joinAndPost(){
+      this.$store.commit('changeJoinState')
+      console.log(this.$store.state.joined)
+      this.btn_text = (this.$store.state.joined === true) ? this.post_text : this.join_text
+    }
+  }
 };
 </script>

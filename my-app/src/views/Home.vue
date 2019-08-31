@@ -88,11 +88,11 @@
       >
         <v-col v-for="(data, index) in topics"
                :key="index"
-               md="4"
+               style="margin-right: 50px"
         >
-          <Comments :avatar_img="topics.avatar_img" :name="topics.name" :team_img="topics.team_img"
-                    :team_name="topics.team_name" :title="topics.title" :content="topics.content"
-                    :num_comment="topics.num_comment" :num_like="topics.num_like"
+          <Comments :avatar_img="avatar_prefix + data.account" :name="data.username" :team_img="avatar_prefix + topics.teamId"
+                    :team_name="data.teamName" :title="data.title" :content="data.content"
+                    :num_comment="data.replyNum" :num_like="data.likeNum" :id="data.id"
           />
         </v-col>
 
@@ -108,11 +108,13 @@ import SegText from '../components/SegText'
 import Comments from '../components/Comments'
 import HistoryComment from '../components/HistoryComment'
 import BackGroundVideo from '../components/BackGroundVideo'
-
 export default {
 
   data () {
     return {
+      avatar_prefix: 'http://114.115.151.96:8666/ProfilePicture/UserAccount/',
+      user_img: '',
+      team_img: '',
       error_img: '',
       password_wrong_show: false,
       info: '',
@@ -132,20 +134,37 @@ export default {
     }
   },
   mounted () {
-    this.axios({
-      method: 'post',
-      url: 'http://114.115.151.96:8666/film/findAll',
-      data: {
-      },
-      crossDomain: true
-    }).then(body => {
-      this.info = body
-      this.$store.dispatch('getTodayRecommend', this.info.data)
-    })
+    this.initTodayRecommend();
+    this.initComments();
   },
   methods: {
     unshow () {
       this.password_wrong_show = false
+    },
+    initTodayRecommend(){
+      this.axios({
+        method: 'post',
+        url: 'http://114.115.151.96:8666/film/findAll',
+        data: {
+        },
+        crossDomain: true
+      }).then(body => {
+        this.info = body
+        this.$store.dispatch('getTodayRecommend', this.info.data)
+      })
+    },
+    initComments(){
+      this.axios({
+        method: 'post',
+        url: 'http://114.115.151.96:8666/Posting/GetPostingSortByLike',
+        data: {
+          num: 6
+        },
+        crossDomain: true
+      }).then(body => {
+        this.topics = body.data
+        console.log(this.topics)
+      })
     },
     login () {
       // 未输入账号

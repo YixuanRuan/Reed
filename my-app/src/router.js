@@ -87,20 +87,29 @@ export default new Router({
       component: () => import(/* webpackChunkName: "test" */ './views/BackManage.vue')
     },
     {
-      path: '*',
-      name: 'notFound',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "test" */ './views/NotFound.vue')
-    },
-    {
       path: '/testComponent',
       name: 'testComponent',
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import(/* webpackChunkName: "testComponent" */ './views/TestComponent.vue')
+    },
+    {
+      path: '/reply',
+      name: 'reply',
+      // route level code-splitting
+      // this generates a separate chunk (about.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import(/* webpackChunkName: "createReply" */ './views/CreatReply.vue')
+    },
+    {
+      path: '*',
+      name: 'notFound',
+      // route level code-splitting
+      // this generates a separate chunk (about.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import(/* webpackChunkName: "test" */ './views/NotFound.vue')
     }
+
   ]
 })

@@ -5,6 +5,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    joined: false,
     selfAvatar: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2579313585,1854004294&fm=26&gp=0.jpg',
     currentId: '',
     username: '',
@@ -185,26 +186,30 @@ export default new Vuex.Store({
         looked: '1024'
       }
     ],
-    like_content: [
+    collection: [
       {
-        poster_img: 'https://m.media-amazon.com/images/M/MV5BMTU0OTc3ODk4Ml5BMl5BanBnXkFtZTgwMzM4NzI5NjM@._V1_UX182_CR0,0,182,268_AL_.jpg',
-        name: 'a',
-        score: 37.6
+        filmId: "5d65eeccd4a370186cdac7d4",
+        name: "你好，吸血鬼小姐1",
+        score: "37.6",
+        account: "abcd"
       },
       {
-        poster_img: 'https://m.media-amazon.com/images/M/MV5BMTU0OTc3ODk4Ml5BMl5BanBnXkFtZTgwMzM4NzI5NjM@._V1_UX182_CR0,0,182,268_AL_.jpg',
-        name: 'b',
-        score: 37.6
+        filmId: "5d65eeccd4a370186cdac7d3",
+        name: "九五二班",
+        score: "37.6",
+        account: "abcd"
       },
       {
-        poster_img: 'https://m.media-amazon.com/images/M/MV5BMTU0OTc3ODk4Ml5BMl5BanBnXkFtZTgwMzM4NzI5NjM@._V1_UX182_CR0,0,182,268_AL_.jpg',
-        name: 'c',
-        score: 37.6
+        filmId: "5d65eeccd4a370186cdac7d2",
+        name: "拜见女仆大人",
+        score: "37.6",
+        account: "abcd"
       },
       {
-        poster_img: 'https://m.media-amazon.com/images/M/MV5BMTU0OTc3ODk4Ml5BMl5BanBnXkFtZTgwMzM4NzI5NjM@._V1_UX182_CR0,0,182,268_AL_.jpg',
-        name: 'd',
-        score: 37.6
+        filmId: "5d65eeccd4a370186cdac7d1",
+        name: "心跳 Hart Beat",
+        score: "37.6",
+        account: "abcd"
       }
     ]
   },
@@ -225,7 +230,7 @@ export default new Vuex.Store({
       state.today_hot_content = newVal
     },
     handleLikeContent (state, newVal) {
-      state.like_content = newVal
+      state.collection = newVal
     },
     handleMassageContent (state, newVal) {
       state.massage_content = newVal
@@ -261,7 +266,7 @@ export default new Vuex.Store({
       state.introduction = newIntroduction
     },
     deleteItem (state, index) {
-      state.like_content.splice(index, 1)
+      state.collection.splice(index, 1)
     },
     deleteMassage (state, index) {
       state.massage_content.splice(index, 1)
@@ -277,6 +282,9 @@ export default new Vuex.Store({
     },
     changeCurrentId (state, newVal) {
       state.currentId = newVal
+    },
+    changeJoinState (state) {
+      state.joined = !state.joined;
     }
   },
   actions: {

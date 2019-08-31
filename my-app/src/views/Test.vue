@@ -16,13 +16,14 @@ export default {
   mounted () {
     this.axios({
       method: 'post',
-      url: 'http://114.115.151.96:8666/search/filmlikelist',
+      url: 'http://114.115.151.96:8666/reply/list',
       data: {
-        pagesCount: 20
+        id: this.postId,
+        type: 4
       },
       crossDomain: true
     }).then(body => {
-      this.info = body
+      this.info = body.data
     })
   }
 

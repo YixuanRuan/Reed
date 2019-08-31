@@ -13,8 +13,10 @@
     <v-col cols="8" class="post-content">
       <p class="user-name">{{name}}</p>
       <p class="post-name">{{title}}</p>
-      <p class="post-content">{{content}}
-      </p>
+      <div class="post-content" v-html="compiledMarkdown"></div>
+      <!--<p class="post-content">-->
+        <!--{{content}}-->
+      <!--</p>-->
     </v-col>
     <v-col cols="2" class="post-team">
       <v-img
@@ -34,43 +36,76 @@
 </template>
 
 <script>
-  export default {
-      name: "Post",
-      props: {
-        avatar_img:{
-          default: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2579313585,1854004294&fm=26&gp=0.jpg'
-        },
-        title:{
-          default: '大家更喜欢什么风格的诗呢？'
-        },
-        name: {
-          default: 'logos'
-        },
-        team_img: {
-          default: 'https://upload-images.jianshu.io/upload_images/2707438-61bec868c535b5d2.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/640/format/webp'
-        },
-        team_name:{
-          default: '诗和远方'
-        },
-        content:{
-          default: '我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗\n' +
+
+  import marked from 'marked'
+  var rendererMD = new marked.Renderer()
+  marked.setOptions({
+    renderer: rendererMD,
+    gfm: true,
+    tables: true,
+    breaks: false,
+    pedantic: false,
+    sanitize: false,
+    smartLists: true,
+    smartypants: false
+  })
+
+export default {
+    name: "Post",
+    data () {
+      return {
+      }
+    },
+    mounted(){
+    },
+    methods: {
+    },
+    computed: {
+      compiledMarkdown: function () {
+        return marked(this.input, { sanitize: true })
+      }
+    },
+    props:{
+      team_img: {
+        default: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2579313585,1854004294&fm=26&gp=0.jpg'
+      },
+      input: {
+        default: '# 陈忠智是个大骚货 ## '
+      },
+      postId: {
+        default: ''
+      },
+      name: {
+        default: 'logos'
+      },
+      avatar_img: {
+        default: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2579313585,1854004294&fm=26&gp=0.jpg'
+      },
+      title: {
+        default: '大家更喜欢什么风格的诗呢？'
+      },
+      team_name: {
+        default: '诗和远方'
+      },
+      content: {
+        default: '我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗\n' +
             '        我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗\n' +
-            '        我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗\n' +
-            '        我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗\n' +
-            '        我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗\n' +
-            '        我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗\n' +
-            '        我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗\n' +
-            '        我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗\n' +
-            '        我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗\n' +
-            '        我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗\n' +
-            '        我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗\n' +
-            '        我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗'
-        },
-        num_like: {
-          default: 45
-        }
-     }
-  }
+          '        我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗\n' +
+          '        我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗\n' +
+          '        我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗\n' +
+          '        我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗\n' +
+          '        我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗\n' +
+          '        我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗\n' +
+          '        我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗\n' +
+          '        我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗\n' +
+          '        我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗\n' +
+          '        我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗我更喜欢现代诗'
+      },
+      num_like: {
+        default: 45
+      }
+    }
+}
 </script>
 
 <style scoped>
@@ -110,11 +145,10 @@
   .post-name{
     margin-top: -20px;
     font-weight: bold;
-    font-size: 28px;
+    font-size: 32px;
     font-family: "Microsoft YaHei" ! important;
   }
   .post-content{
-    margin-top: -10px;
     font-size: 16px;
     font-family: "Microsoft YaHei" ! important;
   }

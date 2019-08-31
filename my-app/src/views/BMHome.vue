@@ -62,7 +62,7 @@ export default {
         {},
         {},
         {}
-      ]
+      ],
     }
   },
   mounted () {
@@ -76,6 +76,7 @@ export default {
     }).then(body => {
       this.info = body
       this.$store.dispatch('getTodayRecommend', this.info.data)
+      console.log(this.info.data)
     });
   },
   computed: {

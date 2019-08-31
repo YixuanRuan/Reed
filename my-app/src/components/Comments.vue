@@ -4,7 +4,7 @@
     color="#ccc"
     max-width="400"
     elevation="5"
-    style="border-radius: 0"
+    style="border-radius: 0; width: 400px"
   >
 
     <v-card-actions>
@@ -58,7 +58,7 @@
           justify="end"
           class="comment-bottom"
         >
-          <v-icon class="mr-1" color="white">mdi-comment</v-icon>
+          <v-icon class="mr-1" color="white" @click="routerTo()">mdi-comment</v-icon>
           <span class="subheading mr-2">{{num_comment}}</span>
           <span class="mr-1"></span>
           <v-icon class="mr-1" color="white">mdi-thumb-up</v-icon>
@@ -99,6 +99,19 @@
         },
         num_like: {
           default: 45
+        },
+        id:{
+          default: ''
+        }
+      },
+      methods: {
+        routerTo() {
+          this.$router.push({
+            name: `forum`,
+            params: {
+              postId: this.id
+            }
+          })
         }
       }
     }

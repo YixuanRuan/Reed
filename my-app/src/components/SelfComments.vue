@@ -59,7 +59,7 @@
           align="center"
           class="comment-bottom"
         >
-          <v-menu bottom offset-y nudge-bottom="10" :close-on-content-click="closeOnContentClick" max-height="300" style="float:left !important;">
+          <v-menu bottom offset-y nudge-bottom="10" :close-on-content-click="closeOnContentClick" max-height="300" style="float:left !important;" v-if="!bm_comment">
             <template v-slot:activator="{ on }">
               <v-btn
                 dark
@@ -96,7 +96,6 @@
     name: "Comments",
     data: () => ({
       like_color:'white',
-      num_like:''
     }),
     mounted(){
       this.isLiked();
@@ -109,7 +108,8 @@
           url: 'http://114.115.151.96:8666/Like/IsLike',
           data: {
             account:this.$store.state.account,
-            postingId:this.id
+            postingId:this.id,
+            type: 4
           },
           crossDomain: true
         }).then(body =>{
@@ -136,7 +136,8 @@
           url: 'http://114.115.151.96:8666/Like/ChangeStatus',
           data: {
             account:this.$store.state.account,
-            postingId:this.id
+            postingId:this.id,
+            type:this.type
           },
           crossDomain: true
         }).then(body =>{
@@ -145,6 +146,9 @@
       }
     },
     props: {
+      type:{
+        default: 4
+      },
       bm_comment:{
         default: true
       },
@@ -179,6 +183,9 @@
         default: '大家更喜欢什么风格的诗呢？'
       },
       id:{
+        default:''
+      },
+      num_like: {
         default:''
       }
     }

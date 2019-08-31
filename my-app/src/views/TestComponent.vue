@@ -1,28 +1,32 @@
 <template>
   <div id="app">
-    <vue-particles
-      color="#2EC4B6"
-      :particleOpacity="0.7"
-      :particlesNumber="80"
-      shapeType="circle"
-      :particleSize="4"
-      linesColor="#2EC4B6"
-      :linesWidth="1"
-      :lineLinked="true"
-      :lineOpacity="0.4"
-      :linesDistance="150"
-      :moveSpeed="3"
-      :hoverEffect="true"
-      hoverMode="grab"
-      :clickEffect="true"
-      clickMode="push"
-    >
-    </vue-particles>
+    <div v-html="compiledMarkdown"></div>
   </div>
 </template>
-<style scoped>
-
-</style>
 <script>
-
+  import marked from 'marked'
+  var rendererMD = new marked.Renderer()
+  marked.setOptions({
+    renderer: rendererMD,
+    gfm: true,
+    tables: true,
+    breaks: false,
+    pedantic: false,
+    sanitize: false,
+    smartLists: true,
+    smartypants: false
+  })
+  export default {
+    name: 'TestComponent',
+    data () {
+      return {
+        input: '# hello `java` '
+      }
+    },
+    computed: {
+      compiledMarkdown: function () {
+        return marked(this.input, { sanitize: true })
+      }
+    }
+  }
 </script>

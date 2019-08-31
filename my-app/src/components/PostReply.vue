@@ -39,23 +39,31 @@
       },
       methods:{
         replySubmit:function () {
-          console.log(11111111111111);
           console.log(this.reply);
           this.axios({
             method: 'post',
             url: 'http://114.115.151.96:8666/reply/add',
             data: {
-              replyerId:this.user_id,
-              content:this.reply,
-              placeId:this.id,
-              type:this.type,
+              replyerId: this.user_id,
+              content: this.reply,
+              placeId: this.id,
+              type: this.type,
+              istop: false,
+              isbest: false
             },
             crossDomain: true
           }).then(body =>{
-
+            console.log('-------------------reply-------------------')
+            console.log('user_id',this.user_id)
+            console.log('id',this.id)
+            console.log('reply',this.reply)
+            console.log('type', this.type)
+            console.log('id',this.id)
+            console.log('-----------------reply end-----------------')
+            this.reply = '';
+            this.onsubmit()
           });
-          this.$emit('child-say', this.somedata);
-          this.reply = '';
+
         }
       },
       props:{
@@ -67,6 +75,10 @@
         },
         id:{
           default: ''
+        },
+        onsubmit: {
+          type: Function,
+          default: null
         }
       }
     }

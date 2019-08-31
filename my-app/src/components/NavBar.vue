@@ -111,9 +111,9 @@
           </template>
 
           <v-list style="background: #EEEEEE;padding: 5px;">
-            <draggable class="list-group" :list="like_content" group="people">
+            <draggable class="list-group" :list="collection" group="people">
               <v-list-item
-                v-for="(item, index) in like_content"
+                v-for="(item, index) in collection"
                 :key="index"
                 style="background-color:#CACACA; margin-top: 5px"
               >
@@ -160,19 +160,19 @@ import draggable from 'vuedraggable'
 
 export default {
 
-
-  components:{
+  components: {
     ScoreBar,
     draggable
   },
   data () {
     return {
-      test:'1',
-      massage_color:'',
-      like_color:'',
+      movie_img_prefix: '',
+      test: '1',
+      massage_color: '',
+      like_color: '',
       closeOnContentClick: false,
-      poster_name:'寄生兽',
-      poster_img:'http://p1.ifengimg.com/cmpp/2016/07/11/17/88967cf4-a794-4a28-9675-c3ee65eebd30_size59_w600_h838.jpeg-contentimage',
+      poster_name: '寄生兽',
+      poster_img: 'http://p1.ifengimg.com/cmpp/2016/07/11/17/88967cf4-a794-4a28-9675-c3ee65eebd30_size59_w600_h838.jpeg-contentimage',
       imgUrl: '../imgs/full-logo-white.png',
       tab: null,
       text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
@@ -183,40 +183,40 @@ export default {
       prevIcon: false,
       nextIcon: false,
       right: false,
-      tabs: 3,
+      tabs: 3
     }
   },
-  methods:{
-    submit: function(){
-      this.$router.push({path:'/search'})
+  methods: {
+    submit: function () {
+      this.$router.push({ path: '/search' })
     },
     like: function () {
-      this.like_color = (this.like_color == '') ? 'red':''
+      this.like_color = (this.like_color === '') ? 'red' : ''
     },
     massage: function () {
-      this.massage_color = this.massage_color == '' ? 'green':''
+      this.massage_color = this.massage_color === '' ? 'green' : ''
     },
-    deleteItem: function(index){
-      this.$store.dispatch("deleteLikeItem", index);
+    deleteItem: function (index) {
+      this.$store.dispatch('deleteLikeItem', index)
     },
     deleteMassage: function (index) {
-      this.$store.dispatch("deleteMassageItem", index);
+      this.$store.dispatch('deleteMassageItem', index)
     }
   },
   computed: {
-    like_content: {
-      get() {
-        return this.$store.state.like_content
+    collection: {
+      get () {
+        return this.$store.state.collection
       },
-      set(newVal) {
+      set (newVal) {
         this.$store.commit('handleLikeContent', newVal)
       }
     },
     massage_content: {
-      get() {
+      get () {
         return this.$store.state.massage_content
       },
-      set(newVal) {
+      set (newVal) {
         this.$store.commit('handleMassageContent', newVal)
       }
     },
