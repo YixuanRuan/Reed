@@ -77,6 +77,7 @@
               this.addInformation()
               this.onsubmit()
             }
+            this.$emit('replyState', 'done')
           });
 
         }

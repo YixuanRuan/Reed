@@ -1,6 +1,9 @@
 <template>
   <div>
-    <BookShowCard :poster_img="$store.state.book_img_prefix+info.id" :bookName="info.bookName" :author="info.author" :publisher="info.publisher" :isbn="info.isbn" :finalScore="info.finalScore"/>
+    <BookShowCard :poster_img="$store.state.book_img_prefix+info.id"
+                  :bookName="info.bookName" :author="info.author"
+                  :publisher="info.publisher" :isbn="info.isbn"
+                  :finalScore="info.finalScore"/>
     <v-row class="intro_outer">
       <v-col cols="4" class="intro-left">
         <div class="intro">简介</div>
@@ -18,7 +21,10 @@
                       :title="data.reply.title" :id="data.reply.id"/>
       </v-col>
     </v-row>
-    <PostReply v-if="$store.state.logined" :user_id="this.$store.state.account" :id="bm_id" :type="type" v-on:child-say="listenToMyBoy"/>
+    <PostReply v-if="$store.state.logined"
+               :user_id="this.$store.state.account"
+               :id="bm_id" :type="type" v-on:child-say="listenToMyBoy"
+               @replyState="refresh"/>
     <v-row v-else>
       <v-row cols="12"><p class="pls">请登录再评论</p></v-row>
     </v-row>
@@ -75,6 +81,11 @@
       this.bm_id = this.$store.state.currentBookId;
     },
     methods:{
+      refresh(state){
+        if(state=='done'){
+          this.initComments();
+        }
+      },
       listenToMyBoy: function (somedata){
         this.flag = somedata;
         if(this.flag){
