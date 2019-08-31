@@ -44,7 +44,7 @@
       <v-row>
         <v-col v-for="(data,index) in reported" :key="index">
           <div class="report-manage">
-            <SelfComments></SelfComments>
+            <Comments ></Comments>
           </div>
         </v-col>
       </v-row>
@@ -53,10 +53,10 @@
 </template>
 
 <script>
-import SelfComments from "../components/SelfComments";
+import Comments from "../components/Comments";
 export default {
   components:{
-    SelfComments,
+    Comments,
   },
   data (){
       return {
@@ -78,7 +78,8 @@ export default {
                 content:'某个东西4',
                 picUrl:''
             },
-        ],reported:[
+        ],
+        reported:[
               {
                   index:1,
                   content:'zzyy1',
@@ -92,8 +93,23 @@ export default {
                   index:4,
                   content:'fd4',
               },
-          ]
+        ]
       }
+  },
+  mounted() {
+  },
+  methods:{
+    getReport(){
+      this.axios({
+        method: 'post',
+        url: 'http://114.115.151.96:8666/report/list',
+        data: {
+        },
+        crossDomain: true
+      }).then(body => {
+        reported = body.data
+      })
+    }
   }
 }
 </script>

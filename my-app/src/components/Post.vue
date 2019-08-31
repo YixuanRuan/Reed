@@ -9,6 +9,7 @@
         width="150px"
         position="center center"
       ></v-img>
+      <v-btn depressed style="margin-left: 60px; margin-top: -20px" @click="report">举报帖子</v-btn>
     </v-col>
     <v-col cols="8" class="post-content">
       <p class="user-name">{{name}}</p>
@@ -59,6 +60,19 @@ export default {
     mounted(){
     },
     methods: {
+      report(){
+        this.axios({
+          method: 'post',
+          url: 'http://114.115.151.96:8666/report/add',
+          data: {
+            reporterId:this.$store.state.account,
+            reportedId:this.postId
+          },
+          crossDomain: true
+        }).then(body => {
+          this.info = body
+        })
+      }
     },
     computed: {
       compiledMarkdown: function () {
@@ -120,6 +134,9 @@ export default {
     margin-bottom: 20px;
   }
   .post-team{
+  }
+  .btn-text-report{
+    font-family: "Microsoft YaHei" ! important;
   }
   .team-name{
     display:-webkit-box;

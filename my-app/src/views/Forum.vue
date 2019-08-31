@@ -2,7 +2,7 @@
 <div>
   <Post :name="postContent.posting.account" :avatar_img="avatar_prefix + postContent.posting.account"
         :title="postContent.posting.title" :team_name="postContent.teamName" :team_img="avatar_prefix + postContent.teamId"
-        :input="postContent.posting.content"
+        :input="postContent.posting.content" :postId="postContent.posting.id"
   />
   <v-row justify="start">
 
@@ -66,6 +66,7 @@ export default {
         crossDomain: true
       }).then(body => {
         this.postContent = body.data
+        console.log('post', this.postContent)
       })
     },
     getReply(){
