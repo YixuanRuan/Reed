@@ -26,6 +26,8 @@ export default new Vuex.Store({
     introduction: '',
     selfComments: [],
     searchBookId: '5d61fe1359f0004904de51b6',
+    book_img_prefix: 'http://114.115.151.96:8666/PosterPicture/MovieAccount/',
+    movie_img_prefix: 'http://114.115.151.96:8666/PosterPicture/MovieAccount/',
     groupStatus: {
       joinedNum: 1,
       myGroups:[{
@@ -521,6 +523,9 @@ export default new Vuex.Store({
     changeCurrentId (state, newVal) {
       state.currentId = newVal
     },
+    changeCurrentBookId (state, newVal) {
+      state.currentBookId = newVal
+    },
     changeJoinState (state) {
       state.joined = !state.joined;
     },
@@ -546,6 +551,9 @@ export default new Vuex.Store({
     },
     changeCurrentBMId (context, newVal) {
       context.commit('changeCurrentId', newVal)
+    },
+    changeCurrentBookId (context, newVal) {
+      context.commit('changeCurrentBookId', newVal)
     },
     getTodayRecommend (context, newList) {
       context.commit('changeTodayRecommendContent', newList)

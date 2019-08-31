@@ -21,10 +21,10 @@
 
       <v-col cols="5" class="content-right">
         <v-col>
-          <div class="movie-name">{{filmName}}</div>
-          <div class="actor-name">{{director}}</div>
-          <div class="actor-name" style="max-height: 30px;overflow: hidden">{{starring[0]}}</div>
-          <div class="actor-name">时长:{{filmTime}}分钟</div>
+          <div class="book-name">{{bookName}}</div>
+          <div class="author-name">作者：{{author}}</div>
+          <div class="author-name" style="max-height: 30px;overflow: hidden">出版商：{{publisher}}</div>
+          <div class="author-name">ISBN：{{isbn}}</div>
           <v-row class="vote-button" justify="start" align="end">
             <v-btn class="ma-2" color="white" dark small elevation="0">
               <v-icon size="28px" color="red">mdi-thumb-down</v-icon>
@@ -36,59 +36,21 @@
         </v-col>
       </v-col>
     </v-row>
-    <div class="tag-outer">
-      <div class="tag-container">
-          <div v-for="(data,tag) in tags" :key="tag" class="tag">{{data.tag}}</div>
-      </div>
-    </div>
   </v-card>
 </template>
 
 <script>
-import ScoreBar from '../components/ScoreBar'
-export default {
-  name: 'Showcard',
-  components: { ScoreBar },
-  data () {
-    return {
-      tags: [
-        {
-          index: 1,
-          tag: '剧情'
-        }, {
-          index: 2,
-          tag: '故事'
-        }, {
-          index: 3,
-          tag: '亲情'
-        }, {
-          index: 4,
-          tag: '美国'
-        }
-      ]
-    }
-  },
-  props: {
-    poster_img: {
-      default: ''
+  import ScoreBar from "../components/ScoreBar";
+  export default {
+    name: "Showcard",
+    components: {ScoreBar},
+    data (){
+      return{
+      }
     },
-    filmName: {
-      default: '寄生虫 기생충'
-    },
-    director: {
-      default: '导演:奉俊昊'
-    },
-    starring: {
-      default: '主演:宋康昊 李善均 赵汝贞'
-    },
-    filmTime: {
-      default: 135
-    },
-    finalScore: {
-      default: 23.3
-    }
+    props:['poster_img','bookName','author',
+      'publisher','isbn','finalScore','intro']
   }
-}
 </script>
 <style scoped>
   .card{
@@ -99,7 +61,7 @@ export default {
   }
   .pic{
     /*background: url("../imgs/ROMA-web.jpg") no-repeat  -120px -900px;*/
-    background-size: cover;
+    background-repeat: cover;
     background-position: center center;
     height:400px;
     width: 100%;
@@ -108,13 +70,13 @@ export default {
   .scorebar{
 
   }
-  .movie-name{
+  .book-name{
     font-size: 36px;
     float: left;
     width: 100%;
     text-align: left;
   }
-  .actor-name{
+  .author-name{
     color: aliceblue;
     font-size: 18px;
     float: left;
@@ -143,36 +105,5 @@ export default {
 
   .vote-button{
     width: 100%;
-  }
-
-  .tag-outer{
-    display: flex;
-    margin-top: -5px;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-  }
-
-  .tag-container{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    width:auto;
-  }
-
-  .tag{
-    padding: 2px;
-    margin-right: 5px;
-    background: white;
-    color: #aaa;
-    font-size: 14px;
-    border-radius: 5px;
-    min-width: 80px;
-  }
-
-  .tag:hover{
-    color: white;
-    background: #aaa;
   }
 </style>
