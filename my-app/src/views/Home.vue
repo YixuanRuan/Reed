@@ -39,14 +39,8 @@
               style="opacity: 0.8"
             ></v-text-field>
             <v-text-field
-<<<<<<< HEAD
               v-if="register"
               v-model="phoneNumber"
-=======
-              :value="phonenumber"
-              v-if="register"
-              v-model="re_phonenumber"
->>>>>>> e060260a460ad274df0a9d8025ec0dc61ae95173
               label="Please enter your phone number"
               filled
               background-color="#eee"
@@ -55,14 +49,8 @@
             <v-row>
               <v-col cols="6">
               <v-text-field
-<<<<<<< HEAD
                 v-if="register"
                 v-model="verificationCode"
-=======
-                :value="vericode"
-                v-if="register"
-                v-model="re_vericode"
->>>>>>> e060260a460ad274df0a9d8025ec0dc61ae95173
                 label="Verification Code"
                 filled
                 background-color="#eee"
