@@ -80,7 +80,7 @@
 
         <v-list style="background: #EEEEEE;padding: 5px;">
             <v-list-item
-              v-for="(item, index) in massage_content"
+              v-for="(item, index) in $store.state.massage_content"
               :key="index"
               style="background-color:#CACACA; margin-top: 5px"
             >
@@ -108,15 +108,15 @@
               icon
               v-on="on"
               style="margin-top:6px; margin-right: 20px"
+              @click="submitCollection"
             >
               <v-icon>mdi-heart</v-icon>
             </v-btn>
           </template>
-
           <v-list style="background: #EEEEEE;padding: 5px;">
-            <draggable class="list-group" :list="collection" group="people">
+            <draggable class="list-group" :list="$store.state.collection" group="people">
               <v-list-item
-                v-for="(item, index) in collection"
+                v-for="(item, index) in $store.state.collection"
                 :key="index"
                 style="background-color:#CACACA; margin-top: 5px"
               >
@@ -128,7 +128,7 @@
                     ></v-img>
                   </v-col>
                   <v-col cols="6">
-                    <p class="poster-name">{{item.filmName}}</p>
+                    <p class="poster-name">{{item.filmName == null ? item.bookName : item.filmName}}</p>
                     <ScoreBar class="scoreBar" :score="item.score"/>
                   </v-col>
                   <v-col cols="2">
@@ -171,6 +171,7 @@ export default {
   },
   data () {
     return {
+      flag: true,
       film_prefix: 'http://114.115.151.96:8666/PosterPicture/MovieAccount/',
       test: '1',
       massage_color: '',
@@ -183,7 +184,7 @@ export default {
       text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
       icons: false,
       centered: false,
-      keyword:"",
+      keyword: '',
       grow: false,
       vertical: false,
       prevIcon: false,
@@ -192,15 +193,15 @@ export default {
       tabs: 3
     }
   },
-  methods:{
+  methods: {
     submit: function (keyword) {
-      if (keyword.length == 0) {
-        keyword = "everything"
+      if (keyword.length === 0) {
+        keyword = 'everything'
       }
       this.$store.commit('changeKeyword', keyword)
       this.$router.push('/search/')
     },
-    routerTo(index) {
+    routerTo (index) {
       this.$router.push({
         name: `forum`,
         params: {
@@ -229,50 +230,102 @@ export default {
         crossDomain: true
       })
     },
-    getInformation(){
+    getInformation () {
       this.axios({
         method: 'post',
         url: 'http://114.115.151.96:8666/Information/Get',
         data: {
-          account: this.$store.state.account,
+          account: this.$store.state.account
         },
         crossDomain: true
       }).then(body => {
         console.log('massage', body.data)
         this.$store.dispatch('changeMassageData', body.data)
-      });
-    }
-  },
-  computed: {
-    group: {
-      get () {
-        if(this.$store.state.groupStatus.joinedNum==0){
-          return "/groupFind"
-        }else{
-          return "/myGroup"
+        console.log('massage', massage_content)
+      })
+    },
+    submitCollection () {
+      if (this.flag) {
+        this.getCollection()
+        this.flag = false
+      } else {
+        this.delCollection()
+        this.flag = true
+      }
+      // this.addCollection()
+    },
+    delCollection () {
+      this.axios({
+        method: 'post',
+        url: 'http://114.115.151.96:8666/Collection/Del',
+        data: {
+          account: this.$store.state.account
+        },
+        crossDomain: true
+      }).then(body => {
+        this.addCollection()
+      })
+    },
+    getCollection () {
+      this.axios({
+        method: 'post',
+        url: 'http://114.115.151.96:8666/Collection/Get',
+        data: {
+          account: this.$store.state.account
+        },
+        crossDomain: true
+      }).then(body => {
+        this.$store.dispatch('changeCollection', body.data)
+      })
+    },
+    addCollection () {
+      var i = 0
+      for (i = 0; i < this.$store.state.collection.length; i++) {
+        console.log(this.$store.state.collection[i].filmName)
+        this.axios({
+          method: 'post',
+          url: 'http://114.115.151.96:8666/Collection/Add',
+          data: {
+            id: this.$store.state.collection[i].id,
+            filmName: this.$store.state.collection[i].filmName,
+            score: this.$store.state.collection[i].score,
+            account: this.$store.state.account
+          },
+          crossDomain: true
+        })
+      }
+    },
+    computed: {
+      group: {
+        get () {
+          if (this.$store.state.groupStatus.joinedNum == 0) {
+            return '/groupFind'
+          } else {
+            return '/myGroup'
+          }
         }
-      }
-    },
-    collection: {
-      get () {
-        return this.$store.state.collection
       },
-      set (newVal) {
-        this.$store.commit('handleCollection', newVal)
-      }
-    },
-    massage_content: {
-      get () {
-        return this.$store.state.massage_content
+      collection: {
+        get () {
+          return this.$store.state.collection
+        },
+        set (newVal) {
+          this.$store.commit('handleCollection', newVal)
+        }
       },
-      set (newVal) {
-        this.$store.commit('handleMassageContent', newVal)
-      }
-    },
-    optionLeft () {
-      return {
-        direction: 2,
-        limitMoveNum: 2
+      massage_content: {
+        get () {
+          return this.$store.state.massage_content
+        },
+        set (newVal) {
+          this.$store.commit('handleMassageContent', newVal)
+        }
+      },
+      optionLeft () {
+        return {
+          direction: 2,
+          limitMoveNum: 2
+        }
       }
     }
   }

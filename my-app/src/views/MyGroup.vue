@@ -62,32 +62,32 @@
 </template>
 
 <script>
-import Comments from "../components/Comments.vue"
-import GroupCardShort from "../components/GroupCardShort.vue"
+import Comments from '../components/Comments.vue'
+import GroupCardShort from '../components/GroupCardShort.vue'
 
 export default {
-  name: "MyGroup",
-  data(){
+  name: 'MyGroup',
+  data () {
     return {
-      imgg: "http://114.115.151.96:8666/ProfilePicture/UserAccount/",
+      imgg: 'http://114.115.151.96:8666/ProfilePicture/UserAccount/',
       page: 1,
       circle: false,
       disabled: false,
       nextIcon: 'mdi-arrow-right',
       prevIcon: 'mdi-arrow-left',
       totalVisible: 10
-  }
+    }
   },
   components: {
     Comments,
     GroupCardShort
   },
   methods: {
-    goToGroupCreate(){
-      this.$router.push({ path: '/groupCreate'})
+    goToGroupCreate () {
+      this.$router.push({ path: '/groupCreate' })
     }
   },
-  created() {
+  created () {
     this.$store.commit('handleMyGroup')
     console.log(1)
   }

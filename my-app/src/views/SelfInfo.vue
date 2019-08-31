@@ -52,76 +52,75 @@ import SelfComments from '../components/SelfComments'
 import UserInfo from '../components/UserInfo'
 import HistoryComment from '../components/HistoryComment'
 import TeamManage from '../components/TeamManage'
-import BookComment from "../components/BookComment";
-
+import BookComment from '../components/BookComment'
 
 export default {
-    name: "SelfInfo",
-    data () {
-      return {
-        comment_type: 4,
-        info:'',
-        history: '发帖历史',
-        comment_book:[
-        ],
-        comment_movie:[
-        ],
-        teams:[
-          {},
-          {},
-          {}
-        ]
-      }
-    },
-    components: {
-      NavBar,
-      SegText,
-      SelfComments,
-      UserInfo,
-      HistoryComment,
-      TeamManage,
-      BookComment
-    },
-  mounted() {
+  name: 'SelfInfo',
+  data () {
+    return {
+      comment_type: 4,
+      info: '',
+      history: '发帖历史',
+      comment_book: [
+      ],
+      comment_movie: [
+      ],
+      teams: [
+        {},
+        {},
+        {}
+      ]
+    }
+  },
+  components: {
+    NavBar,
+    SegText,
+    SelfComments,
+    UserInfo,
+    HistoryComment,
+    TeamManage,
+    BookComment
+  },
+  mounted () {
     this.axios({
       method: 'post',
       url: 'http://114.115.151.96:8666/Posting/SearchHistory',
       data: {
-        account: this.$store.state.account,
+        account: this.$store.state.account
       },
       crossDomain: true
-    }).then(body =>{
-      this.info = body;
-      this.$store.dispatch("changeSComments", this.info.data);
-    }).catch(error =>{
+    }).then(body => {
+      this.info = body
+      this.$store.dispatch('changeSComments', this.info.data)
+    }).catch(error => {
       console.log(error)
-    });
+    })
     this.axios({
       method: 'post',
       url: 'http://114.115.151.96:8666/reply/findFilmAndBookByReply',
       data: {
-        id: this.$store.state.account,
+        id: this.$store.state.account
       },
       crossDomain: true
-    }).then(body =>{
-      this.comment_book = body.data['booklist'];
-      this.comment_movie = body.data['filmlist'];
-      console.log("commented")
+    }).then(body => {
+      this.comment_book = body.data['booklist']
+      this.comment_movie = body.data['filmlist']
+      console.log('commented')
       console.log(body.data)
-    }).catch(error =>{
-      console.log("commented")
+    }).catch(error => {
+      console.log('commented')
       console.log(error)
-    });
+    })
   },
-  computed:{
-    selfComments:{
-      get(){
+  computed: {
+    selfComments: {
+      get () {
         return this.$store.state.selfComments
       },
-      set(newVal) {
+      set (newVal) {
         this.$store.commit('handleSelfComments', newVal)
       }
-    },
+    }
   }
 }
 </script>

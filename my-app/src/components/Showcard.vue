@@ -24,7 +24,7 @@
           <div class="movie-name">{{filmName}}</div>
           <div class="actor-name">{{director}}</div>
           <div class="actor-name" style="max-height: 30px;overflow: hidden">{{starring[0]}}</div>
-          <div class="actor-name">时长:{{filmTime}}分钟</div>
+          <div class="actor-name">时长:{{filmTime}}</div>
           <v-row class="vote-button" justify="start" align="end">
             <v-btn class="ma-2" color="white" dark small elevation="0">
               <v-icon size="28px" color="red">mdi-thumb-down</v-icon>

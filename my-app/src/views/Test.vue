@@ -15,9 +15,10 @@ export default {
   },
   mounted () {
     this.testCollectionGet()
+
   },
-  methods:{
-    testReport(){
+  methods: {
+    testReport () {
       this.axios({
         method: 'post',
         url: 'http://114.115.151.96:8666/report/list',
@@ -41,12 +42,24 @@ export default {
         this.info = body
       })
     },
+    testCollectionDel(){
+      this.axios({
+        method: 'post',
+        url: 'http://114.115.151.96:8666/Collection/Del',
+        data: {
+          account: 'abcd'
+        },
+        crossDomain: true
+      }).then(body => {
+        this.info = body
+      })
+    },
     testCollectionGet(){
       this.axios({
         method: 'post',
         url: 'http://114.115.151.96:8666/Collection/Get',
         data: {
-          account: 'abcd',
+          account: 'abcd'
         },
         crossDomain: true
       }).then(body => {
@@ -56,10 +69,6 @@ export default {
     testCollectionAdd(){
       var i = 0
       for (i = 0; i < this.$store.state.collection.length; i++) {
-        console.log('id',this.$store.state.collection[i].id)
-        console.log('filmName',this.$store.state.collection[i].filmName)
-        console.log('score',this.$store.state.collection[i].score)
-        console.log('account',this.$store.state.collection[i].account)
         this.axios({
           method: 'post',
           url: 'http://114.115.151.96:8666/Collection/Add',
@@ -67,12 +76,12 @@ export default {
             id: this.$store.state.collection[i].id,
             filmName: this.$store.state.collection[i].filmName,
             score: this.$store.state.collection[i].score,
-            account: this.$store.state.collection[i].account,
+            account: 'abcd',
           },
           crossDomain: true
         }).then(body => {
           this.info = body
-        });
+        })
       }
     },
     testInformationGet(){
