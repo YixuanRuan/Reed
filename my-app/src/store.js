@@ -413,7 +413,7 @@ export default new Vuex.Store({
     groupCreate(state,tags){
       var ttags=[]
       for (var i=0;i<tags.length;i++){
-        ttags.push(state.groupCreate.tags[ttags[i]])
+        ttags.push(state.groupCreate.tags[tags[i]])
       }
       axios.post('http://114.115.151.96:8666/Team/Add', {
         introduction: state.groupCreate.intro,
