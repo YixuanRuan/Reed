@@ -8,7 +8,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    reported:[],
+    reported: [],
     joined: false,
     selfAvatar: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2579313585,1854004294&fm=26&gp=0.jpg',
     currentId: '',
@@ -33,37 +33,37 @@ export default new Vuex.Store({
     movie_img_prefix: 'http://114.115.151.96:8666/PosterPicture/MovieAccount/',
     groupStatus: {
       joinedNum: 1,
-      myGroups:[{
-        id:"5d65f9b259f000353446afbb",
-        teamName:"我是打小天才babababbcwe"
-      },{
-        id:"5d65f9b259f000353446afbb",
-        teamName:"我是小天才babababbcwe"
-      },{
-        id:"5d65f9b259f000353446afbb",
-        teamName:"我是小天才babababbcwe"
-      },{
-        id:"5d65f9b259f000353446afbb",
-        teamName:"我是小天才babababbcwe"
+      myGroups: [{
+        id: '5d65f9b259f000353446afbb',
+        teamName: '我是打小天才babababbcwe'
+      }, {
+        id: '5d65f9b259f000353446afbb',
+        teamName: '我是小天才babababbcwe'
+      }, {
+        id: '5d65f9b259f000353446afbb',
+        teamName: '我是小天才babababbcwe'
+      }, {
+        id: '5d65f9b259f000353446afbb',
+        teamName: '我是小天才babababbcwe'
       }]
     },
     datas: {
-      hello: 'hiiiit',
+      hello: 'hiiiit'
     },
     group: {
       groupId: {
-        dafalut: "1"
+        dafalut: '1'
       },
       isMygroup: {
         default: false
       },
       groupName: {
-        default: "诗与远方"
+        default: '诗与远方'
       },
       groupMotto: {
-        default: "交流着诗意的人生"
+        default: '交流着诗意的人生'
       },
-      imgSrc: "http://114.115.151.96:8666/ProfilePicture/UserAccount/"
+      imgSrc: 'http://114.115.151.96:8666/ProfilePicture/UserAccount/'
     },
     groupFind: {
       tabsNum: 6,
@@ -73,8 +73,8 @@ export default new Vuex.Store({
       data: []
     },
     groupCreate: {
-      name: "",
-      intro: "",
+      name: '',
+      intro: '',
       tags: ['Hobby', 'Emotion', 'Movie', 'Literature', 'Academic', 'Life'],
       tagsChecked: [ false, true, false, false, false, false],
       succeed: false
@@ -82,19 +82,19 @@ export default new Vuex.Store({
     myGroup: {
       pageSize: 10,
       pageNum: 1,
-      comments:[]
+      comments: []
     },
     search: {
       keyword: '11',
       tab: 1,
       totalLen: 100,
       pageSize: 3,
-      pageNum: {'book':1,'film':1,'team':1},
-      bookImgPath: "http://114.115.151.96:8666/ProfilePicture/UserAccount/",
-      filmImgPath: "http://114.115.151.96:8666/ProfilePicture/UserAccount/",
-      groupImgPath: "http://114.115.151.96:8666/ProfilePicture/UserAccount/",
-      field:['book','film','team'],
-      dataShow: {'book':[],'film':[],'team':[]},
+      pageNum: { 'book': 1, 'film': 1, 'team': 1 },
+      bookImgPath: 'http://114.115.151.96:8666/ProfilePicture/UserAccount/',
+      filmImgPath: 'http://114.115.151.96:8666/ProfilePicture/UserAccount/',
+      groupImgPath: 'http://114.115.151.96:8666/ProfilePicture/UserAccount/',
+      field: ['book', 'film', 'team'],
+      dataShow: { 'book': [], 'film': [], 'team': [] },
       currentPage: 6,
       currentSearchTab: 0
     },
@@ -271,17 +271,17 @@ export default new Vuex.Store({
     ],
     collection: [
       {
-        id: "5d65eeccd4a370186cdac7d4",
-        filmName: "你好，吸血鬼小姐1",
-        score: "37.6",
-        account: "abcd"
+        id: '5d6a18f0d4a37011ec598f6a',
+        filmName: '你好，吸血鬼小姐1',
+        score: '37.6',
+        account: 'abcd'
       },
-      // {
-      //   id: "5d65eeccd4a370186cdac7d3",
-      //   filmName: "九五二班",
-      //   score: "37.6",
-      //   account: "abcd"
-      // },
+      {
+        id: '5d6a18f0d4a37011ec598f69',
+        filmName: '九五二班',
+        score: '37.6',
+        account: 'abcd'
+      }
       // {
       //   id: "5d65eeccd4a370186cdac7d2",
       //   filmName: "拜见女仆大人",
@@ -338,7 +338,7 @@ export default new Vuex.Store({
         })
     },
     handleGroupFind (state, i) {
-      var url ='http://114.115.151.96:8666/Team/Find'+state.groupFind.tabEngNames[i]
+      var url = 'http://114.115.151.96:8666/Team/Find' + state.groupFind.tabEngNames[i]
       axios.post(url, { })
         .then(function (response) {
           state.groupFind.num = response.data.length
@@ -349,33 +349,33 @@ export default new Vuex.Store({
           state.datas = { tit: error }
         })
     },
-    handleMyGroup(state){
+    handleMyGroup (state) {
       axios.post('http://114.115.151.96:8666/MyGroupNotification', {
         account: state.account
       })
         .then(function (response) {
-          state.myGroup.pageNum = Math.ceil(response.data.length/state.myGroup.pageSize)
+          state.myGroup.pageNum = Math.ceil(response.data.length / state.myGroup.pageSize)
           var lenn = 0
           var i = 0
-          for (i = 0;i < state.myGroup.pageNum-1; i++){
+          for (i = 0; i < state.myGroup.pageNum - 1; i++) {
             lenn = i * state.myGroup.pageSize
-            state.myGroup.comments.push(response.data.slice(lenn,lenn+state.myGroup.pageSize))
+            state.myGroup.comments.push(response.data.slice(lenn, lenn + state.myGroup.pageSize))
           }
-          lenn = i*state.myGroup.pageSize
-          state.myGroup.comments.push(response.data.slice(lenn,response.data.length))
+          lenn = i * state.myGroup.pageSize
+          state.myGroup.comments.push(response.data.slice(lenn, response.data.length))
         })
         .catch(function (error) {
           state.datas = { tit: error }
         })
       console.log(2)
     },
-    changeGroupCreateName(state,newVal){
+    changeGroupCreateName (state, newVal) {
       state.groupCreate.name = newVal
     },
-    changeGroupCreateIntro(state,newVal){
+    changeGroupCreateIntro (state, newVal) {
       state.groupCreate.intro = newVal
     },
-    changeGroup(state, groupId){
+    changeGroup (state, groupId) {
       state.group.groupId = groupId
       console.log(groupId)
       axios.post('http://114.115.151.96:8666/Team/FindOne', {
@@ -390,27 +390,27 @@ export default new Vuex.Store({
           state.datas = { tit: error }
         })
     },
-    changeKeyword(state, keyword){
-      state.search.keyword=keyword
+    changeKeyword (state, keyword) {
+      state.search.keyword = keyword
     },
-    handleSearch(state){
+    handleSearch (state) {
       axios.post('http://114.115.151.96:8666/search/find', {
         name: state.search.keyword
       })
         .then(function (response) {
-          console.log("entered")
-          state.search.dataShow= {'book':[],'film':[],'team':[]}
-          for (let x of state.search.field){
+          console.log('entered')
+          state.search.dataShow = { 'book': [], 'film': [], 'team': [] }
+          for (let x of state.search.field) {
             var lenn = 0
             var i = 0
             console.log(response.data[x])
-            state.search.pageNum[x] = Math.ceil(response.data[x].length/state.search.pageSize)
-            for (i = 0;i < state.search.pageNum[x]-1; i++){
+            state.search.pageNum[x] = Math.ceil(response.data[x].length / state.search.pageSize)
+            for (i = 0; i < state.search.pageNum[x] - 1; i++) {
               lenn = i * state.search.pageSize
-              state.search.dataShow[x].push(response.data[x].slice(lenn,lenn+state.search.pageSize))
+              state.search.dataShow[x].push(response.data[x].slice(lenn, lenn + state.search.pageSize))
             }
-            lenn = i*state.search.pageSize
-            state.search.dataShow[x].push(response.data[x].slice(lenn,response.data[x].length))
+            lenn = i * state.search.pageSize
+            state.search.dataShow[x].push(response.data[x].slice(lenn, response.data[x].length))
           }
           console.log(state.search.dataShow['book'][0])
           state.datas = response.data
@@ -419,9 +419,9 @@ export default new Vuex.Store({
           state.datas = { tit: error }
         })
     },
-    groupCreate(state,tags){
-      var ttags=[]
-      for (var i=0;i<tags.length;i++){
+    groupCreate (state, tags) {
+      var ttags = []
+      for (var i = 0; i < tags.length; i++) {
         ttags.push(state.groupCreate.tags[tags[i]])
       }
       axios.post('http://114.115.151.96:8666/Team/Add', {
@@ -432,15 +432,15 @@ export default new Vuex.Store({
       })
         .then(function (response) {
           console.log(response)
-          state.groupCreate.succeed=true
+          state.groupCreate.succeed = true
         })
         .catch(function (error) {
           state.datas = { tit: error }
-          state.groupCreate.succeed=false
+          state.groupCreate.succeed = false
         })
     },
-    changeGroupCreatSucceed(state){
-      state.groupCreate.succeed=false
+    changeGroupCreatSucceed (state) {
+      state.groupCreate.succeed = false
     },
     handleCurrentId (state, newVal) {
       state.currentId = newVal
@@ -462,9 +462,6 @@ export default new Vuex.Store({
     },
     handleCollection (state, newVal) {
       state.collection = newVal
-      for (i = 0; i < state.collection.length; i++) {
-        state.collection[i].account = state.account
-      }
     },
     handleMassageContent (state, newVal) {
       state.massage_content = newVal
@@ -484,11 +481,11 @@ export default new Vuex.Store({
     handleVerificationCode (state, newVal) {
       state.verificationCode = newVal
     },
-    handleisgt(state){
-      state.isgt = true;
+    handleisgt (state) {
+      state.isgt = true
     },
-    handleverify(state){
-      state.verify = true;
+    handleverify (state) {
+      state.verify = true
     },
     handleError (state, newVal) {
       state.error_img = newVal
@@ -536,26 +533,29 @@ export default new Vuex.Store({
       state.currentBookId = newVal
     },
     changeJoinState (state) {
-      state.joined = !state.joined;
+      state.joined = !state.joined
     },
     changetrueCode (state, newVal) {
       state.true_verificationCode = newVal
     },
-    changeMassage(state, newList) {
+    changeMassage (state, newList) {
       state.massage_content = newList
     },
-    changeIsSuper(state) {
+    changeIsSuper (state) {
       state.isSuper = true
     }
   },
   actions: {
-    changeReported(context, newVal){
+    changeCollection (context, newList) {
+      context.commit('handleCollection', newList)
+    },
+    changeReported (context, newVal) {
       context.commit('handleReported', newVal)
     },
-    changeSuper(context){
+    changeSuper (context) {
       context.commit('changeIsSuper')
     },
-    changeMassageData(context, newList) {
+    changeMassageData (context, newList) {
       context.commit('changeMassage', newList)
     },
     changeCurrentBMId (context, newVal) {

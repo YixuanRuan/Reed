@@ -61,29 +61,29 @@
 </template>
 
 <script>
-  import GroupCard from "../components/GroupCard";
-  export default {
-    name: 'GroupFind',
-    components: {
-      GroupCard
-    },
-    data () {
-      return {
-        tab: null,
-        tabs: this.$store.state.groupFind.tabsNum,
-        tabNames: this.$store.state.groupFind.tabNames,
-        imgg: "http://114.115.151.96:8666/ProfilePicture/UserAccount/"
-      }
-    },
-    mounted () {
-      this.$store.commit('handleGroupFind', 0)
-    },
-    methods: {
-      cli: function (i) {
-        this.$store.commit('handleGroupFind', i-1)
-      }
+import GroupCard from '../components/GroupCard'
+export default {
+  name: 'GroupFind',
+  components: {
+    GroupCard
+  },
+  data () {
+    return {
+      tab: null,
+      tabs: this.$store.state.groupFind.tabsNum,
+      tabNames: this.$store.state.groupFind.tabNames,
+      imgg: 'http://114.115.151.96:8666/ProfilePicture/UserAccount/'
+    }
+  },
+  mounted () {
+    this.$store.commit('handleGroupFind', 0)
+  },
+  methods: {
+    cli: function (i) {
+      this.$store.commit('handleGroupFind', i - 1)
     }
   }
+}
 </script>
 
 <style scoped>
