@@ -30,7 +30,7 @@
       {{title}}
     </v-card-text>
 
-    <v-card v-if="reply==2" class="replay_content" elevation="0" tile>
+    <v-card v-if="type==2" class="replay_content" elevation="0" tile>
       <v-card-actions style="max-width: 200px;padding-top: 0px">
         <v-list-item class="grow">
           <v-list-item-avatar tile color="grey darken-3" style="width: 40px;height: 40px">
@@ -98,23 +98,27 @@ export default {
     like_color: 'white'
   }),
   mounted () {
+    if (this.type == 2)
+      this.getParent()
     this.isLiked()
     this.clickLike()
-    this.axios({
-      method: 'post',
-      url: 'http://114.115.151.96:8666/commentsreply/sectoFir',
-      data: {
-        id: this.id
-      },
-      crossDomain: true
-    }).then(body => {
-      console.log(body)
-      this.reply_name = body.username
-      this.reply_avatar_img = this.$store.state.avatar_img_prefix + body.account
-      this.reply_comment = body.reply
-    })
   },
   methods: {
+    getParent: function(){
+      console.log(this.id)
+      this.axios({
+        method: 'post',
+        url: 'http://114.115.151.96:8666/commentreply/sectoFir',
+        data: {
+          id: this.id
+        },
+        crossDomain: true
+      }).then(body => {
+        this.reply_name = body.data.username
+        this.reply_avatar_img = this.$store.state.avatar_img_prefix + body.data.account
+        this.reply_comment = body.data.reply.content
+      })
+    },
     isLiked: function () {
       this.axios({
         method: 'post',
