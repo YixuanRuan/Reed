@@ -44,7 +44,9 @@
       <v-row>
         <v-col v-for="(data,index) in reported" :key="index">
           <div class="report-manage">
-            <Comments ></Comments>
+            <Comments :name="data.Posting.account" :team_name="data.Team.teamName" :title="data.Posting.title"
+                      :content="data.Posting.content" :avatar_img="img_prefix + data.Posting.account"
+                      :team_img="img_prefix + data.Team.id" :id="data.Posting.id"></Comments>
           </div>
         </v-col>
       </v-row>
@@ -60,6 +62,9 @@ export default {
   },
   data (){
       return {
+        img_prefix: 'http://114.115.151.96:8666/ProfilePicture/UserAccount/',
+        avatar_img:'',
+        team_img:'',
         swipers:[
             {
                 index:1,
@@ -97,6 +102,7 @@ export default {
       }
   },
   mounted() {
+    this.getReport()
   },
   methods:{
     getReport(){
@@ -107,7 +113,8 @@ export default {
         },
         crossDomain: true
       }).then(body => {
-        reported = body.data
+        this.reported = body.data
+        console.log('reported', this.reported)
       })
     }
   }

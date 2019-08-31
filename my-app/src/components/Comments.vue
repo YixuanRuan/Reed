@@ -104,6 +104,9 @@ export default {
   data: () => ({
     //
   }),
+  mounted (){
+    console.log('avatar_img',this.avatar_img)
+  },
   props: {
     groupId:{
       default: 0
