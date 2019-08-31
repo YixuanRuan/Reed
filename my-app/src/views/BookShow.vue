@@ -32,11 +32,9 @@
 </template>
 
 <script>
-import NavBar from '../components/NavBar'
 import BookShowCard from '../components/BookShowCard'
 import CommentsStar from '../components/Comments-star'
 import ScoreBar from '../components/ScoreBar'
-import HistoryComment from '../components/HistoryComment'
 import PostReply from '../components/PostReply'
 import SelfComments from '../components/SelfComments'
 export default {
@@ -66,12 +64,10 @@ export default {
     }
   },
   components: {
-    NavBar,
     BookShowCard,
     CommentsStar,
     ScoreBar,
     PostReply,
-    HistoryComment,
     SelfComments
   },
   mounted () {
