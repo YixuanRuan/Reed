@@ -39,6 +39,7 @@
         >
           <v-tab>帖子</v-tab>
           <v-tab>作品</v-tab>
+          <v-btn text color="error" style="margin-top: 7px; margin-left: 20px" @click="delHistory">删除</v-btn>
           <v-tabs-slider></v-tabs-slider>
         </v-tabs>
 
@@ -226,6 +227,20 @@ export default {
     this.initHistory()
   },
   methods: {
+    delHistory () {
+      this.axios({
+        method: 'post',
+        url: 'http://114.115.151.96:8666/ViewHistory/DelAll',
+        data: {
+          account: this.$store.state.account
+        },
+        crossDomain: true
+      }).then(body => {
+        this.history_movie = []
+        this.history_book = []
+        this.history_posting = []
+      })
+    },
     initHistory () {
       this.axios({
         method: 'post',
