@@ -79,11 +79,11 @@ export default {
     SelfComments
   },
   mounted () {
-      this.bm_id = this.$store.state.currentId
-      this.initBMInfo()
+    this.bm_id = this.$store.state.currentBookId
+    this.initBMInfo()
     this.initBestReply()
     this.initComments()
-      this.initCommentsReply()
+    this.initCommentsReply()
   },
   methods: {
     refresh (state) {
