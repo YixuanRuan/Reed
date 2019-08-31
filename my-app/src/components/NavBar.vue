@@ -199,7 +199,7 @@ export default {
       }
       this.$store.commit('changeKeyword', keyword)
       this.$router.push('/search/')
-    }
+    },
     routerTo(index) {
       this.$router.push({
         name: `forum`,
