@@ -9,11 +9,11 @@
       <v-col cols="9">
         <div>
           <div class="comment-book">
-            <p class="comment-book-text">评论过的书籍 1</p>
+            <p class="comment-book-text">评论过的书籍</p>
           </div>
           <BookComment :card_content="comment_book"/>
           <div class="comment-movie">
-            <p class="comment-book-text">评论过的电影 2</p>
+            <p class="comment-book-text">评论过的电影</p>
           </div>
           <HistoryComment :card_content="comment_movie"/>
           <div class="comment-movie">

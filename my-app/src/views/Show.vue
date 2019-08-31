@@ -119,7 +119,7 @@ export default {
           id: this.$store.state.currentId
         },
         crossDomain: true
-      }).then(body =>{
+      }).then(body => {
         console.log('movie!')
         console.log(body)
         this.info = body.data
@@ -133,27 +133,13 @@ export default {
           id: this.$store.state.currentId
         },
         crossDomain: true
-      }).then(body =>{
-        console.log(body);
-        this.star_reply_name = body.data.reply.id;
-        this.reply_content = body.data.reply.content;
-        this.like_num = body.data.likes;
-        this.comment_num = '255';
-        this.avatar_img = this.$store.state.avatar_img_prefix + body.data.reply.id;
-      });
-    },
-    getBest(){
-      this.axios({
-        method: 'post',
-        url: 'http://114.115.151.96:8666/film/find',
-        data: {
-          id: this.$store.state.currentId
-        },
-        crossDomain: true
-      }).then(body =>{
-        console.log('movie!')
-        console.log(body)
-        this.info = body.data
+      }).then(body => {
+        console.log('best', body)
+        this.star_reply_name = body.data.reply.replyerId
+        this.reply_content = body.data.reply.content
+        this.like_num = body.data.likes
+        this.comment_num = '255'
+        this.avatar_img = this.$store.state.avatar_img_prefix + body.data.reply.replyerId
       })
     }
   }

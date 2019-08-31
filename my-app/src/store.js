@@ -32,7 +32,7 @@ export default new Vuex.Store({
     book_img_prefix: 'http://114.115.151.96:8666/PosterPicture/MovieAccount/',
     movie_img_prefix: 'http://114.115.151.96:8666/PosterPicture/MovieAccount/',
     groupStatus: {
-      joinedNum: 1,
+      joinedNum: 0,
       myGroups: [{
         id: '5d65f9b259f000353446afbb',
         teamName: '我是打小天才babababbcwe'
