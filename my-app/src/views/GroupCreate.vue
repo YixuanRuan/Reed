@@ -140,7 +140,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
   .resultAlert{
     position: fixed;
     margin-top: -100px;

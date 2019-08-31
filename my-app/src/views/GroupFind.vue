@@ -97,7 +97,3 @@
     margin-right: 45px;
   }
 </style>
-
-<style scoped>
-
-</style>

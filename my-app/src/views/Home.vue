@@ -1,5 +1,5 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
-  <div>
+  <div class="scope_home">
     <BackGroundVideo/>
     <v-row no-gutters class="login-regist-container">
       <v-col cols="7" >
@@ -458,9 +458,6 @@ export default {
     width: 1060px;
   }
 
-  .left-content{
-  }
-
   .right-content{
     display:-webkit-box;
     -webkit-box-align:center;/* 垂直居中 */
@@ -489,10 +486,6 @@ export default {
   }
   .username{
     margin-top: -50px;
-  }
-
-  .btn-large{
-    width: 200px;
   }
 
   .segtext-hot{

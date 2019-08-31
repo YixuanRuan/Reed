@@ -28,6 +28,7 @@ export default new Vuex.Store({
     introduction: '',
     selfComments: [],
     searchBookId: '5d61fe1359f0004904de51b6',
+    avatar_img_prefix: 'http://114.115.151.96:8666/ProfilePicture/UserAccount/',
     book_img_prefix: 'http://114.115.151.96:8666/PosterPicture/MovieAccount/',
     movie_img_prefix: 'http://114.115.151.96:8666/PosterPicture/MovieAccount/',
     groupStatus: {

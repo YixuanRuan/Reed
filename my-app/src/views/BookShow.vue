@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="scope_bookshow">
     <BookShowCard :poster_img="$store.state.book_img_prefix+info.id"
                   :bookName="info.bookName" :author="info.author"
                   :publisher="info.publisher" :isbn="info.isbn"
@@ -125,8 +125,7 @@
           method: 'post',
           url: 'http://114.115.151.96:8666/search/likebestReply',
           data: {
-            // id:this.$store.state.currentId
-            id:'5d65eeccd4a370186cdac7d4'
+            id: this.$store.state.currentBookId
           },
           crossDomain: true
         }).then(body =>{
@@ -135,7 +134,7 @@
           this.reply_content = body.data.reply.content;
           this.like_num = body.data.likes;
           this.comment_num = '255';
-          this.avatar_img = avatar_prefix + body.data.reply.id;
+          this.avatar_img = this.$store.state.avatar_img_prefix + body.data.reply.id;
         });
       }
     }
@@ -152,35 +151,6 @@
     display:-webkit-box;
     -webkit-box-align:center;/* 垂直居中 */
     -webkit-box-pack:center;/* 水平居中 */
-  }
-  .left-content{
-  }
-
-  .right-content{
-    display:-webkit-box;
-    -webkit-box-align:center;/* 垂直居中 */
-    -webkit-box-pack:center;/* 水平居中 */
-  }
-
-  .logo-left{
-    margin-left: 100px;
-    width: 75%;
-  }
-
-  .director-text{
-    width: 396px;
-    height: 101px;
-    color: rgba(0, 0, 0, 1);
-    font-size: 36px;
-    font-family: "Microsoft YaHei" ! important;
-  }
-  .mainactor-text{
-    width: 396px;
-    height: 101px;
-    color: rgba(0, 0, 0, 1);
-    font-size: 28px;
-    font-family: "Microsoft YaHei" ! important;
-    margin-top: -50px;
   }
   .intro {
     color:#CCC;
