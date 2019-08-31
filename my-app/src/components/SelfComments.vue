@@ -30,7 +30,7 @@
       {{title}}
     </v-card-text>
 
-    <v-card v-if="reply===2" class="replay_content" elevation="0" tile>
+    <v-card v-if="reply==2" class="replay_content" elevation="0" tile>
       <v-card-actions style="max-width: 200px;padding-top: 0px">
         <v-list-item class="grow">
           <v-list-item-avatar tile color="grey darken-3" style="width: 40px;height: 40px">
@@ -40,7 +40,7 @@
             ></v-img>
           </v-list-item-avatar>
           <v-list-item-content class="user-name">
-            <v-list-item-title class="user-name-text" style="color: #aaa;font-size: 20px">{{reply_name }}</v-list-item-title>
+            <v-list-item-title class="user-name-text" style="color: #aaa;font-size: 20px">{{reply_name}}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-card-actions>
@@ -100,6 +100,19 @@ export default {
   mounted () {
     this.isLiked()
     this.clickLike()
+      this.axios({
+          method: 'post',
+          url: 'http://114.115.151.96:8666/commentsreply/sectoFir',
+          data: {
+              id: this.id
+          },
+          crossDomain: true
+      }).then(body => {
+          console.log(body)
+          this.reply_name = body.username
+          this.reply_avatar_img = this.$store.state.avatar_img_prefix + body.account
+          this.reply_comment = body.reply
+      })
   },
   methods: {
     isLiked: function () {

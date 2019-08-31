@@ -20,8 +20,7 @@
       </v-col>
       <v-col v-for="(data, index) in commentsReply" :key="index">
         <SelfComments :avatar_img="avatar_prefix + data.replyerId" :name="data.replyerId" :comment="data.content"
-                      :title="data.title" :id="data.id" :type="2"
-                      :reply_avatar_img="avatar_prefix" :reply_name="data" :reply_comment="data"/>
+                      :title="data.title" :id="data.id" :type="2"/>
       </v-col>
     </v-row>
     <PostReply v-if="$store.state.logined"
@@ -93,6 +92,7 @@ export default {
     this.initBMInfo()
     this.initBestReply()
     this.initComments()
+      this.initCommentsReply()
   },
   methods: {
     refresh (state) {
@@ -112,7 +112,6 @@ export default {
         method: 'post',
         url: 'http://114.115.151.96:8666/reply/list',
         data: {
-
           id: this.$store.state.currentId
         },
         crossDomain: true
@@ -126,12 +125,13 @@ export default {
         method: 'post',
         url: 'http://114.115.151.96:8666/commentreply/findByMAB',
         data: {
-          id: this.$store.state.currentId
+
+            id: this.$store.state.currentId
         },
         crossDomain: true
       }).then(body => {
+          console.log(body)
         this.commentsReply = body.data
-        console.log(this.commentsReply)
       })
     },
     initBMInfo: function () {
