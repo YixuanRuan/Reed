@@ -115,6 +115,7 @@ export default new Vuex.Store({
     // 今日推荐
     today_recommend_content: [],
 
+    today_book_recommend_content: [],
     // 今日最新
     today_new_content: [
       {
@@ -507,6 +508,9 @@ export default new Vuex.Store({
     changeTodayRecommendContent (state, newList) {
       state.today_recommend_content = newList
     },
+    changeTodayBookRecommendContent (state, newList) {
+      state.today_book_recommend_content = newList
+    },
     changeSelfComments (state, newList) {
       state.selfComments = newList
     },
@@ -538,6 +542,9 @@ export default new Vuex.Store({
     },
     getTodayRecommend (context, newList) {
       context.commit('changeTodayRecommendContent', newList)
+    },
+    getTodayBookRecommend (context, newList) {
+      context.commit('changeTodayBookRecommendContent', newList)
     },
     changeSelfAvatar (context, newAvatar) {
       context.commit('changeAvatar', newAvatar)
