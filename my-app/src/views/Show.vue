@@ -14,7 +14,12 @@
     <v-row>
       <v-col v-for="(data, index) in comments" :key="index">
         <SelfComments :avatar_img="avatar_prefix + data.replyerId" :name="data.replyerId" :comment="data.content"
-                      :title="data.tilte" :id="data.id"/>
+                      :title="data.title" :id="data.id"/>
+      </v-col>
+      <v-col v-for="(data, index) in commentsReply" :key="index">
+        <SelfComments :avatar_img="avatar_prefix + data.replyerId" :name="data.replyerId" :comment="data.content"
+                      :title="data.title" :id="data.id" :type="2"
+                      :reply_avatar_img="avatar_prefix" :reply_name="data" :reply_comment="data"/>
       </v-col>
     </v-row>
     <PostReply v-if="$store.state.logined" :user_id="this.$store.state.account" :id="bm_id" :type="type" v-on:child-say="listenToMyBoy"/>
@@ -25,43 +30,47 @@
 </template>
 
 <script>
-import NavBar from '../components/NavBar';
-import Showcard from '../components/Showcard';
-import CommentsStar from '../components/Comments-star';
-import ScoreBar from '../components/ScoreBar';
-import HistoryComment from '../components/HistoryComment';
-import PostReply from '../components/PostReply';
-import SelfComments from '../components/SelfComments';
+import NavBar from '../components/NavBar'
+import Showcard from '../components/Showcard'
+import CommentsStar from '../components/Comments-star'
+import ScoreBar from '../components/ScoreBar'
+import HistoryComment from '../components/HistoryComment'
+import PostReply from '../components/PostReply'
+import SelfComments from '../components/SelfComments'
 export default {
   data () {
     return {
 
-      flag:false,
-      type:'2',
+      flag: false,
+      type: '2',
 
       // reply
-      bm_id:'',
+      bm_id: '',
 
       // Showcard
-      intro:'《寄生虫》讲述了发生在身份地位悬殊的两个家庭身上的故事：宋康昊饰演的无业游民父亲基泽，让寄托了家人生计希望的大儿子（崔宇植 饰）前往IT公司老总朴社长（李善均 饰）家应聘课外教师，随之发生了一连串意外事件。',
+      intro: '《寄生虫》讲述了发生在身份地位悬殊的两个家庭身上的故事：宋康昊饰演的无业游民父亲基泽，让寄托了家人生计希望的大儿子（崔宇植 饰）前往IT公司老总朴社长（李善均 饰）家应聘课外教师，随之发生了一连串意外事件。',
       filmName: '',
-      director:'',
-      starring:'',
-      filmTime:'',
-      finalScore:'',
-      poster_img:'',
-      img_prefix:'http://114.115.151.96:8666/PosterPicture/MovieAccount/',
+      director: '',
+      starring: '',
+      filmTime: '',
+      finalScore: '',
+      poster_img: '',
+      img_prefix: 'http://114.115.151.96:8666/PosterPicture/MovieAccount/',
 
       // CommentsStar
-      avatar_img:'',
-      star_reply_name:'',
+      avatar_img: '',
+      star_reply_name: '',
       reply_content: '',
       like_num: '',
       comment_num: '',
-      avatar_prefix:'http://114.115.151.96:8666/ProfilePicture/UserAccount/',
+      avatar_prefix: 'http://114.115.151.96:8666/ProfilePicture/UserAccount/',
 
       // comments
-      comments:[
+      comments: [
+        {},
+        {}
+      ],
+      commentsReply: [
         {},
         {}
       ]
@@ -74,23 +83,23 @@ export default {
     ScoreBar,
     PostReply,
     HistoryComment,
-    SelfComments,
+    SelfComments
   },
-  mounted() {
-    this.initBMInfo();
-    this.initBestReply();
-    this.initComments();
-    this.bm_id = this.$store.state.currentId;
+  mounted () {
+    this.initBMInfo()
+    this.initBestReply()
+    this.initComments()
+    this.bm_id = this.$store.state.currentId
   },
-  methods:{
-    listenToMyBoy: function (somedata){
-      this.flag = somedata;
-      if(this.flag){
-        this.initComments();
-        this.flag = false;
+  methods: {
+    listenToMyBoy: function (somedata) {
+      this.flag = somedata
+      if (this.flag) {
+        this.initComments()
+        this.flag = false
       }
     },
-    initComments:function () {
+    initComments: function () {
       this.axios({
         method: 'post',
         url: 'http://114.115.151.96:8666/reply/list',
@@ -98,11 +107,25 @@ export default {
           id: this.$store.state.currentId
         },
         crossDomain: true
-      }).then(body =>{
-        this.comments = body.data.replylist;
-      });
+      }).then(body => {
+        this.comments = body.data.replylist
+        console.log(this.comments)
+      })
     },
-    initBMInfo: function(){
+    initCommentsReply: function () {
+      this.axios({
+        method: 'post',
+        url: 'http://114.115.151.96:8666/commentreply/findByMAB',
+        data: {
+          id: this.$store.state.currentId
+        },
+        crossDomain: true
+      }).then(body => {
+        this.commentsReply = body.data
+        console.log(this.commentsReply)
+      })
+    },
+    initBMInfo: function () {
       this.axios({
         method: 'post',
         url: 'http://114.115.151.96:8666/film/find',
@@ -110,18 +133,18 @@ export default {
           id: this.$store.state.currentId
         },
         crossDomain: true
-      }).then(body =>{
+      }).then(body => {
         console.log(body)
-        this.intro = body.data.intro;
-        this.filmName = body.data.filmName;
-        this.director = body.data.director;
-        this.starring = body.data.starring;
-        this.filmTime = body.data.filmTime;
-        this.finalScore = body.data.finalScore;
-        this.poster_img = this.img_prefix + body.data.id;
-      });
+        this.intro = body.data.intro
+        this.filmName = body.data.filmName
+        this.director = body.data.director
+        this.starring = body.data.starring
+        this.filmTime = body.data.filmTime
+        this.finalScore = body.data.finalScore
+        this.poster_img = this.img_prefix + body.data.id
+      })
     },
-    initBestReply: function(){
+    initBestReply: function () {
       this.axios({
         method: 'post',
         url: 'http://114.115.151.96:8666/search/likebestReply',
@@ -130,17 +153,17 @@ export default {
           id: this.$store.state.currentId
         },
         crossDomain: true
-      }).then(body =>{
-        console.log(body);
-        this.star_reply_name = body.data.reply.id;
-        this.reply_content = body.data.reply.content;
-        this.like_num = body.data.likes;
-        this.comment_num = '255';
-        this.avatar_img = avatar_prefix + body.data.reply.id;
-      });
+      }).then(body => {
+        console.log(body)
+        this.star_reply_name = body.data.reply.id
+        this.reply_content = body.data.reply.content
+        this.like_num = body.data.likes
+        this.comment_num = '255'
+        this.avatar_img = avatar_prefix + body.data.reply.id
+      })
     }
   }
-};
+}
 </script>
 
 <style scoped>
