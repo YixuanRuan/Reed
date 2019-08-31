@@ -14,9 +14,20 @@ export default {
     }
   },
   mounted () {
-    this.testLogin()
+    this.testCollectionGet()
   },
   methods:{
+    testReport(){
+      this.axios({
+        method: 'post',
+        url: 'http://114.115.151.96:8666/report/list',
+        data: {
+        },
+        crossDomain: true
+      }).then(body => {
+        this.info = body
+      })
+    },
     testLogin(){
       this.axios({
         method: 'post',

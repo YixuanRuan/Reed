@@ -15,7 +15,10 @@ import scroll from 'vue-seamless-scroll'
 import VueParticles from 'vue-particles'
 import mavonEditor from 'mavon-editor'
 import 'mavon-editor/dist/css/index.css'
-
+// 导入极验
+require('@/assets/gt.js');
+// 绑定到原型
+Vue.prototype.$initGeet=initGeetest;
 
 Vue.use(mavonEditor)
 Vue.use(VueParticles)

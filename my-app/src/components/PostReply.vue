@@ -73,8 +73,10 @@
             console.log('id',this.id)
             console.log('-----------------reply end-----------------')
             this.reply = ''
-            this.addInformation()
-            this.onsubmit()
+            if(this.type=="4"){
+              this.addInformation()
+              this.onsubmit()
+            }
           });
 
         }

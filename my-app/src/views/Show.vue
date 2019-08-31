@@ -17,7 +17,10 @@
                       :title="data.tilte" :id="data.id"/>
       </v-col>
     </v-row>
-    <PostReply :user_id="this.$store.state.account" :id="bm_id" :type="type" v-on:child-say="listenToMyBoy"/>
+    <PostReply v-if="$store.state.logined" :user_id="this.$store.state.account" :id="bm_id" :type="type" v-on:child-say="listenToMyBoy"/>
+    <v-row v-else>
+      <v-row cols="12"><p class="pls">请登录再评论</p></v-row>
+    </v-row>
   </div>
 </template>
 
@@ -34,11 +37,10 @@ export default {
     return {
 
       flag:false,
-      type:'1',
+      type:'2',
 
       // reply
       bm_id:'',
-
 
       // Showcard
       intro:'《寄生虫》讲述了发生在身份地位悬殊的两个家庭身上的故事：宋康昊饰演的无业游民父亲基泽，让寄托了家人生计希望的大儿子（崔宇植 饰）前往IT公司老总朴社长（李善均 饰）家应聘课外教师，随之发生了一连串意外事件。',
@@ -93,7 +95,7 @@ export default {
         method: 'post',
         url: 'http://114.115.151.96:8666/reply/list',
         data: {
-          id:'5d65eeccd4a370186cdac7d4'
+          id: this.$store.state.currentId
         },
         crossDomain: true
       }).then(body =>{
@@ -105,7 +107,7 @@ export default {
         method: 'post',
         url: 'http://114.115.151.96:8666/film/find',
         data: {
-          id:this.$store.state.currentId
+          id: this.$store.state.currentId
         },
         crossDomain: true
       }).then(body =>{
@@ -125,7 +127,7 @@ export default {
         url: 'http://114.115.151.96:8666/search/likebestReply',
         data: {
           // id:this.$store.state.currentId
-          id:'5d65eeccd4a370186cdac7d4'
+          id: this.$store.state.currentId
         },
         crossDomain: true
       }).then(body =>{
@@ -142,6 +144,17 @@ export default {
 </script>
 
 <style scoped>
+
+  .pls{
+    color: white;
+    background-color: #CCC;
+    height: 50px;
+    margin-top:50px;
+    width: 100%;
+    display:-webkit-box;
+    -webkit-box-align:center;/* 垂直居中 */
+    -webkit-box-pack:center;/* 水平居中 */
+  }
 
   .left-content{
   }

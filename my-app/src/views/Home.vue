@@ -46,6 +46,7 @@
               background-color="#eee"
               style="opacity: 0.8"
             ></v-text-field>
+            <Geet :isGeet="this.$store.state.isgt" @geetPath="GeetPath" @clickChange="GeetChange"></Geet>
             <v-row>
               <v-col cols="6">
               <v-text-field
@@ -135,6 +136,8 @@ import Comments from '../components/Comments'
 import HistoryComment from '../components/HistoryComment'
 import BookComment from '../components/BookComment'
 import BackGroundVideo from '../components/BackGroundVideo'
+import Gtpage from '../components/GtPage'
+import Geet from '../components/Geet'
 
 export default {
   data () {
@@ -148,6 +151,7 @@ export default {
       error_img: '',
       password_wrong_show: false,
       info: '',
+      bookInfo: '',
       hot: '今日热门',
       topic: '今日话题',
       height: '560px',
@@ -168,7 +172,9 @@ export default {
     Comments,
     BookComment,
     HistoryComment,
-    BackGroundVideo
+    BackGroundVideo,
+    Geet,
+    Gtpage
   },
   mounted () {
     this.initTodayBookRecommend();
@@ -214,6 +220,15 @@ export default {
         }, 1000)
       }
     },
+    // 极验图片加载之后，通过更改控制变量实现可以再次加载
+    GeetChange(val) {
+      this.$store.state.isgt = val;
+    },
+    GeetPath(val) {
+      console.log("4,接受到图形验证参数，将参数发往服务端进行验证");
+      console.log(val);
+      this.$store.state.isgt = false;
+    },
     unshow () {
       this.password_wrong_show = false
     },
@@ -232,13 +247,19 @@ export default {
     initTodayBookRecommend(){
       this.axios({
         method: 'post',
-        url: 'http://114.115.151.96:8666/book/findAll',
+        url: 'http://114.115.151.96:8666/search/booktimelist',
         data: {
+          pagesCount: 20
         },
         crossDomain: true
       }).then(body => {
-        this.info = body
-        this.$store.dispatch('getTodayBookRecommend', this.info.data)
+        console.log("hello")
+        console.log(body)
+        this.bookInfo = body
+        this.$store.dispatch('getTodayBookRecommend', this.bookInfo.data)
+      }).catch(error => {
+        console.log(error)
+        console.log("book error")
       })
     },
     initComments(){
@@ -268,6 +289,9 @@ export default {
       } else {
         // 未处于注册态,进行登录
         if (this.register === false) {
+          if (this.$store.state.verify === 'false') {
+            this.$store.commit('handleisgt')
+          }
           this.axios({
             method: 'post',
             url: 'http://114.115.151.96:8666/User/Login',
@@ -279,7 +303,7 @@ export default {
           }).then(body => {
             this.info = body
             // 用户不存在
-            if (this.info.data === 0) {
+            if (this.info.data === 0 && this.$store.state.verify === true) {
               this.register = true
             }
             // 密码错误
@@ -295,11 +319,28 @@ export default {
             }
             // 登录成功
             else {
-              this.$store.commit('logined')
-              this.$store.dispatch('changeAC', this.info.data.user.account)
-              this.$store.dispatch('changeInro', this.info.data.user.introduction)
-              this.$store.dispatch('changeSelfAvatar', 'http://114.115.151.96:8666/ProfilePicture/UserAccount/' + this.info.data.user.account)
-              this.$router.push({ path: '/selfinfo' })
+              if (this.$store.state.verify === true) {
+                this.$store.commit('logined')
+                this.$store.dispatch('changeAC', this.info.data.user.account)
+                this.$store.dispatch('changeInro', this.info.data.user.introduction)
+                this.$store.dispatch('changeSelfAvatar', 'http://114.115.151.96:8666/ProfilePicture/UserAccount/' + this.info.data.user.account)
+                if (this.info.data.user.superuser) {
+                  this.$store.commit('IsSuper')
+                  this.$router.push({path: '/manage'})
+                }
+                else {
+                  this.$router.push({path: '/selfinfo'})
+                }
+              }
+              else {
+                this.password_wrong_show = true
+                var that = this
+                this.error_img = '滑动认证未通过'
+                setTimeout(function () {
+                  that.password_wrong_show = false
+                  that.$forceUpdate()
+                }, 2000)
+              }
             }
           })
         }
