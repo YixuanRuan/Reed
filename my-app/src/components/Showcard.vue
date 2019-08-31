@@ -85,7 +85,7 @@
         default:135
       },
       finalScore:{
-        default:-40.7
+        default:23.3
       }
     }
   }
