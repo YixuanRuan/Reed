@@ -11,6 +11,9 @@ export default new Vuex.Store({
     username: '',
     password: '',
     re_password: '',
+    phoneNumber: '',
+    verificationCode: '',
+    true_verificationCode: 'root',
     logined: '',
     error_img: '',
     account: '',
@@ -247,6 +250,12 @@ export default new Vuex.Store({
     handleRePassword (state, newVal) {
       state.re_password = newVal
     },
+    handlePhoneNumber (state, newVal) {
+      state.phoneNumber = newVal
+    },
+    handleVerificationCode (state, newVal) {
+      state.verificationCode = newVal
+    },
     handleError (state, newVal) {
       state.error_img = newVal
     },
@@ -288,6 +297,9 @@ export default new Vuex.Store({
     },
     changeJoinState (state) {
       state.joined = !state.joined;
+    },
+    changetrueCode (state, newVal) {
+      state.true_verificationCode = newVal
     }
   },
   actions: {
@@ -314,6 +326,9 @@ export default new Vuex.Store({
     },
     deleteMassageItem (context, index) {
       context.commit('deleteMassage', index)
+    },
+    changeCode (context, trueCode) {
+      context.commit('changetrueCode', trueCode)
     }
 
   }

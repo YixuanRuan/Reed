@@ -26,7 +26,7 @@
     }),
     props:{
       score:{
-        default:-40.7
+        default: 23.3
       }
     },
     computed: {
@@ -92,12 +92,14 @@
     background: #E51C23;
     border-bottom-left-radius: 5px;
     border-top-left-radius: 5px;
+    float: right;
   }
 
   .green_bar{
     background: #8BC34A;
     border-bottom-right-radius: 5px;
     border-top-right-radius: 5px;
+    float: left;
   }
 
   .placeholder{

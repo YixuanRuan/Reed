@@ -10,12 +10,14 @@
       style="border-radius: 0px"
     >
       <div style="width: 1px"></div>
-      <img src= "../imgs/text-only -white.png" class="logo-header">
-      <router-link class="link-text" to="/"><v-tab to="/" :aria-selected="grow" style="height: 100%">主页</v-tab></router-link>
-      <router-link class="link-text" to="/bmhome"><v-tab to="/bmhome" style="height: 100%">书籍</v-tab></router-link>
-      <router-link class="link-text" to="/forum"><v-tab to="/bmshow" style="height: 100%">影视</v-tab></router-link>
-      <router-link class="link-text" to="/group"><v-tab to="/group" style="height: 100%">小组</v-tab></router-link>
-      <router-link class="link-text" to="/selfinfo"><v-tab to="/selfinfo" style="height: 100%">我的</v-tab></router-link>
+      <router-link class="link-text" to="/">
+        <img src= "../imgs/text-only -white.png" class="logo-header">
+      </router-link>
+      <div class="link-text" ><v-tab to="/" :aria-selected="grow" style="height: 100%">主页</v-tab></div>
+      <div class="link-text" ><v-tab to="/bmhome" style="height: 100%">书籍</v-tab></div>
+      <div class="link-text" ><v-tab to="/forum" style="height: 100%">影视</v-tab></div>
+      <div class="link-text" ><v-tab to="/group" style="height: 100%">小组</v-tab></div>
+      <div class="link-text" ><v-tab to="/selfinfo" style="height: 100%">我的</v-tab></div>
       <div style="width: 35%"></div>
 <!-------------------------------------------------------------浏览历史------------------------------------------------------------->
       <v-menu open-on-hover bottom offset-y :close-on-content-click="closeOnContentClick">
@@ -186,9 +188,9 @@ export default {
       tabs: 3
     }
   },
-  methods: {
-    submit: function () {
-      this.$router.push({ path: '/search' })
+  methods:{
+    submit: function(){
+      this.$router.replace({path:'/search'})
     },
     like: function () {
       this.like_color = (this.like_color === '') ? 'red' : ''
