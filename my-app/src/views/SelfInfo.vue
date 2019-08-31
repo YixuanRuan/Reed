@@ -11,7 +11,7 @@
           <div class="comment-book">
             <p class="comment-book-text">评论过的书籍 1</p>
           </div>
-          <HistoryComment :card_content="comment_book"/>
+          <BookComment :card_content="comment_book"/>
           <div class="comment-movie">
             <p class="comment-book-text">评论过的电影 2</p>
           </div>
@@ -52,6 +52,7 @@ import SelfComments from '../components/SelfComments'
 import UserInfo from '../components/UserInfo'
 import HistoryComment from '../components/HistoryComment'
 import TeamManage from '../components/TeamManage'
+import BookComment from "../components/BookComment";
 
 
 export default {
@@ -62,23 +63,8 @@ export default {
         info:'',
         history: '发帖历史',
         comment_book:[
-          {},
-          {},
-          {},
-          {},
-          {},
-          {},
-          {}
         ],
         comment_movie:[
-          {},
-          {},
-          {},
-          {},
-          {},
-          {},
-          {},
-          {}
         ],
         teams:[
           {},
@@ -93,7 +79,8 @@ export default {
       SelfComments,
       UserInfo,
       HistoryComment,
-      TeamManage
+      TeamManage,
+      BookComment
     },
   mounted() {
     this.axios({
@@ -106,7 +93,24 @@ export default {
     }).then(body =>{
       this.info = body;
       this.$store.dispatch("changeSComments", this.info.data);
-      console.log(this.$store.state.selfComments)
+    }).catch(error =>{
+      console.log(error)
+    });
+    this.axios({
+      method: 'post',
+      url: 'http://114.115.151.96:8666/reply/findFilmAndBookByReply',
+      data: {
+        id: this.$store.state.account,
+      },
+      crossDomain: true
+    }).then(body =>{
+      this.comment_book = body.data['booklist'];
+      this.comment_movie = body.data['filmlist'];
+      console.log("commented")
+      console.log(body.data)
+    }).catch(error =>{
+      console.log("commented")
+      console.log(error)
     });
   },
   computed:{
