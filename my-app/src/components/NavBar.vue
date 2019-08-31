@@ -16,11 +16,11 @@
       <div class="link-text" ><v-tab to="/" :aria-selected="grow" style="height: 100%">主页</v-tab></div>
       <div class="link-text" ><v-tab to="/bkhome" style="height: 100%">书籍</v-tab></div>
       <div class="link-text" ><v-tab to="/bmhome" style="height: 100%">影视</v-tab></div>
-      <div class="link-text" ><v-tab :to="group" style="height: 100%">小组</v-tab></div>
-      <div class="link-text" ><v-tab to="/selfinfo" style="height: 100%">我的</v-tab></div>
+      <div class="link-text" v-if="$store.state.logined"><v-tab :to="group" style="height: 100%">小组</v-tab></div>
+      <div class="link-text" v-if="$store.state.logined"><v-tab to="/selfinfo" style="height: 100%">我的</v-tab></div>
       <div style="width: 35%"></div>
 <!-------------------------------------------------------------浏览历史------------------------------------------------------------->
-      <v-menu open-on-hover bottom offset-y :close-on-content-click="closeOnContentClick">
+      <v-menu v-if="$store.state.logined" open-on-hover bottom offset-y :close-on-content-click="closeOnContentClick">
         <template v-slot:activator="{ on }">
           <v-btn
             dark
@@ -65,7 +65,7 @@
       </v-menu>
 
 <!-------------------------------------------------------------消息列表------------------------------------------------------------->
-      <v-menu bottom offset-y nudge-bottom="10" :close-on-content-click="closeOnContentClick" max-height="340">
+      <v-menu v-if="$store.state.logined" bottom offset-y nudge-bottom="10" :close-on-content-click="closeOnContentClick" max-height="340">
         <template v-slot:activator="{ on }">
           <v-btn
             dark
@@ -101,7 +101,7 @@
 <!------------------------------------------------------------------------------------------------------------------------------>
 
 <!-------------------------------------------------------------收藏夹------------------------------------------------------------->
-      <v-menu bottom offset-y nudge-bottom="10" :close-on-content-click="closeOnContentClick" max-height="325">
+      <v-menu v-if="$store.state.logined" bottom offset-y nudge-bottom="10" :close-on-content-click="closeOnContentClick" max-height="325">
           <template v-slot:activator="{ on }">
             <v-btn
               dark

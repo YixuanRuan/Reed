@@ -11,57 +11,59 @@
             return {
                 words: [
                     {
-                        name: "考研",
+                        name: "悬疑",
                         value: 10000
                     },
                     {
-                        name: "兼职",
+                        name: "惊悚",
                         value: 6181
                     },
                     {
-                        name: "食堂",
+                        name: "恐怖",
                         value: 4386
                     },
                     {
-                        name: "家教",
+                        name: "文艺",
                         value: 4055
                     },
                     {
-                        name: "大四",
+                        name: "欢乐",
                         value: 2467
                     },
                     {
-                        name: "研友",
+                        name: "轻松",
                         value: 2244
                     },
                     {
-                        name: "论文",
+                        name: "复古",
                         value: 1898
                     },
                     {
-                        name: "专接本",
+                        name: "历史",
                         value: 1484
                     },
                     {
-                        name: "招聘",
+                        name: "记录",
                         value: 1112
                     },
                     {
-                        name: "讲座",
+                        name: "正能量",
                         value: 965
                     },
                     {
-                        name: "图书馆",
+                        name: "鸡汤",
                         value: 847
                     },
                     {
-                        name: "租房",
+                        name: "二次元",
                         value: 582
                     }
-
                 ]
             };
         },
+        props: [
+
+        ],
         mounted() {
             this.$nextTick(() => {
                 this.initEchart();

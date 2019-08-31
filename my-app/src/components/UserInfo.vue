@@ -44,12 +44,12 @@
 </template>
 
 <script>
-    export default {
-        name: "UserInfo",
-      data: () => ({
-        show: false,
-      }),
-    }
+export default {
+    name: "UserInfo",
+  data: () => ({
+    show: false,
+  }),
+}
 </script>
 
 <style scoped>
