@@ -141,6 +141,20 @@ export default {
         this.comment_num = '255';
         this.avatar_img = this.$store.state.avatar_img_prefix + body.data.reply.id;
       });
+    },
+    getBest(){
+      this.axios({
+        method: 'post',
+        url: 'http://114.115.151.96:8666/film/find',
+        data: {
+          id: this.$store.state.currentId
+        },
+        crossDomain: true
+      }).then(body =>{
+        console.log('movie!')
+        console.log(body)
+        this.info = body.data
+      })
     }
   }
 }
