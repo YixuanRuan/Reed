@@ -6,6 +6,12 @@
     elevation="5"
     style="border-radius: 0; width: 400px"
   >
+    <div class="topper">
+      <div class="toptag">
+        <div v-if="toptag==1" class="topped">置顶</div>
+        <div v-if="toptag==2" class="essence">精华</div>
+      </div>
+    </div>
 
     <v-card-actions>
       <v-list-item class="grow">
@@ -74,8 +80,8 @@
         <v-list style="background: #EEEEEE;padding: 2px;width: 130px">
           <v-list-item v-if="userType === 1" @click="delReport" class="card-option justify-center">忽略</v-list-item>
           <v-list-item v-if="userType === 1" @click="delPost" class="card-option justify-center">删除</v-list-item>
-          <v-list-item v-if="userType === 2" @click="" class="card-option justify-center">置顶</v-list-item>
-          <v-list-item v-if="userType === 2" @click="" class="card-option justify-center">设为精华</v-list-item>
+          <v-list-item v-if="userType === 2" @click="setTop" class="card-option justify-center">置顶</v-list-item>
+          <v-list-item v-if="userType === 2" @click="setFine" class="card-option justify-center">设为精华</v-list-item>
         </v-list>
       </v-menu>
       <v-card-actions class="justify-end" style="padding-bottom: 0px; width: 100%">
@@ -108,11 +114,14 @@ export default {
     this.clickLike()
   },
   props: {
+    toptag: {
+      default: 0
+    },
     reportId: {
       default: ''
     },
     userType: {
-      default: 0
+      default: 2
     },
     groupId: {
       default: 0
@@ -150,6 +159,33 @@ export default {
     }
   },
   methods: {
+    setTop () {
+      this.axios({
+        method: 'post',
+        url: 'http://114.115.151.96:8666/Posting/settop',
+        data: {
+          id: this.id,
+          status: 1
+        },
+        crossDomain: true
+      }).then(body => {
+        console.log(11111111111)
+        this.toptag = 1
+      })
+    },
+    setFine () {
+      this.axios({
+        method: 'post',
+        url: 'http://114.115.151.96:8666/Posting/setbest',
+        data: {
+          id: this.id,
+          status: 1
+        },
+        crossDomain: true
+      }).then(body => {
+        this.toptag = 2
+      })
+    },
     clickLike: function () {
       this.axios({
         method: 'post',
@@ -243,6 +279,35 @@ export default {
 </script>
 
 <style scoped>
+
+  .topped,
+  .essence{
+    height: 30px;
+    font-size: 20px;
+    border-bottom-left-radius: 10px;
+    width: 100px;
+    text-align: center;
+    float: right;
+  }
+
+  .topped{
+    background: #aaa;
+    color: #fff;
+  }
+  .essence{
+    background: #fff;
+    color: #aaa;
+  }
+
+  .topper{
+    display: flex;
+    flex-direction: row;
+  }
+
+  .toptag{
+    width: 100%;
+  }
+
   .comments-card{
     margin: 20px;
 
