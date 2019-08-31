@@ -23,25 +23,27 @@
 </template>
 
 <script>
-  import ScoreBar from "./ScoreBar"
-  export default {
-    components: {
-      ScoreBar
-    },
-    name: "SearchBar",
-    props:['image','title','fstl','scdl','score','type','id'],
-    methods:{
-      nav(type,id){
-        if(type=='book'){
-          this.$router.push()
-        }else if(type=='film'){
-          this.$router.push()
-        }else if(type=='team'){
-
-        }
+import ScoreBar from "./ScoreBar"
+export default {
+  components: {
+    ScoreBar
+  },
+  name: "SearchBar",
+  props:['image','title','fstl','scdl','score','type','id'],
+  methods:{
+    nav(type,id){
+      if(type=='book'){
+        this.$router.push()
+      }else if(type=='film'){
+        // this.
+        this.$router.push()
+      }else if(type=='team'){
+        this.$store.commit("changeGroup",id)
+        this.$router.push("/group")
       }
     }
   }
+}
 </script>
 
 <style scoped>

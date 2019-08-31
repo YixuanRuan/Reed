@@ -116,8 +116,8 @@
                :key="index"
                style="margin-right: 50px"
         >
-          <Comments :avatar_img="avatar_prefix + data.account" :name="data.username" :team_img="avatar_prefix + topics.teamId"
-                    :team_name="data.teamName" :title="data.title" :content="data.content"
+          <Comments :avatar_img="avatar_prefix + data.account" :name="data.username" :team_img="avatar_prefix + data.teamId"
+                    :team_name="data.teamName" :title="data.title" :content="data.content" :groupId="data.teamId"
                     :num_comment="data.replyNum" :num_like="data.likeNum" :id="data.id"
           />
         </v-col>
