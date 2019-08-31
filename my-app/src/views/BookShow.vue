@@ -20,6 +20,10 @@
                       :name="data.reply.replyerId" :comment="data.reply.content"
                       :title="data.reply.title" :id="data.reply.id"/>
       </v-col>
+      <v-col v-for="(data, index) in commentsReply" :key="index">
+        <SelfComments :avatar_img="avatar_prefix + data.userId" :name="data.userId" :comment="data.content"
+                      :title="data.title" :id="data.id" :type="2"/>
+      </v-col>
     </v-row>
     <PostReply v-if="$store.state.logined"
                :user_id="this.$store.state.account"
@@ -60,7 +64,11 @@ export default {
       comments: [
         {},
         {}
-      ]
+      ],
+        commentsReply: [
+            {},
+            {}
+        ]
     }
   },
   components: {
@@ -71,10 +79,11 @@ export default {
     SelfComments
   },
   mounted () {
-    this.initBMInfo()
+      this.bm_id = this.$store.state.currentId
+      this.initBMInfo()
     this.initBestReply()
     this.initComments()
-    this.bm_id = this.$store.state.currentBookId
+      this.initCommentsReply()
   },
   methods: {
     refresh (state) {
@@ -103,6 +112,20 @@ export default {
         this.comments = body.data
       })
     },
+      initCommentsReply: function () {
+          this.axios({
+              method: 'post',
+              url: 'http://114.115.151.96:8666/commentreply/findByMAB',
+              data: {
+
+                  id: this.$store.state.currentBookId
+              },
+              crossDomain: true
+          }).then(body => {
+              console.log(body)
+              this.commentsReply = body.data
+          })
+      },
     initBMInfo: function () {
       this.axios({
         method: 'post',

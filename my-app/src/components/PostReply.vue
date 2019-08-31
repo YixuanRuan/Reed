@@ -9,7 +9,8 @@
           background-color="white"
           color="black"
           label="你的回复"
-          hint="25字符及以上"
+          @click="onClick"
+          :hint="hintcontent"
           filled
           auto-grow
           :value="reply"
@@ -19,9 +20,7 @@
           发表
         </v-btn>
       </v-container>
-
     </div>
-
   </div>
 
 </template>
@@ -37,6 +36,13 @@ export default {
     }
   },
   methods: {
+    onClick () {
+        console.log(this.$store.state.currentReply)
+      if (this.$store.state.currentReply != '') {
+        this.replyId = this.$store.state.currentReply
+        this.hintcontent = '回复 ' + this.replyId
+      }
+    },
     addInformation () {
       this.axios({
         method: 'post',
@@ -51,33 +57,44 @@ export default {
     },
     replySubmit: function () {
       console.log(this.reply)
-      this.axios({
-        method: 'post',
-        url: 'http://114.115.151.96:8666/reply/add',
-        data: {
-          replyerId: this.user_id,
-          content: this.reply,
-          placeId: this.id,
-          type: this.type,
-          istop: false,
-          isbest: false
-        },
-        crossDomain: true
-      }).then(body => {
-        console.log('-------------------reply-------------------')
-        console.log('user_id', this.user_id)
-        console.log('id', this.id)
-        console.log('reply', this.reply)
-        console.log('type', this.type)
-        console.log('id', this.id)
-        console.log('-----------------reply end-----------------')
-        this.reply = ''
-        if (this.type === 4) {
-          this.addInformation()
-          this.onsubmit()
-        }
-        this.$emit('replyState', 'done')
-      })
+      if (this.replyId === '') {
+        this.axios({
+          method: 'post',
+          url: 'http://114.115.151.96:8666/reply/add',
+          data: {
+            replyerId: this.user_id,
+            content: this.reply,
+            placeId: this.id,
+            type: this.type,
+            istop: false,
+            isbest: false
+          },
+          crossDomain: true
+        }).then(body => {})
+      } else {
+        this.axios({
+          method: 'post',
+          url: 'http://114.115.151.96:8666/commentreply/add',
+          data: {
+            userId: this.user_id,
+            content: this.reply,
+            replyId: this.replyId
+          },
+          crossDomain: true
+        }).then(body => {})
+      }
+      console.log('-------------------reply-------------------')
+      console.log('user_id', this.user_id)
+      console.log('id', this.id)
+      console.log('reply', this.reply)
+      console.log('type', this.type)
+      console.log('id', this.id)
+      console.log('-----------------reply end-----------------')
+      this.reply = ''
+      if (this.type == '4') {
+        this.addInformation()
+        this.onsubmit()
+      }
     }
   },
   props: {
@@ -90,10 +107,19 @@ export default {
     id: {
       default: ''
     },
+    replyId: {
+      default: ''
+    },
     onsubmit: {
       type: Function,
       default: null
+    },
+    hintcontent: {
+      default: '25字以上'
     }
+  },
+  mounted () {
+
   }
 }
 </script>
@@ -104,7 +130,6 @@ export default {
   .reply-text-container{
     display:-webkit-box;
     -webkit-box-pack:center;/* 水平居中 */
-
   }
   .reply-text{
     color: #AAAAAA;

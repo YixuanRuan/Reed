@@ -15,8 +15,12 @@
                   :like_num="like_num" :comment_num="comment_num" :avatar_img="avatar_img"/>
     <v-row>
       <v-col v-for="(data, index) in comments" :key="index">
-        <SelfComments :avatar_img="avatar_prefix + data.reply.replyerId" :name="data.reply.replyerId" :comment="data.reply.content"
-                      :title="data.reply.tilte" :id="data.reply.id"/>
+        <SelfComments :avatar_img="avatar_prefix + data.replyerId" :name="data.replyerId" :comment="data.content"
+                      :title="data.title" :id="data.id"/>
+      </v-col>
+      <v-col v-for="(data, index) in commentsReply" :key="index">
+        <SelfComments :avatar_img="avatar_prefix + data.replyerId" :name="data.replyerId" :comment="data.content"
+                      :title="data.title" :id="data.id" :type="2"/>
       </v-col>
     </v-row>
     <PostReply v-if="$store.state.logined"
@@ -67,6 +71,10 @@ export default {
       comments: [
         {},
         {}
+      ],
+      commentsReply: [
+        {},
+        {}
       ]
     }
   },
@@ -84,6 +92,7 @@ export default {
     this.initBMInfo()
     this.initBestReply()
     this.initComments()
+    this.initCommentsReply()
   },
   methods: {
     refresh (state) {
@@ -103,12 +112,26 @@ export default {
         method: 'post',
         url: 'http://114.115.151.96:8666/reply/list',
         data: {
+          id: this.$store.state.currentId
+        },
+        crossDomain: true
+      }).then(body => {
+        this.comments = body.data.replylist
+        console.log(this.comments)
+      })
+    },
+    initCommentsReply: function () {
+      this.axios({
+        method: 'post',
+        url: 'http://114.115.151.96:8666/commentreply/findByMAB',
+        data: {
 
           id: this.$store.state.currentId
         },
         crossDomain: true
       }).then(body => {
-        this.comments = body.data
+        console.log(body)
+        this.commentsReply = body.data
       })
     },
     initBMInfo: function () {
@@ -120,9 +143,14 @@ export default {
         },
         crossDomain: true
       }).then(body => {
-        console.log('movie!')
-        console.log(body)
-        this.info = body.data
+        console.log('movie', body)
+        this.intro = body.data.intro
+        this.filmName = body.data.filmName
+        this.director = body.data.director
+        this.starring = body.data.starring
+        this.filmTime = body.data.filmTime
+        this.finalScore = body.data.finalScore
+        this.poster_img = this.img_prefix + body.data.id
       })
     },
     initBestReply: function () {
