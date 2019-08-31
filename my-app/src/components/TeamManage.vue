@@ -23,7 +23,7 @@
       </v-col>
       <v-col cols="4" class="team-btn-container">
         <v-btn depressed large dark height="30" width="217" color="#AAAAAA">管理小组</v-btn>
-        <v-btn depressed large dark height="30" width="217" color="#AAAAAA" class="team-btn">退出小组</v-btn>
+        <v-btn depressed large dark height="30" width="217" color="#AAAAAA" class="team-btn" @click="exitGroup">退出小组</v-btn>
       </v-col>
     </v-row>
   </div>
@@ -40,8 +40,41 @@ export default {
       default: '诗和远方'
     },
     position: {
-      default: '管理员'
+      default: '成员'
+    },
+    id: {
+        default: ''
     }
+  },
+
+  methods: {
+      exitGroup: function(){
+          console.log(this.$store.state.account)
+          console.log(this.id)
+          this.axios.post('http://114.115.151.96:8666/Team/out', {
+                  account: this.$store.state.account,
+                  teamid: this.id
+              }
+          )
+              .then(function (response) {
+                  console.log(response)
+                  this.$store.state.groupExit.succeed=true
+              })
+              .catch(function (error) {
+                  console.log('error')
+                  this.$store.state.groupExit.succeed=false
+              })
+      }
+  },
+
+  mounted() {
+      if (this.position==1){
+          this.position = '创建人'
+      }else if (this.position==2){
+          this.position = '管理员'
+      }else if (this.position==1){
+          this.position = '成员'
+      }
   }
 }
 </script>
