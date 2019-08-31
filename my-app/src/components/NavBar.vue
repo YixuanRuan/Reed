@@ -85,7 +85,7 @@
               style="background-color:#CACACA; margin-top: 5px"
             >
               <v-row style="width: 300px; height: 105px;">
-                <v-col cols="9">
+                <v-col cols="9" @click="routerTo(index)">
                   <p class="massage-title">消息通知</p>
                   <p class="massage-content">您在{{item.teamName}}发表的评论得到回复，点击查看</p>
                 </v-col>
@@ -190,6 +190,14 @@ export default {
     }
   },
   methods:{
+    routerTo(index) {
+      this.$router.push({
+        name: `forum`,
+        params: {
+          postId: this.$store.state.massage_content[index].information.id
+        }
+      })
+    },
     submit: function(){
       this.$router.replace({path:'/search'})
     },
