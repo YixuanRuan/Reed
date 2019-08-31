@@ -2,7 +2,7 @@
   <v-card
     class="mx-auto comments-card"
     color="#ccc"
-    max-width="400"
+    max-width="350"
     elevation="5"
     style="border-radius: 0; width: 400px"
   >

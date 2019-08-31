@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="swiper">
-      <Swiper />
+      <Swiper :content="$store.state.bookSwiperImgs"/>
     </div>
     <div class="outer">
       <div style="position:relative;margin-top: 50px;margin-left: 30px">
@@ -11,19 +11,19 @@
         <p class="content-title">推荐</p>
         <div style="width: 100%; display:-webkit-box; -webkit-box-pack:center; background-color: white">
           <div class="hot-content">
-            <HistoryComment :card_content="today_recommend_content"/>
+            <BookComment :card_content="today_recommend_content"/>
           </div>
         </div>
         <p class="content-title">热门</p>
         <div style="width: 100%; display:-webkit-box; -webkit-box-pack:center; background-color: white">
           <div class="hot-content">
-            <HistoryComment :card_content="today_hot_content"/>
+            <BookComment :card_content="today_hot_content"/>
           </div>
         </div>
         <p class="content-title">最新</p>
         <div style="width: 100%; display:-webkit-box; -webkit-box-pack:center; background-color: white">
           <div class="hot-content">
-            <HistoryComment :card_content="today_new_content"/>
+            <BookComment :card_content="today_new_content"/>
           </div>
         </div>
       </div>
@@ -41,8 +41,8 @@
 </template>
 
 <script>
-import HistoryComment from '../components/HistoryComment'
 import WonderfulComment from '../components/WonderfulComment'
+import BookComment from "../components/BookComment";
 import draggable from 'vuedraggable'
 import SideBar from './SideBar'
 import Swiper from '../components/Swiper'
@@ -50,7 +50,7 @@ import Swiper from '../components/Swiper'
 export default {
   name: 'BKHome',
   components: {
-    HistoryComment,
+    BookComment,
     WonderfulComment,
     draggable,
     SideBar,
@@ -68,40 +68,64 @@ export default {
   mounted () {
     this.axios({
       method: 'post',
-      url: 'http://114.115.151.96:8666/search/filmlikelist',
+      url: 'http://114.115.151.96:8666/search/booklikelist',
       data: {
         pagesCount: 20
       },
       crossDomain: true
     }).then(body => {
       this.info = body
-      this.$store.dispatch('getTodayRecommend', this.info.data)
+      this.$store.dispatch('getTodayBookHot', this.info.data)
       console.log(this.info.data)
-    })
+    });
+    this.axios({
+      method: 'post',
+      url: 'http://114.115.151.96:8666/search/bookreplylist',
+      data: {
+        pagesCount: 20
+      },
+      crossDomain: true
+    }).then(body => {
+      this.info = body
+      this.$store.dispatch('getTodayBookRecommend', this.info.data)
+      console.log(this.info.data)
+    });
+    this.axios({
+      method: 'post',
+      url: 'http://114.115.151.96:8666/search/booktimelist',
+      data: {
+        pagesCount: 20
+      },
+      crossDomain: true
+    }).then(body => {
+      this.info = body
+      this.$store.dispatch('getTodayBookNew', this.info.data)
+      console.log(this.info.data)
+    });
   },
   computed: {
     today_hot_content: {
       get () {
-        return this.$store.state.today_hot_content
+        return this.$store.state.today_book_hot_content
       },
       set (newVal) {
-        this.$store.commit('handleTodayHotContent', newVal)
+        this.$store.commit('changeTodayBookHot', newVal)
       }
     },
     today_recommend_content: {
       get () {
-        return this.$store.state.today_recommend_content
+        return this.$store.state.today_book_recommend_content
       },
       set (newVal) {
-        this.$store.commit('handleTodayRecommendContent', newVal)
+        this.$store.commit('changeTodayBookRecommendContent', newVal)
       }
     },
     today_new_content: {
       get () {
-        return this.$store.state.today_new_content
+        return this.$store.state.today_book_new_content
       },
       set (newVal) {
-        this.$store.commit('handleTodayNewContent', newVal)
+        this.$store.commit('changeTodayBookNew', newVal)
       }
     }
   },
@@ -120,7 +144,7 @@ export default {
     color:#AAAAAA;
   }
   .hot-content{
-    width: 800px;
+    width: 80%;
   }
   .bm-part{
     width: 80%;
@@ -132,6 +156,6 @@ export default {
     background: white;
   }
   .swiper{
-    width: 100%;
+    width: 90%;
   }
 </style>

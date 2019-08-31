@@ -47,7 +47,8 @@
               class="item"
             >
               <GroupCard
-                :img="imgg+$store.state.groupFind.data[n-1]['id']"
+                :groupId="$store.state.groupFind.data[n-1]['id']"
+                :img="$store.state.avatar_img_prefix+$store.state.groupFind.data[n-1]['id']"
                 :groupName="$store.state.groupFind.data[n-1]['teamName']"
                 :groupMotto="$store.state.groupFind.data[n-1]['introduction']"
               ></GroupCard>
@@ -72,7 +73,6 @@ export default {
       tab: null,
       tabs: this.$store.state.groupFind.tabsNum,
       tabNames: this.$store.state.groupFind.tabNames,
-      imgg: 'http://114.115.151.96:8666/ProfilePicture/UserAccount/'
     }
   },
   mounted () {

@@ -16,7 +16,7 @@
       <div class="link-text" ><v-tab to="/" :aria-selected="grow" style="height: 100%">主页</v-tab></div>
       <div class="link-text" ><v-tab to="/bkhome" style="height: 100%">书籍</v-tab></div>
       <div class="link-text" ><v-tab to="/bmhome" style="height: 100%">影视</v-tab></div>
-      <div class="link-text" v-if="$store.state.logined"><v-tab :to="group" style="height: 100%">小组</v-tab></div>
+      <div class="link-text" @click="goToGroup" v-if="$store.state.logined"><v-tab style="height: 100%">小组</v-tab></div>
       <div class="link-text" v-if="$store.state.logined"><v-tab to="/selfinfo" style="height: 100%">我的</v-tab></div>
       <div style="width: 35%"></div>
 <!-------------------------------------------------------------浏览历史------------------------------------------------------------->
@@ -285,7 +285,7 @@ export default {
       })
     },
     getHistory () {
-      
+
     },
     addCollection () {
       var i = 0
@@ -304,37 +304,45 @@ export default {
         })
       }
     },
-    computed: {
-      group: {
-        get () {
-          if (this.$store.state.groupStatus.joinedNum == 0) {
-            return '/groupFind'
-          } else {
-            return '/myGroup'
-          }
-        }
-      },
-      collection: {
-        get () {
-          return this.$store.state.collection
+    goToGroup() {
+      var that=this
+      this.axios({
+        method: 'post',
+        url: 'http://114.115.151.96:8666/Team/findteambyuser',
+        data: {
+          id: this.$store.state.account
         },
-        set (newVal) {
-          this.$store.commit('handleCollection', newVal)
+        crossDomain: true
+      }).then(body => {
+        if(body.data.length>0){
+          that.$router.push('/myGroup')
+        }else{
+          that.$router.push('/groupFind')
         }
+      })
+    },
+  },
+  computed: {
+    collection: {
+      get () {
+        return this.$store.state.collection
       },
-      massage_content: {
-        get () {
-          return this.$store.state.massage_content
-        },
-        set (newVal) {
-          this.$store.commit('handleMassageContent', newVal)
-        }
+      set (newVal) {
+        this.$store.commit('handleCollection', newVal)
+      }
+    },
+    massage_content: {
+      get () {
+        return this.$store.state.massage_content
       },
-      optionLeft () {
-        return {
-          direction: 2,
-          limitMoveNum: 2
-        }
+      set (newVal) {
+        this.$store.commit('handleMassageContent', newVal)
+      }
+    },
+    optionLeft () {
+      return {
+        direction: 2,
+        limitMoveNum: 2
       }
     }
   }
