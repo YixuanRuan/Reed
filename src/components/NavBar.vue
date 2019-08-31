@@ -57,7 +57,8 @@ export default {
         keyword="everything"
       }
       this.$store.commit('changeKeyword',keyword)
-      this.$router.push('/search')
+      // res 为随机字符串,下面是跳转：
+      this.$router.push('/search/')
     }
   },
   computed:{

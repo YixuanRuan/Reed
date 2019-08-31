@@ -123,21 +123,13 @@ export default {
       for (var i=0;i<tagsChecked;i++){
         if(tagsChecked[i]) tags.push(i)
       }
-      this.$store.commit('groupCreate',tags).then(response => {
-        console.log(response)
-      }, error => {
-        console.log(error)
-      })
+      this.$store.commit('groupCreate',tags)
+      this.succeed=true
+      var that=this
+      setTimeout(function(){
+        that.$router.push("/myGroup")
+      },2000)
 
-      // console.log("hellllllo")
-      // if(this.$store.state.groupCreate.succeed){
-      //   console.log("entered")
-      //   this.$store.commit("changeGroupCreatSucceed")
-      //   var that=this
-      //   setTimeout(function(){
-      //     that.$router.push("/myGroup")
-      //   },1000)
-      // }
     }
   },
 }

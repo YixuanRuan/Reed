@@ -68,30 +68,13 @@ export default new Vuex.Store({
       keyword: '11',
       tab: 1,
       totalLen: 100,
-      pageSize: 5,
-      pageNum: 20,
-      dataShow: [
-        {
-          image:"https://cdn.vuetifyjs.com/images/profiles/marcus.jpg",
-          title:"I'm the 1 title",
-          fstl:"I'm the first line",
-          scdl:"I'm the second line",
-          sore:-45.6,
-        },
-        {
-          image:"https://cdn.vuetifyjs.com/images/profiles/marcus.jpg",
-          title:"I'm the 2 title",
-          fstl:"I'm the first line",
-          scdl:"I'm the second line",
-          sore:20.6,
-        },
-        {
-          image:"https://cdn.vuetifyjs.com/images/profiles/marcus.jpg",
-          title:"I'm the 3 title",
-          fstl:"I'm the first line",
-          scdl:"I'm the second line",
-          sore:20.6,
-        }],
+      pageSize: 3,
+      pageNum: {'book':1,'film':1,'team':1},
+      bookImgPath: "http://114.115.151.96:8666/ProfilePicture/UserAccount/",
+      filmImgPath: "http://114.115.151.96:8666/ProfilePicture/UserAccount/",
+      groupImgPath: "http://114.115.151.96:8666/ProfilePicture/UserAccount/",
+      field:['book','film','team'],
+      dataShow: {'book':[],'film':[],'team':[]},
       currentPage: 6,
       currentSearchTab: 0
     }
@@ -188,50 +171,59 @@ export default new Vuex.Store({
         })
     },
     changeKeyword(state, keyword){
-      console.log(keyword)
+      state.search.keyword=keyword
     },
     handleSearch(state){
-      console.log(state.search.keyword)
       axios.post('http://114.115.151.96:8666/search/find', {
         name: state.search.keyword
       })
         .then(function (response) {
-          state.search.dataShow = response.data
-          console.log(response)
+          console.log("entered")
+          state.search.dataShow= {'book':[],'film':[],'team':[]}
+          for (let x of state.search.field){
+            var lenn = 0
+            var i = 0
+            console.log(response.data[x])
+            state.search.pageNum[x] = Math.ceil(response.data[x].length/state.search.pageSize)
+            for (i = 0;i < state.search.pageNum[x]-1; i++){
+              lenn = i * state.search.pageSize
+              state.search.dataShow[x].push(response.data[x].slice(lenn,lenn+state.search.pageSize))
+            }
+            lenn = i*state.search.pageSize
+            state.search.dataShow[x].push(response.data[x].slice(lenn,response.data[x].length))
+          }
+          console.log(state.search.dataShow['book'][0])
           state.datas = response.data
         })
         .catch(function (error) {
           state.datas = { tit: error }
         })
-    },,
+    },
+    groupCreate(state,tags){
+      var ttags=[]
+      for (var i=0;i<tags.length;i++){
+        ttags.push(state.groupCreate.tags[ttags[i]])
+      }
+      axios.post('http://114.115.151.96:8666/Team/Add', {
+        introduction: state.groupCreate.intro,
+        teamName: state.groupCreate.name,
+        account: state.userId,
+        tags: ttags
+      })
+        .then(function (response) {
+          console.log(response)
+          state.groupCreate.succeed=true
+        })
+        .catch(function (error) {
+          state.datas = { tit: error }
+          state.groupCreate.succeed=false
+        })
+    },
     changeGroupCreatSucceed(state){
       state.groupCreate.succeed=false
     }
   },
   actions: {
-  groupCreate(context,tags){
-    var ttags=[]
-    for (var i=0;i<tags.length;i++){
-      ttags.push(context.state.groupCreate.tags[ttags[i]])
-    }
-    return new Promise((resolve, reject) =>{
-      axios.post('http://114.115.151.96:8666/Team/Add', {
-        introduction: context.state.groupCreate.intro,
-        teamName: context.state.groupCreate.name,
-        account: context.state.userId,
-        tags: ttags
-      })
-        .then(function (response) {
-          console.log(response)
-          commit(context.state.groupCreate.succeed=true
-          resolve("succeed")
-        })
-        .catch(function (error) {
-          context.state.datas = { tit: error }
-          state.groupCreate.succeed=false
-          reject("error")
-        })
-    })
-  }
+
   }
 })
