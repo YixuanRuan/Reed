@@ -19,6 +19,8 @@ export default new Vuex.Store({
     phoneNumber: '',
     verificationCode: '',
     true_verificationCode: 'root',
+    isgt: 'false',
+    verify: 'false',
     logined: false,
     error_img: '',
     isSuper: false,
@@ -26,6 +28,7 @@ export default new Vuex.Store({
     introduction: '',
     selfComments: [],
     searchBookId: '5d61fe1359f0004904de51b6',
+    avatar_img_prefix: 'http://114.115.151.96:8666/ProfilePicture/UserAccount/',
     book_img_prefix: 'http://114.115.151.96:8666/PosterPicture/MovieAccount/',
     movie_img_prefix: 'http://114.115.151.96:8666/PosterPicture/MovieAccount/',
     groupStatus: {
@@ -477,6 +480,12 @@ export default new Vuex.Store({
     },
     handleVerificationCode (state, newVal) {
       state.verificationCode = newVal
+    },
+    handleisgt (state) {
+      state.isgt = true
+    },
+    handleverify (state) {
+      state.verify = true
     },
     handleError (state, newVal) {
       state.error_img = newVal

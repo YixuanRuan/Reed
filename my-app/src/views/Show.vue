@@ -1,23 +1,31 @@
 <template>
   <div>
-    <Showcard :poster_img="poster_img" :filmName="filmName" :director="director" :starring="starring" :filmTime="filmTime" :finalScore="finalScore"/>
+    <Showcard :poster_img="$store.state.movie_img_prefix+info.id" :filmName="info.filmName"
+              :director="info.director" :starring="info.starring"
+              :filmTime="info.filmTime" :finalScore="info.finalScore"/>
     <v-row class="intro_outer">
       <v-col cols="4" class="intro-left">
         <div class="intro">简介</div>
       </v-col>
       <v-col cols="7" class="intro-right">
-        <div class="intro-content">{{intro}}</div>
+        <div class="intro-content">{{info.intro}}</div>
       </v-col>
     </v-row>
     <CommentsStar :star_reply_name="star_reply_name" :reply_content="reply_content"
                   :like_num="like_num" :comment_num="comment_num" :avatar_img="avatar_img"/>
     <v-row>
       <v-col v-for="(data, index) in comments" :key="index">
-        <SelfComments :avatar_img="avatar_prefix + data.replyerId" :name="data.replyerId" :comment="data.content"
-                      :title="data.tilte" :id="data.id"/>
+        <SelfComments :avatar_img="avatar_prefix + data.reply.replyerId" :name="data.reply.replyerId" :comment="data.reply.content"
+                      :title="data.reply.tilte" :id="data.reply.id"/>
       </v-col>
     </v-row>
-    <PostReply :user_id="this.$store.state.account" :id="bm_id" :type="type" v-on:child-say="listenToMyBoy"/>
+    <PostReply v-if="$store.state.logined"
+               :user_id="this.$store.state.account"
+               :id="bm_id" :type="type" v-on:child-say="listenToMyBoy"
+               @replyState="refresh"/>
+    <v-row v-else>
+      <v-row cols="12"><p class="pls">请登录再评论</p></v-row>
+    </v-row>
   </div>
 </template>
 
@@ -32,13 +40,10 @@ import SelfComments from '../components/SelfComments'
 export default {
   data () {
     return {
-
       flag: false,
-      type: '1',
-
+      type: '2',
       // reply
       bm_id: '',
-
       // Showcard
       intro: '《寄生虫》讲述了发生在身份地位悬殊的两个家庭身上的故事：宋康昊饰演的无业游民父亲基泽，让寄托了家人生计希望的大儿子（崔宇植 饰）前往IT公司老总朴社长（李善均 饰）家应聘课外教师，随之发生了一连串意外事件。',
       filmName: '',
@@ -48,6 +53,7 @@ export default {
       finalScore: '',
       poster_img: '',
       img_prefix: 'http://114.115.151.96:8666/PosterPicture/MovieAccount/',
+      info: {},
 
       // CommentsStar
       avatar_img: '',
@@ -74,12 +80,17 @@ export default {
     SelfComments
   },
   mounted () {
+    this.bm_id = this.$store.state.currentId
     this.initBMInfo()
     this.initBestReply()
     this.initComments()
-    this.bm_id = this.$store.state.currentId
   },
   methods: {
+    refresh (state) {
+      if (state == 'done') {
+        this.initComments()
+      }
+    },
     listenToMyBoy: function (somedata) {
       this.flag = somedata
       if (this.flag) {
@@ -92,11 +103,12 @@ export default {
         method: 'post',
         url: 'http://114.115.151.96:8666/reply/list',
         data: {
-          id: '5d65eeccd4a370186cdac7d4'
+
+          id: this.$store.state.currentId
         },
         crossDomain: true
       }).then(body => {
-        this.comments = body.data.replylist
+        this.comments = body.data
       })
     },
     initBMInfo: function () {
@@ -108,14 +120,9 @@ export default {
         },
         crossDomain: true
       }).then(body => {
+        console.log('movie!')
         console.log(body)
-        this.intro = body.data.intro
-        this.filmName = body.data.filmName
-        this.director = body.data.director
-        this.starring = body.data.starring
-        this.filmTime = body.data.filmTime
-        this.finalScore = body.data.finalScore
-        this.poster_img = this.img_prefix + body.data.id
+        this.info = body.data
       })
     },
     initBestReply: function () {
@@ -124,7 +131,7 @@ export default {
         url: 'http://114.115.151.96:8666/search/likebestReply',
         data: {
           // id:this.$store.state.currentId
-          id: '5d65eeccd4a370186cdac7d4'
+          id: this.$store.state.currentId
         },
         crossDomain: true
       }).then(body => {
@@ -133,7 +140,7 @@ export default {
         this.reply_content = body.data.reply.content
         this.like_num = body.data.likes
         this.comment_num = '255'
-        this.avatar_img = avatar_prefix + body.data.reply.id
+        this.avatar_img = this.$store.state.avatar_img_prefix + body.data.reply.id
       })
     }
   }
@@ -141,6 +148,17 @@ export default {
 </script>
 
 <style scoped>
+
+  .pls{
+    color: white;
+    background-color: #CCC;
+    height: 50px;
+    margin-top:50px;
+    width: 100%;
+    display:-webkit-box;
+    -webkit-box-align:center;/* 垂直居中 */
+    -webkit-box-pack:center;/* 水平居中 */
+  }
 
   .left-content{
   }

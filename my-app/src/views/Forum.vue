@@ -38,7 +38,8 @@ export default {
       post_type: 4,
       postContent: '',
       avatar_prefix: 'http://114.115.151.96:8666/ProfilePicture/UserAccount/',
-      selfComments: []
+      selfComments: [],
+      postId: '',
     }
   },
   components: {

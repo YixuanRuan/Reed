@@ -17,12 +17,12 @@
           </div>
           <HistoryComment :card_content="comment_movie"/>
           <div class="comment-movie">
-            <p class="comment-book-text">加入的小组 1</p>
+            <p class="comment-book-text">加入的小组 {{teams.length}}</p>
           </div>
           <div v-for="(data, index) in teams"
                :key="index"
           >
-            <TeamManage :team_img="teams.team_img" :team_name="teams.team_name" :position="teams.position"/>
+            <TeamManage :team_img="data.team.teamImg" :team_name="data.team.teamName" :position="data.power" :id="data.team.id"/>
           </div>
 
         </div>
@@ -82,6 +82,7 @@ export default {
     BookComment
   },
   mounted () {
+    console.log(this.$store.state)
     this.axios({
       method: 'post',
       url: 'http://114.115.151.96:8666/Posting/SearchHistory',
@@ -110,6 +111,17 @@ export default {
     }).catch(error => {
       console.log('commented')
       console.log(error)
+    })
+    this.axios({
+      method: 'post',
+      url: 'http://114.115.151.96:8666/Team/findteambyuser',
+      data: {
+        id: this.$store.state.account
+      },
+      crossDomain: true
+    }).then(body => {
+      this.teams = body.data
+      console.log(this.teams)
     })
   },
   computed: {
