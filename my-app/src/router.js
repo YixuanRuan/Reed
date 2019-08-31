@@ -69,7 +69,7 @@ export default new Router({
     },
     {
       path: '/bkshow',
-      name: 'bkshow'
+      name: 'bkshow',
       component: () => import(/* webpackChunkName: "bmhome" */ './views/BookShow.vue')
     },
     {
