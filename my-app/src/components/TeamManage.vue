@@ -58,11 +58,9 @@ export default {
           )
               .then(function (response) {
                   console.log(response)
-                  this.$store.state.groupExit.succeed=true
               })
               .catch(function (error) {
                   console.log('error')
-                  this.$store.state.groupExit.succeed=false
               })
       }
   },
