@@ -38,6 +38,18 @@
         }
       },
       methods:{
+        addInformation(){
+          this.axios({
+            method: 'post',
+            url: 'http://114.115.151.96:8666/Information/Add',
+            data: {
+              postingId: this.id
+            },
+            crossDomain: true
+          }).then(body => {
+            this.info = this.id
+          });
+        },
         replySubmit:function () {
           console.log(this.reply);
           this.axios({
@@ -60,7 +72,8 @@
             console.log('type', this.type)
             console.log('id',this.id)
             console.log('-----------------reply end-----------------')
-            this.reply = '';
+            this.reply = ''
+            this.addInformation()
             this.onsubmit()
           });
 

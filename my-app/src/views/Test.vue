@@ -14,7 +14,7 @@ export default {
     }
   },
   mounted () {
-    this.testCollectionGet()
+    this.testInformationGet()
   },
   methods:{
     testCollectionGet(){
@@ -50,6 +50,30 @@ export default {
           this.info = body
         });
       }
+    },
+    testInformationGet(){
+      this.axios({
+        method: 'post',
+        url: 'http://114.115.151.96:8666/Information/Get',
+        data: {
+          account: 'abcd',
+        },
+        crossDomain: true
+      }).then(body => {
+        this.info = body
+      });
+    },
+    testInformationAdd(){
+      this.axios({
+        method: 'post',
+        url: 'http://114.115.151.96:8666/Information/Add',
+        data: {
+          postingId: ''
+        },
+        crossDomain: true
+      }).then(body => {
+        this.info = body
+      });
     }
   }
 

@@ -274,11 +274,11 @@ export default {
             }
             // 登录成功
             else {
-              this.$router.push({ path: '/selfinfo' })
               this.$store.commit('logined')
               this.$store.dispatch('changeAC', this.info.data.user.account)
               this.$store.dispatch('changeInro', this.info.data.user.introduction)
               this.$store.dispatch('changeSelfAvatar', 'http://114.115.151.96:8666/ProfilePicture/UserAccount/' + this.info.data.user.account)
+              this.$router.push({ path: '/selfinfo' })
             }
           })
         }
@@ -317,7 +317,9 @@ export default {
             }).then(body => {
               this.info = body
               if (this.info.data == 1) {
+                console.log('register', this.$store.state.account)
                 this.$store.commit('logined')
+                this.$store.dispatch('changeAC', this.$store.state.username)
                 this.$router.push({ path: '/selfinfo' })
               }
               else {

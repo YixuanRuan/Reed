@@ -72,6 +72,7 @@
             icon
             v-on="on"
             style="margin-top:6px; margin-right: 20px"
+            @click="getInformation"
           >
             <v-icon>mdi-message-processing</v-icon>
           </v-btn>
@@ -85,8 +86,8 @@
             >
               <v-row style="width: 300px; height: 105px;">
                 <v-col cols="9">
-                  <p class="massage-title">{{item.massage_title}}</p>
-                  <p class="massage-content">{{item.massage_content}}</p>
+                  <p class="massage-title">消息通知</p>
+                  <p class="massage-content">您在{{item.teamName}}发表的评论得到回复，点击查看</p>
                 </v-col>
                 <v-col cols="3">
                   <v-btn dark icon class="icon-delete" v-on:click="deleteMassage(index)">
@@ -203,6 +204,28 @@ export default {
     },
     deleteMassage: function (index) {
       this.$store.dispatch('deleteMassageItem', index)
+
+      this.axios({
+        method: 'post',
+        url: 'http://114.115.151.96:8666/Information/Del',
+        data: {
+          id: this.$store.state.massage_content[index].information.id
+        },
+        crossDomain: true
+      })
+    },
+    getInformation(){
+      this.axios({
+        method: 'post',
+        url: 'http://114.115.151.96:8666/Information/Get',
+        data: {
+          account: this.$store.state.account,
+        },
+        crossDomain: true
+      }).then(body => {
+        console.log('massage', body.data)
+        this.$store.dispatch('changeMassageData', body.data)
+      });
     }
   },
   computed: {

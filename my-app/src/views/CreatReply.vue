@@ -23,7 +23,7 @@
           method: 'post',
           url: 'http://114.115.151.96:8666/Posting/Add',
           data: {
-            account:'abcd',
+            account:this.$store.state.account,
             teamId:'5d65f9b259f000353446afbb',
             title: this.title_value,
             content: this.value
