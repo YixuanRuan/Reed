@@ -50,9 +50,27 @@
     <v-card-text class="text-content">
       {{content}}
     </v-card-text>
-    <v-card-actions style="padding-bottom: 0px">
-      <v-list-item class="grow">
 
+    <v-card-actions style="padding-bottom: 0px">
+      <v-menu bottom offset-y nudge-bottom="10" :close-on-content-click="closeOnContentClick" max-height="300" style="float:left !important;">
+        <template v-slot:activator="{ on }">
+          <v-btn
+            dark
+            icon
+            v-on="on"
+          >
+            <v-icon>mdi-menu</v-icon>
+          </v-btn>
+        </template>
+
+        <v-list style="background: #EEEEEE;padding: 2px;width: 130px">
+          <v-list-item @click="" class="card-option justify-center">举报</v-list-item>
+          <v-list-item @click="" class="card-option justify-center">删除</v-list-item>
+          <v-list-item @click="" class="card-option justify-center">置顶</v-list-item>
+          <v-list-item @click="" class="card-option justify-center">设为精华</v-list-item>
+        </v-list>
+      </v-menu>
+      <v-list-item class="grow" style="margin-left: -40px">
         <v-row
           align="center"
           justify="end"
