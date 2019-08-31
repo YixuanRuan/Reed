@@ -50,9 +50,7 @@ export default {
     },
    data () {
     return {
-      finalScore: {
-          default: 0
-      }
+
     }
   },
   props: ['poster_img', 'bookName', 'author',

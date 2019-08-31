@@ -26,7 +26,7 @@
     }),
     props:{
       score:{
-        default: 23.3
+        default: 0
       }
     },
     computed: {
