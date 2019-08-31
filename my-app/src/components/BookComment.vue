@@ -18,7 +18,7 @@
           :key="index"
         >
           <div @click="getBMId(data)">
-            <InfoCard style="margin-right: 2px" :poster_img="img_prefix+data.id" :name="data.bookName"
+            <BookCard style="margin-right: 2px" :poster_img="img_prefix+data.id" :name="data.bookName"
                       :score="data.score" :author="data.author" :publisher="data.publisher"
                       :isbn="data.isbn" :intro="data.intro" :price="data.price" :id="data.id"/>
           </div>
@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import InfoCard from './InfoCard'
+import BookCard from './BookCard'
 import draggable from 'vuedraggable'
 
 export default {
@@ -45,7 +45,7 @@ export default {
     }
   },
   components: {
-    InfoCard,
+    BookCard,
     draggable
   },
   props: [
