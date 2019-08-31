@@ -13,11 +13,11 @@
           <v-col cols="4" v-for="i in $store.state.myGroup.comments[page-1].length" :key="i">
             <Comments
               class="comments"
-              :group-id="$store.state.myGroup.comments[page-1][i-1]['teamId']"
+              :groupId="$store.state.myGroup.comments[page-1][i-1]['teamId']"
               :name="$store.state.myGroup.comments[page-1][i-1]['username']"
-              :avatar_img="imgg+$store.state.myGroup.comments[page-1][i-1]['account']"
+              :avatar_img="$store.state.avatar_img_prefix+$store.state.myGroup.comments[page-1][i-1]['account']"
               :team_name="$store.state.myGroup.comments[page-1][i-1]['teamName']"
-              :team_img="imgg+$store.state.myGroup.comments[page-1][i-1]['teamId']"
+              :team_img="$store.state.avatar_img_prefix+$store.state.myGroup.comments[page-1][i-1]['teamId']"
               :title="$store.state.myGroup.comments[page-1][i-1]['title']"
               :content="$store.state.myGroup.comments[page-1][i-1]['content']"
             ></Comments>
@@ -40,12 +40,14 @@
         <div class="fixed">
           <v-row >
             <v-col cols="10">
-              <div class="heading group_head">我加入的小组</div>
+              <div class="heading group_head" style="min-width: 150px;">我加入的小组</div>
             </v-col>
           </v-row>
-          <v-row >
-            <v-col cols="4" v-for="i in $store.state.groupStatus.myGroups.length" :key="i">
-              <GroupCardShort :img="imgg+$store.state.groupStatus.myGroups[i-1]['id']" :groupName="$store.state.groupStatus.myGroups[i-1]['teamName']"></GroupCardShort>
+          <v-row style="width: 100%;">
+            <v-col cols="4" v-for="i in myGroups.length" :key="i">
+              <GroupCardShort :groupId="myGroups[i-1]['team']['id']"
+                              :img="$store.state.avatar_img_prefix+myGroups[i-1]['team']['id']"
+                              :groupName="myGroups[i-1]['team']['teamName']"></GroupCardShort>
             </v-col>
           </v-row>
           <v-row>
@@ -69,13 +71,13 @@ export default {
   name: 'MyGroup',
   data () {
     return {
-      imgg: 'http://114.115.151.96:8666/ProfilePicture/UserAccount/',
       page: 1,
       circle: false,
       disabled: false,
       nextIcon: 'mdi-arrow-right',
       prevIcon: 'mdi-arrow-left',
-      totalVisible: 10
+      totalVisible: 10,
+      myGroups:[]
     }
   },
   components: {
@@ -90,6 +92,19 @@ export default {
   created () {
     this.$store.commit('handleMyGroup')
     console.log(1)
+  },
+  mounted() {
+    this.axios({
+      method: 'post',
+      url: 'http://114.115.151.96:8666/Team/findteambyuser',
+      data: {
+        id: this.$store.state.account
+      },
+      crossDomain: true
+    }).then(body => {
+      this.myGroups = body.data
+      console.log(this.myGroups)
+    })
   }
 }
 </script>

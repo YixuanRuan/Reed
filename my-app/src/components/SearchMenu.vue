@@ -28,7 +28,7 @@
         <SearchBar
           v-for="bar in $store.state.search.dataShow['book'][page-1]"
           :key="bar"
-          :image="$store.state.search.bookImgPath+bar['id']"
+          :image="$store.state.book_img_prefix+bar['id']"
           :type="'book'"
           :id="bar['id']"
           :title="bar['bookName']"
@@ -45,7 +45,7 @@
         <SearchBar
           v-for="bar in $store.state.search.dataShow['film'][page-1]"
           :key="bar"
-          :image="$store.state.search.filmImgPath+bar['id']"
+          :image="$store.state.movie_img_prefix+bar['id']"
           :type="'film'"
           :id="bar['id']"
           :title="bar['filmName']"
@@ -62,7 +62,7 @@
         <SearchBar
           v-for="bar in $store.state.search.dataShow['team'][page-1]"
           :key="bar"
-          :image="$store.state.search.groupImgPath+bar['id']"
+          :image="$store.state.avatar_img_prefix+bar['id']"
           :type="'team'"
           :id="bar['id']"
           :title="bar['teamName']"

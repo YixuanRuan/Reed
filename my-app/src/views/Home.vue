@@ -455,7 +455,7 @@ export default {
 
 <style scoped>
   .hot-content{
-    width: 1060px;
+    width: 85%;
   }
 
   .right-content{

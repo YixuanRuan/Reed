@@ -32,6 +32,34 @@ export default new Vuex.Store({
     avatar_img_prefix: 'http://114.115.151.96:8666/ProfilePicture/UserAccount/',
     book_img_prefix: 'http://114.115.151.96:8666/PosterPicture/MovieAccount/',
     movie_img_prefix: 'http://114.115.151.96:8666/PosterPicture/MovieAccount/',
+    bookSwiperImgs:[
+      {
+        index: 1,
+        imgUrl: require('./imgs/swiper-ontheroad.jpg'),
+      },
+      {
+        index: 2,
+        imgUrl: require('./imgs/swiper-roma.jpg'),
+      },
+      {
+        index: 3,
+        imgUrl: require('./imgs/swiper-string.jpg'),
+      }
+    ],
+    filmSwiperImgs:[
+      {
+        index: 1,
+        imgUrl: require('./imgs/1.jpg'),
+      },
+      {
+        index: 2,
+        imgUrl: require('./imgs/2.jpg'),
+      },
+      {
+        index: 3,
+        imgUrl: require('./imgs/3.jpg'),
+      }
+    ],
     groupStatus: {
       joinedNum: 0,
       myGroups: [{
@@ -104,155 +132,16 @@ export default new Vuex.Store({
 
     // 今日推荐
     today_recommend_content: [],
-
     today_book_recommend_content: [],
+
     // 今日最新
-    today_new_content: [
-      {
-        poster_img: 'https://m.media-amazon.com/images/M/MV5BMTU0OTc3ODk4Ml5BMl5BanBnXkFtZTgwMzM4NzI5NjM@._V1_UX182_CR0,0,182,268_AL_.jpg',
-        name: 'n1',
-        score: 37.6,
-        director: '阿方索·卡隆',
-        Starring: '雅利扎·阿巴里西奥',
-        duration: 135,
-        brief: '故事发生在墨西哥城的一个中产阶级社区“罗马”，讲述年轻女佣克里奥突如其来的两个意外，同时砸中了女佣克里奥和雇主索菲亚，两人究竟该如何面对苦涩茫然的生活？故事发生在墨西哥城的一个中产阶级社区“罗马”，讲述年轻女佣克里奥突如其来的两个意外，同时砸中了女佣克里奥和雇主索菲亚，两人究竟该如何面对苦涩茫然的生活？',
-        looked: '1024'
-      },
-      {
-        poster_img: 'https://m.media-amazon.com/images/M/MV5BMTU0OTc3ODk4Ml5BMl5BanBnXkFtZTgwMzM4NzI5NjM@._V1_UX182_CR0,0,182,268_AL_.jpg',
-        name: 'n2',
-        score: 37.6,
-        director: '阿方索·卡隆',
-        Starring: '雅利扎·阿巴里西奥',
-        duration: 135,
-        brief: '故事发生在墨西哥城的一个中产阶级社区“罗马”，讲述年轻女佣克里奥突如其来的两个意外，同时砸中了女佣克里奥和雇主索菲亚，两人究竟该如何面对苦涩茫然的生活？故事发生在墨西哥城的一个中产阶级社区“罗马”，讲述年轻女佣克里奥突如其来的两个意外，同时砸中了女佣克里奥和雇主索菲亚，两人究竟该如何面对苦涩茫然的生活？',
-        looked: '1024'
-      },
-      {
-        poster_img: 'https://m.media-amazon.com/images/M/MV5BMTU0OTc3ODk4Ml5BMl5BanBnXkFtZTgwMzM4NzI5NjM@._V1_UX182_CR0,0,182,268_AL_.jpg',
-        name: 'n3',
-        score: 37.6,
-        director: '阿方索·卡隆',
-        Starring: '雅利扎·阿巴里西奥',
-        duration: 135,
-        brief: '故事发生在墨西哥城的一个中产阶级社区“罗马”，讲述年轻女佣克里奥突如其来的两个意外，同时砸中了女佣克里奥和雇主索菲亚，两人究竟该如何面对苦涩茫然的生活？故事发生在墨西哥城的一个中产阶级社区“罗马”，讲述年轻女佣克里奥突如其来的两个意外，同时砸中了女佣克里奥和雇主索菲亚，两人究竟该如何面对苦涩茫然的生活？',
-        looked: '1024'
-      },
-      {
-        poster_img: 'https://m.media-amazon.com/images/M/MV5BMTU0OTc3ODk4Ml5BMl5BanBnXkFtZTgwMzM4NzI5NjM@._V1_UX182_CR0,0,182,268_AL_.jpg',
-        name: 'n4',
-        score: 37.6,
-        director: '阿方索·卡隆',
-        Starring: '雅利扎·阿巴里西奥',
-        duration: 135,
-        brief: '故事发生在墨西哥城的一个中产阶级社区“罗马”，讲述年轻女佣克里奥突如其来的两个意外，同时砸中了女佣克里奥和雇主索菲亚，两人究竟该如何面对苦涩茫然的生活？故事发生在墨西哥城的一个中产阶级社区“罗马”，讲述年轻女佣克里奥突如其来的两个意外，同时砸中了女佣克里奥和雇主索菲亚，两人究竟该如何面对苦涩茫然的生活？',
-        looked: '1024'
-      },
-      {
-        poster_img: 'https://m.media-amazon.com/images/M/MV5BMTU0OTc3ODk4Ml5BMl5BanBnXkFtZTgwMzM4NzI5NjM@._V1_UX182_CR0,0,182,268_AL_.jpg',
-        name: 'n5',
-        score: 37.6,
-        director: '阿方索·卡隆',
-        Starring: '雅利扎·阿巴里西奥',
-        duration: 135,
-        brief: '故事发生在墨西哥城的一个中产阶级社区“罗马”，讲述年轻女佣克里奥突如其来的两个意外，同时砸中了女佣克里奥和雇主索菲亚，两人究竟该如何面对苦涩茫然的生活？故事发生在墨西哥城的一个中产阶级社区“罗马”，讲述年轻女佣克里奥突如其来的两个意外，同时砸中了女佣克里奥和雇主索菲亚，两人究竟该如何面对苦涩茫然的生活？',
-        looked: '1024'
-      },
-      {
-        poster_img: 'https://m.media-amazon.com/images/M/MV5BMTU0OTc3ODk4Ml5BMl5BanBnXkFtZTgwMzM4NzI5NjM@._V1_UX182_CR0,0,182,268_AL_.jpg',
-        name: 'n6',
-        score: 37.6,
-        director: '阿方索·卡隆',
-        Starring: '雅利扎·阿巴里西奥',
-        duration: 135,
-        brief: '故事发生在墨西哥城的一个中产阶级社区“罗马”，讲述年轻女佣克里奥突如其来的两个意外，同时砸中了女佣克里奥和雇主索菲亚，两人究竟该如何面对苦涩茫然的生活？故事发生在墨西哥城的一个中产阶级社区“罗马”，讲述年轻女佣克里奥突如其来的两个意外，同时砸中了女佣克里奥和雇主索菲亚，两人究竟该如何面对苦涩茫然的生活？',
-        looked: '1024'
-      },
-      {
-        poster_img: 'https://m.media-amazon.com/images/M/MV5BMTU0OTc3ODk4Ml5BMl5BanBnXkFtZTgwMzM4NzI5NjM@._V1_UX182_CR0,0,182,268_AL_.jpg',
-        name: 'n7',
-        score: 37.6,
-        director: '阿方索·卡隆',
-        Starring: '雅利扎·阿巴里西奥',
-        duration: 135,
-        brief: '故事发生在墨西哥城的一个中产阶级社区“罗马”，讲述年轻女佣克里奥突如其来的两个意外，同时砸中了女佣克里奥和雇主索菲亚，两人究竟该如何面对苦涩茫然的生活？故事发生在墨西哥城的一个中产阶级社区“罗马”，讲述年轻女佣克里奥突如其来的两个意外，同时砸中了女佣克里奥和雇主索菲亚，两人究竟该如何面对苦涩茫然的生活？',
-        looked: '1024'
-      }
-    ],
+    today_new_content: [],
+    today_book_new_content: [],
 
     // 今日热点
-    today_hot_content: [
-      {
-        poster_img: 'https://m.media-amazon.com/images/M/MV5BMTU0OTc3ODk4Ml5BMl5BanBnXkFtZTgwMzM4NzI5NjM@._V1_UX182_CR0,0,182,268_AL_.jpg',
-        name: '1',
-        score: 37.6,
-        director: '阿方索·卡隆',
-        Starring: '雅利扎·阿巴里西奥',
-        duration: 135,
-        brief: '故事发生在墨西哥城的一个中产阶级社区“罗马”，讲述年轻女佣克里奥突如其来的两个意外，同时砸中了女佣克里奥和雇主索菲亚，两人究竟该如何面对苦涩茫然的生活？故事发生在墨西哥城的一个中产阶级社区“罗马”，讲述年轻女佣克里奥突如其来的两个意外，同时砸中了女佣克里奥和雇主索菲亚，两人究竟该如何面对苦涩茫然的生活？',
-        looked: '1024'
-      },
-      {
-        poster_img: 'https://m.media-amazon.com/images/M/MV5BMTU0OTc3ODk4Ml5BMl5BanBnXkFtZTgwMzM4NzI5NjM@._V1_UX182_CR0,0,182,268_AL_.jpg',
-        name: '2',
-        score: 37.6,
-        director: '阿方索·卡隆',
-        Starring: '雅利扎·阿巴里西奥',
-        duration: 135,
-        brief: '故事发生在墨西哥城的一个中产阶级社区“罗马”，讲述年轻女佣克里奥突如其来的两个意外，同时砸中了女佣克里奥和雇主索菲亚，两人究竟该如何面对苦涩茫然的生活？故事发生在墨西哥城的一个中产阶级社区“罗马”，讲述年轻女佣克里奥突如其来的两个意外，同时砸中了女佣克里奥和雇主索菲亚，两人究竟该如何面对苦涩茫然的生活？',
-        looked: '1024'
-      },
-      {
-        poster_img: 'https://m.media-amazon.com/images/M/MV5BMTU0OTc3ODk4Ml5BMl5BanBnXkFtZTgwMzM4NzI5NjM@._V1_UX182_CR0,0,182,268_AL_.jpg',
-        name: '3',
-        score: 37.6,
-        director: '阿方索·卡隆',
-        Starring: '雅利扎·阿巴里西奥',
-        duration: 135,
-        brief: '故事发生在墨西哥城的一个中产阶级社区“罗马”，讲述年轻女佣克里奥突如其来的两个意外，同时砸中了女佣克里奥和雇主索菲亚，两人究竟该如何面对苦涩茫然的生活？故事发生在墨西哥城的一个中产阶级社区“罗马”，讲述年轻女佣克里奥突如其来的两个意外，同时砸中了女佣克里奥和雇主索菲亚，两人究竟该如何面对苦涩茫然的生活？',
-        looked: '1024'
-      },
-      {
-        poster_img: 'https://m.media-amazon.com/images/M/MV5BMTU0OTc3ODk4Ml5BMl5BanBnXkFtZTgwMzM4NzI5NjM@._V1_UX182_CR0,0,182,268_AL_.jpg',
-        name: '4',
-        score: 37.6,
-        director: '阿方索·卡隆',
-        Starring: '雅利扎·阿巴里西奥',
-        duration: 135,
-        brief: '故事发生在墨西哥城的一个中产阶级社区“罗马”，讲述年轻女佣克里奥突如其来的两个意外，同时砸中了女佣克里奥和雇主索菲亚，两人究竟该如何面对苦涩茫然的生活？故事发生在墨西哥城的一个中产阶级社区“罗马”，讲述年轻女佣克里奥突如其来的两个意外，同时砸中了女佣克里奥和雇主索菲亚，两人究竟该如何面对苦涩茫然的生活？',
-        looked: '1024'
-      },
-      {
-        poster_img: 'https://m.media-amazon.com/images/M/MV5BMTU0OTc3ODk4Ml5BMl5BanBnXkFtZTgwMzM4NzI5NjM@._V1_UX182_CR0,0,182,268_AL_.jpg',
-        name: '1',
-        score: 37.6,
-        director: '阿方索·卡隆',
-        Starring: '雅利扎·阿巴里西奥',
-        duration: 135,
-        brief: '故事发生在墨西哥城的一个中产阶级社区“罗马”，讲述年轻女佣克里奥突如其来的两个意外，同时砸中了女佣克里奥和雇主索菲亚，两人究竟该如何面对苦涩茫然的生活？故事发生在墨西哥城的一个中产阶级社区“罗马”，讲述年轻女佣克里奥突如其来的两个意外，同时砸中了女佣克里奥和雇主索菲亚，两人究竟该如何面对苦涩茫然的生活？',
-        looked: '1024'
-      },
-      {
-        poster_img: 'https://m.media-amazon.com/images/M/MV5BMTU0OTc3ODk4Ml5BMl5BanBnXkFtZTgwMzM4NzI5NjM@._V1_UX182_CR0,0,182,268_AL_.jpg',
-        name: '5',
-        score: 37.6,
-        director: '阿方索·卡隆',
-        Starring: '雅利扎·阿巴里西奥',
-        duration: 135,
-        brief: '故事发生在墨西哥城的一个中产阶级社区“罗马”，讲述年轻女佣克里奥突如其来的两个意外，同时砸中了女佣克里奥和雇主索菲亚，两人究竟该如何面对苦涩茫然的生活？故事发生在墨西哥城的一个中产阶级社区“罗马”，讲述年轻女佣克里奥突如其来的两个意外，同时砸中了女佣克里奥和雇主索菲亚，两人究竟该如何面对苦涩茫然的生活？',
-        looked: '1024'
-      },
-      {
-        poster_img: 'https://m.media-amazon.com/images/M/MV5BMTU0OTc3ODk4Ml5BMl5BanBnXkFtZTgwMzM4NzI5NjM@._V1_UX182_CR0,0,182,268_AL_.jpg',
-        name: '6',
-        score: 37.6,
-        director: '阿方索·卡隆',
-        Starring: '雅利扎·阿巴里西奥',
-        duration: 135,
-        brief: '故事发生在墨西哥城的一个中产阶级社区“罗马”，讲述年轻女佣克里奥突如其来的两个意外，同时砸中了女佣克里奥和雇主索菲亚，两人究竟该如何面对苦涩茫然的生活？故事发生在墨西哥城的一个中产阶级社区“罗马”，讲述年轻女佣克里奥突如其来的两个意外，同时砸中了女佣克里奥和雇主索菲亚，两人究竟该如何面对苦涩茫然的生活？',
-        looked: '1024'
-      }
-    ],
+    today_hot_content: [],
+    today_book_hot_content: [],
+
     collection: [
       {
         id: '5d6a18f0d4a37011ec598f6a',
@@ -266,18 +155,6 @@ export default new Vuex.Store({
         score: '37.6',
         account: 'abcd'
       }
-      // {
-      //   id: "5d65eeccd4a370186cdac7d2",
-      //   filmName: "拜见女仆大人",
-      //   score: "37.6",
-      //   account: "abcd"
-      // },
-      // {
-      //   id: "5d65eeccd4a370186cdac7d1",
-      //   filmName: "心跳 Hart Beat",
-      //   score: "37.6",
-      //   account: "abcd"
-      // }
     ]
   },
   methods: {
@@ -338,6 +215,7 @@ export default new Vuex.Store({
         account: state.account
       })
         .then(function (response) {
+          console.log(response.data)
           state.myGroup.pageNum = Math.ceil(response.data.length / state.myGroup.pageSize)
           var lenn = 0
           var i = 0
@@ -507,6 +385,18 @@ export default new Vuex.Store({
     changeTodayBookRecommendContent (state, newList) {
       state.today_book_recommend_content = newList
     },
+    changeTodayNew (state, newList) {
+      state.today_new_content = newList
+    },
+    changeTodayBookNew (state, newList) {
+      state.today_book_new_content = newList
+    },
+    changeTodayHot (state, newList) {
+      state.today_hot_content = newList
+    },
+    changeTodayBookHot (state, newList) {
+      state.today_book_hot_content = newList
+    },
     changeSelfComments (state, newList) {
       state.selfComments = newList
     },
@@ -553,6 +443,18 @@ export default new Vuex.Store({
     },
     getTodayBookRecommend (context, newList) {
       context.commit('changeTodayBookRecommendContent', newList)
+    },
+    getTodayNew (context, newList) {
+      context.commit('changeTodayNew', newList)
+    },
+    getTodayBookNew (context, newList) {
+      context.commit('changeTodayBookNew', newList)
+    },
+    getTodayHot (context, newList) {
+      context.commit('changeTodayHot', newList)
+    },
+    getTodayBookHot (context, newList) {
+      context.commit('changeTodayBookHot', newList)
     },
     changeSelfAvatar (context, newAvatar) {
       context.commit('changeAvatar', newAvatar)

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="swiper">
-      <Swiper />
+      <Swiper :content="$store.state.filmSwiperImgs"/>
     </div>
     <div class="outer">
       <div style="position:relative;margin-top: 50px;margin-left: 30px">
@@ -75,9 +75,33 @@ export default {
       crossDomain: true
     }).then(body => {
       this.info = body
+      this.$store.dispatch('getTodayHot', this.info.data)
+      console.log(this.info.data)
+    });
+    this.axios({
+      method: 'post',
+      url: 'http://114.115.151.96:8666/search/filmreplylist',
+      data: {
+        pagesCount: 20
+      },
+      crossDomain: true
+    }).then(body => {
+      this.info = body
       this.$store.dispatch('getTodayRecommend', this.info.data)
       console.log(this.info.data)
-    })
+    });
+    this.axios({
+      method: 'post',
+      url: 'http://114.115.151.96:8666/search/filmtimelist',
+      data: {
+        pagesCount: 20
+      },
+      crossDomain: true
+    }).then(body => {
+      this.info = body
+      this.$store.dispatch('getTodayNew', this.info.data)
+      console.log(this.info.data)
+    });
   },
   computed: {
     today_hot_content: {
@@ -85,15 +109,15 @@ export default {
         return this.$store.state.today_hot_content
       },
       set (newVal) {
-        this.$store.commit('handleTodayHotContent', newVal)
+        this.$store.commit('changeTodayHot', newVal)
       }
     },
     today_recommend_content: {
       get () {
         return this.$store.state.today_recommend_content
       },
-      set (newVal) {
-        this.$store.commit('handleTodayRecommendContent', newVal)
+      set(newVal) {
+        this.$store.commit('changeTodayRecommendContent', newVal)
       }
     },
     today_new_content: {
@@ -101,7 +125,7 @@ export default {
         return this.$store.state.today_new_content
       },
       set (newVal) {
-        this.$store.commit('handleTodayNewContent', newVal)
+        this.$store.commit('changeTodayNew', newVal)
       }
     }
   },
@@ -120,7 +144,7 @@ export default {
     color:#AAAAAA;
   }
   .hot-content{
-    width: 800px;
+    width: 80%;
   }
   .bm-part{
     width: 80%;

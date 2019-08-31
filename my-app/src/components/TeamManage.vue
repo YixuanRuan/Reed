@@ -48,21 +48,21 @@ export default {
   },
 
   methods: {
-      exitGroup: function(){
-          console.log(this.$store.state.account)
-          console.log(this.id)
-          this.axios.post('http://114.115.151.96:8666/Team/out', {
-                  account: this.$store.state.account,
-                  teamid: this.id
-              }
-          )
-              .then(function (response) {
-                  console.log(response)
-              })
-              .catch(function (error) {
-                  console.log('error')
-              })
-      }
+    exitGroup: function(){
+      console.log(this.$store.state.account)
+      console.log(this.id)
+      this.axios.post('http://114.115.151.96:8666/Team/out', {
+          account: this.$store.state.account,
+          teamid: this.id
+        }
+      )
+        .then(function (response) {
+          console.log(response)
+        })
+        .catch(function (error) {
+          console.log('error')
+        })
+    }
   },
 
   mounted() {

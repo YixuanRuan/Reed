@@ -148,6 +148,6 @@ export default new Router({
       path: '/groupCreate',
       name: 'groupCreate',
       component: () => import('./views/GroupCreate.vue')
-    }
+    },
   ]
 })

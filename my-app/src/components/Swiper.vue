@@ -48,27 +48,10 @@ export default {
           nextEl: '.swiper-button-next',
           prevEl: '.swiper-button-prev',
         }
-        // 其他参数…………
-      },
-      content: [
-        {
-          index: 1,
-          imgUrl: require('../imgs/swiper-ontheroad.jpg'),
-          text: '1'
-        },
-        {
-          index: 2,
-          imgUrl: require('../imgs/swiper-roma.jpg'),
-          text: '1'
-        },
-        {
-          index: 3,
-          imgUrl: require('../imgs/swiper-string.jpg'),
-          text: '1'
-        },
-    ]
+      }
     }
-  }
+  },
+  props:['content']
 }
 </script>
 

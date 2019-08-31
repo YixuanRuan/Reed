@@ -14,7 +14,7 @@
       <v-col cols="3" sm="4" md="5"></v-col>
       <v-col cols="6" sm="4" md="2">
         <GroupCard class="card"
-           :img="$store.state.group.imgSrc+$store.state.group.groupId"
+           :img="$store.state.avatar_img_prefix+$store.state.group.groupId"
            :groupName="$store.state.group.groupName"
            :groupMotto="$store.state.group.groupMotto"
            :groupId="$store.state.group.groupId"
