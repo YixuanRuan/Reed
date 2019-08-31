@@ -514,9 +514,15 @@ export default new Vuex.Store({
     },
     changetrueCode (state, newVal) {
       state.true_verificationCode = newVal
+    },
+    changeMassage(state, newList) {
+      state.massage_content = newList
     }
   },
   actions: {
+    changeMassageData(context, newList) {
+      context.commit('changeMassage', newList)
+    },
     changeCurrentBMId (context, newVal) {
       context.commit('changeCurrentId', newVal)
     },

@@ -12,7 +12,8 @@
     >
       <SelfComments style="width: 400px;" :reply="reply_flag" :toptag="toptag_flag"
                     :bm_comment="bm_comment" :name="data.reply.replyerId" :comment="data.reply.content"
-                    :avatar_img="avatar_prefix+data.reply.replyerId" :num_like="data.likes" :type="comment_type"
+                    :avatar_img="avatar_prefix+data.reply.replyerId" :num_like="data.likes"
+                    :type="comment_type" :id="data.reply.id"
       />
     </v-col>
   </v-row>
