@@ -27,7 +27,7 @@
             icon
             v-on="on"
             style="margin-top:6px; margin-right: 20px"
-            @click="getSearchHistory"
+            @click="initHistory"
           >
             <v-icon>mdi-history</v-icon>
           </v-btn>
