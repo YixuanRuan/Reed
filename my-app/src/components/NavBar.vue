@@ -219,8 +219,6 @@ export default {
       this.$store.dispatch('deleteLikeItem', index)
     },
     deleteMassage: function (index) {
-      this.$store.dispatch('deleteMassageItem', index)
-
       this.axios({
         method: 'post',
         url: 'http://114.115.151.96:8666/Information/Del',
@@ -228,6 +226,8 @@ export default {
           id: this.$store.state.massage_content[index].information.id
         },
         crossDomain: true
+      }).then(body => {
+        this.$store.dispatch('deleteMassageItem', index)
       })
     },
     getInformation () {
