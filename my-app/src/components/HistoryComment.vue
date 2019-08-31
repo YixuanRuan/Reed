@@ -8,7 +8,7 @@
     <div style="min-height: 250px">
       <v-slide-group
         v-model="model"
-        class="pa-4 silde-c"
+        class="pa-4 silde-c scoped_historycomment"
         active-class="success"
         show-arrows
       >
@@ -58,4 +58,7 @@ export default {
 </script>
 
 <style scoped>
+.scoped_historycomment{
+
+}
 </style>

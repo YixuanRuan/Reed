@@ -1,12 +1,14 @@
 <template>
-  <div>
-    <Showcard :poster_img="poster_img" :filmName="filmName" :director="director" :starring="starring" :filmTime="filmTime" :finalScore="finalScore"/>
+  <div class="scope_show">
+    <Showcard :poster_img="$store.state.movie_img_prefix+info.id" :filmName="info.filmName"
+              :director="info.director" :starring="info.starring"
+              :filmTime="info.filmTime" :finalScore="info.finalScore"/>
     <v-row class="intro_outer">
       <v-col cols="4" class="intro-left">
         <div class="intro">简介</div>
       </v-col>
       <v-col cols="7" class="intro-right">
-        <div class="intro-content">{{intro}}</div>
+        <div class="intro-content">{{info.intro}}</div>
       </v-col>
     </v-row>
     <CommentsStar :star_reply_name="star_reply_name" :reply_content="reply_content"
@@ -22,7 +24,10 @@
                       :reply_avatar_img="avatar_prefix" :reply_name="data" :reply_comment="data"/>
       </v-col>
     </v-row>
-    <PostReply v-if="$store.state.logined" :user_id="this.$store.state.account" :id="bm_id" :type="type" v-on:child-say="listenToMyBoy"/>
+    <PostReply v-if="$store.state.logined"
+               :user_id="this.$store.state.account"
+               :id="bm_id" :type="type" v-on:child-say="listenToMyBoy"
+               @replyState="refresh"/>
     <v-row v-else>
       <v-row cols="12"><p class="pls">请登录再评论</p></v-row>
     </v-row>
@@ -40,13 +45,10 @@ import SelfComments from '../components/SelfComments'
 export default {
   data () {
     return {
-
       flag: false,
       type: '2',
-
       // reply
       bm_id: '',
-
       // Showcard
       intro: '《寄生虫》讲述了发生在身份地位悬殊的两个家庭身上的故事：宋康昊饰演的无业游民父亲基泽，让寄托了家人生计希望的大儿子（崔宇植 饰）前往IT公司老总朴社长（李善均 饰）家应聘课外教师，随之发生了一连串意外事件。',
       filmName: '',
@@ -56,6 +58,7 @@ export default {
       finalScore: '',
       poster_img: '',
       img_prefix: 'http://114.115.151.96:8666/PosterPicture/MovieAccount/',
+      info: {},
 
       // CommentsStar
       avatar_img: '',
@@ -86,12 +89,17 @@ export default {
     SelfComments
   },
   mounted () {
+    this.bm_id = this.$store.state.currentId
     this.initBMInfo()
     this.initBestReply()
     this.initComments()
-    this.bm_id = this.$store.state.currentId
   },
   methods: {
+    refresh (state) {
+      if (state == 'done') {
+        this.initComments()
+      }
+    },
     listenToMyBoy: function (somedata) {
       this.flag = somedata
       if (this.flag) {
@@ -104,6 +112,7 @@ export default {
         method: 'post',
         url: 'http://114.115.151.96:8666/reply/list',
         data: {
+
           id: this.$store.state.currentId
         },
         crossDomain: true
@@ -149,18 +158,17 @@ export default {
         method: 'post',
         url: 'http://114.115.151.96:8666/search/likebestReply',
         data: {
-          // id:this.$store.state.currentId
           id: this.$store.state.currentId
         },
         crossDomain: true
-      }).then(body => {
-        console.log(body)
-        this.star_reply_name = body.data.reply.id
-        this.reply_content = body.data.reply.content
-        this.like_num = body.data.likes
-        this.comment_num = '255'
-        this.avatar_img = avatar_prefix + body.data.reply.id
-      })
+      }).then(body =>{
+        console.log(body);
+        this.star_reply_name = body.data.reply.id;
+        this.reply_content = body.data.reply.content;
+        this.like_num = body.data.likes;
+        this.comment_num = '255';
+        this.avatar_img = this.$store.state.avatar_img_prefix + body.data.reply.id;
+      });
     }
   }
 }
@@ -177,36 +185,6 @@ export default {
     display:-webkit-box;
     -webkit-box-align:center;/* 垂直居中 */
     -webkit-box-pack:center;/* 水平居中 */
-  }
-
-  .left-content{
-  }
-
-  .right-content{
-    display:-webkit-box;
-    -webkit-box-align:center;/* 垂直居中 */
-    -webkit-box-pack:center;/* 水平居中 */
-  }
-
-  .logo-left{
-    margin-left: 100px;
-    width: 75%;
-  }
-
-  .director-text{
-    width: 396px;
-    height: 101px;
-    color: rgba(0, 0, 0, 1);
-    font-size: 36px;
-    font-family: "Microsoft YaHei" ! important;
-  }
-  .mainactor-text{
-    width: 396px;
-    height: 101px;
-    color: rgba(0, 0, 0, 1);
-    font-size: 28px;
-    font-family: "Microsoft YaHei" ! important;
-    margin-top: -50px;
   }
   .intro {
     color:#CCC;
