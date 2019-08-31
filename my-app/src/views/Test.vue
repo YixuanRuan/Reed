@@ -1,6 +1,6 @@
 <template>
   <div>
-    {{info.data.booklist}}
+    {{info}}
   </div>
 </template>
 
@@ -20,9 +20,9 @@ export default {
     testHistory () {
       this.axios({
         method: 'post',
-        url: 'http://114.115.151.96:8666//reply/findFilmAndBookByReply',
+        url: 'http://114.115.151.96:8666/ViewHistory/Get',
         data: {
-          id: 'abcd'
+          account: 'abcd'
         },
         crossDomain: true
       }).then(body => {

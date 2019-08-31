@@ -65,10 +65,10 @@ export default {
         {},
         {}
       ],
-        commentsReply: [
-            {},
-            {}
-        ]
+      commentsReply: [
+        {},
+        {}
+      ]
     }
   },
   components: {
@@ -79,13 +79,25 @@ export default {
     SelfComments
   },
   mounted () {
-      this.bm_id = this.$store.state.currentId
-      this.initBMInfo()
+    this.bm_id = this.$store.state.currentId
+    this.initBMInfo()
     this.initBestReply()
     this.initComments()
-      this.initCommentsReply()
+    this.initCommentsReply()
+    this.addHistory()
   },
   methods: {
+    addHistory () {
+      this.axios({
+        method: 'post',
+        url: 'http://114.115.151.96:8666/ViewHistory/AddBook',
+        data: {
+          id: this.$store.state.currentBookId,
+          account: this.$store.state.account
+        },
+        crossDomain: true
+      })
+    },
     refresh (state) {
       if (state == 'done') {
         this.initComments()
@@ -112,21 +124,20 @@ export default {
         this.comments = body.data
       })
     },
-      initCommentsReply: function () {
-          this.axios({
-              method: 'post',
-              url: 'http://114.115.151.96:8666/commentreply/findByMAB',
-              data: {
-
-                  id: this.$store.state.currentBookId
-              },
-              crossDomain: true
-          }).then(body => {
-              console.log(body)
-              this.commentsReply = body.data
-          })
-      },
+    initCommentsReply: function () {
+      this.axios({
+        method: 'post',
+        url: 'http://114.115.151.96:8666/commentreply/findByMAB',
+        data: {
+          id: this.$store.state.currentBookId
+        },
+        crossDomain: true
+      }).then(body => {
+        this.commentsReply = body.data
+      })
+    },
     initBMInfo: function () {
+      console.log('bminfo', this.$store.state.currentBookId)
       this.axios({
         method: 'post',
         url: 'http://114.115.151.96:8666/book/find',
@@ -135,11 +146,12 @@ export default {
         },
         crossDomain: true
       }).then(body => {
-        console.log(body)
+        console.log('information', body)
         this.info = body.data
       })
     },
     initBestReply: function () {
+      console.log('best', this.$store.state.currentBookId)
       this.axios({
         method: 'post',
         url: 'http://114.115.151.96:8666/search/likebestReply',
@@ -148,6 +160,7 @@ export default {
         },
         crossDomain: true
       }).then(body => {
+        console.log('22222222222222222')
         console.log('best', body)
         this.star_reply_name = body.data.reply.replyerId
         this.reply_content = body.data.reply.content

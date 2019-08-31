@@ -93,8 +93,22 @@ export default {
     this.initBestReply()
     this.initComments()
     this.initCommentsReply()
+    this.addHistory()
   },
   methods: {
+    addHistory () {
+      console.log(1111111111111111111)
+      console.log('id', this.$store.state.currentId)
+      this.axios({
+        method: 'post',
+        url: 'http://114.115.151.96:8666/ViewHistory/AddMovie',
+        data: {
+          id: this.$store.state.currentId,
+          account: this.$store.state.account
+        },
+        crossDomain: true
+      })
+    },
     refresh (state) {
       if (state == 'done') {
         this.initComments()
@@ -143,14 +157,7 @@ export default {
         },
         crossDomain: true
       }).then(body => {
-        console.log('movie', body)
-        this.intro = body.data.intro
-        this.filmName = body.data.filmName
-        this.director = body.data.director
-        this.starring = body.data.starring
-        this.filmTime = body.data.filmTime
-        this.finalScore = body.data.finalScore
-        this.poster_img = this.img_prefix + body.data.id
+        this.info = body.data
       })
     },
     initBestReply: function () {

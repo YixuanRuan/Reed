@@ -44,28 +44,48 @@
 
         <v-tabs-items v-model="tab">
           <v-tab-item>
+            <div v-for="(data, index) in history_posting"
+                 :key="index">
             <!----------------------------------------------------->
             <div class="history-forum">
               <v-icon color="#aaa" style="margin-right: 20px">mdi-comment</v-icon>
-              <div style="font-size: 14px;margin: 10px;width:200px;overflow: hidden">帖子标题标题标题标题</div>
+              <div style="font-size: 14px;margin: 10px;width:200px;overflow: hidden">{{data.postingtitle}}</div>
               <v-icon color="#aaa" style="float: right">mdi-delete</v-icon>
             </div>
             <!----------------------------------------------------->
+            </div>
           </v-tab-item>
           <v-tab-item>
-
-            <!---------------------------------------------------->
-            <div class="history-bm">
-              <v-img
-                :src="poster_img"
-                :aspect-ratio="1"
-                max-width="60px"
-                max-height="80px"
-              />
-              <div style="font-size: 14px;margin: 10px;width:200px;overflow: hidden">标题标题标题</div>
-              <v-icon color="#aaa" style="float: right">mdi-delete</v-icon>
+            <div v-for="(data, index) in history_movie"
+                 :key="index">
+              <!---------------------------------------------------->
+              <div class="history-bm">
+                <v-img
+                  :src="film_prefix+data.id"
+                  :aspect-ratio="1"
+                  max-width="60px"
+                  max-height="80px"
+                />
+                <div style="font-size: 14px;margin: 10px;width:200px;overflow: hidden">{{data.filmname}}</div>
+                <v-icon color="#aaa" style="float: right">mdi-delete</v-icon>
+              </div>
+              <!---------------------------------------------------->
             </div>
-            <!---------------------------------------------------->
+            <div v-for="(data, index) in history_book"
+                 :key="index">
+              <!---------------------------------------------------->
+              <div class="history-bm">
+                <v-img
+                  :src="film_prefix+data.id"
+                  :aspect-ratio="1"
+                  max-width="60px"
+                  max-height="80px"
+                />
+                <div style="font-size: 14px;margin: 10px;width:200px;overflow: hidden">{{data.bookname}}</div>
+                <v-icon color="#aaa" style="float: right">mdi-delete</v-icon>
+              </div>
+              <!---------------------------------------------------->
+            </div>
           </v-tab-item>
         </v-tabs-items>
       </v-menu>
@@ -196,10 +216,30 @@ export default {
       prevIcon: false,
       nextIcon: false,
       right: false,
-      tabs: 3
+      tabs: 3,
+      history_book: [],
+      history_movie: [],
+      history_posting: []
     }
   },
+  mounted () {
+    this.initHistory()
+  },
   methods: {
+    initHistory () {
+      this.axios({
+        method: 'post',
+        url: 'http://114.115.151.96:8666/ViewHistory/Get',
+        data: {
+          account: this.$store.state.account
+        },
+        crossDomain: true
+      }).then(body => {
+        this.history_movie = body.data[0]
+        this.history_book = body.data[1]
+        this.history_posting = body.data[2]
+      })
+    },
     submit: function (keyword) {
       if (keyword.length === 0) {
         keyword = 'everything'
@@ -283,9 +323,6 @@ export default {
       }).then(body => {
         this.$store.dispatch('changeCollection', body.data)
       })
-    },
-    getHistory () {
-      
     },
     addCollection () {
       var i = 0

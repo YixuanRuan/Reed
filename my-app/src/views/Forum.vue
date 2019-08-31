@@ -47,12 +47,24 @@ export default {
     SelfComments,
     PostReply
   },
-  mounted(){
+  mounted () {
     this.getRouterData()
     this.initPost()
     this.getReply()
+    this.addHistory()
   },
   methods: {
+    addHistory () {
+      this.axios({
+        method: 'post',
+        url: 'http://114.115.151.96:8666/ViewHistory/AddPosting',
+        data: {
+          id: this.postId,
+          account: this.$store.state.account
+        },
+        crossDomain: true
+      })
+    },
     getRouterData() {
       this.postId = this.$route.params.postId
       console.log('postId', this.postId)
