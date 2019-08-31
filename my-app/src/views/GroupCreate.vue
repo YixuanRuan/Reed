@@ -79,63 +79,65 @@
 </template>
 
 <script>
-    import BackGroundVideo from "../components/BackGroundVideo"
-    export default {
-        components:{
-            BackGroundVideo
-        },
-        name: "GroupCreate",
-        data: () => ({
-            succeed: false,
-            valid: true,
-            nameRules: [
-                v => !!v || '小组名称是必须的',
-                v => (v && v.length <= 10) || '小组名称必须小于10个字哦~',
-            ],
-            introRules: [
-                v => !!v || '小组介绍是必须的',
-                v => (v && v.length < 50) || '小组介绍必须小于50个字哦~',
-            ],
-            lazy: false,
-            tagsChecked: [ false, false, false, false, false, false]
-        }),
-        computed: {
-            intro: {
-                get () {
-                    return this.$store.state.groupCreate.intro
-                },
-                set (newVal) {
-                    this.$store.commit("changeGroupCreateIntro",newVal)
-                }
-            },
-            name: {
-                get () {
-                    return this.$store.state.groupCreate.name
-                },
-                set (newVal) {
-                    this.$store.commit("changeGroupCreateName",newVal)
-                }
-            },
-        },
-        methods: {
-            reset () {
-                this.$refs.form.reset()
-            },
-            submit (tagsChecked) {
-                var tags=[]
-                for (var i=0;i<tagsChecked;i++){
-                    if(tagsChecked[i]) tags.push(i)
-                }
-                this.$store.commit('groupCreate',tags)
-                this.succeed=true
-                var that=this
-                setTimeout(function(){
-                    that.$router.push("/myGroup")
-                },2000)
-
-            }
-        },
+import BackGroundVideo from '../components/BackGroundVideo'
+export default {
+  components: {
+    BackGroundVideo
+  },
+  name: 'GroupCreate',
+  data: () => ({
+    succeed: false,
+    valid: true,
+    nameRules: [
+      v => !!v || '小组名称是必须的',
+      v => (v && v.length <= 10) || '小组名称必须小于10个字哦~'
+    ],
+    introRules: [
+      v => !!v || '小组介绍是必须的',
+      v => (v && v.length < 50) || '小组介绍必须小于50个字哦~'
+    ],
+    lazy: false,
+    tagsChecked: [ false, false, false, false, false, false]
+  }),
+  computed: {
+    intro: {
+      get () {
+        return this.$store.state.groupCreate.intro
+      },
+      set (newVal) {
+        this.$store.commit('changeGroupCreateIntro', newVal)
+      }
+    },
+    name: {
+      get () {
+        return this.$store.state.groupCreate.name
+      },
+      set (newVal) {
+        this.$store.commit('changeGroupCreateName', newVal)
+      }
     }
+  },
+  methods: {
+    reset () {
+        this.$refs.form.reset()
+    },
+    submit (tagsChecked) {
+        var tags = []
+      for (var i = 0; i < this.tagsChecked.length; i++) {
+        if (this.tagsChecked[i]){
+            tags.push(i)
+        }
+      }
+      console.log(tags)
+      this.$store.commit('groupCreate', tags)
+      this.succeed = true
+      var that = this
+      setTimeout(function () {
+        that.$router.push('/myGroup')
+      }, 2000)
+    }
+  }
+}
 </script>
 
 <style>
@@ -154,5 +156,13 @@
     position: relative;
     background: transparent;
     height: 80vh;
+  }
+
+  .card-option{
+    margin-top: 3px;
+    font-size: 13px;
+    color: #646464;
+    text-align: center;
+    height: 20px;
   }
 </style>

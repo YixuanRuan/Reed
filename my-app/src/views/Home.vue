@@ -102,7 +102,7 @@
     <SegText :text="hot" class="segtext-hot"/>
     <div style="width: 100%; display:-webkit-box; -webkit-box-pack:center; background-color: white">
       <div class="hot-content">
-        <HistoryComment :card_content="this.$store.state.today_recommend_content"/>
+        <BookComment :card_content="this.$store.state.today_book_recommend_content"/>
         <HistoryComment :card_content="this.$store.state.today_recommend_content"/>
       </div>
     </div>
@@ -133,9 +133,10 @@
 import SegText from '../components/SegText'
 import Comments from '../components/Comments'
 import HistoryComment from '../components/HistoryComment'
+import BookComment from '../components/BookComment'
 import BackGroundVideo from '../components/BackGroundVideo'
-export default {
 
+export default {
   data () {
     return {
       avatar_prefix: 'http://114.115.151.96:8666/ProfilePicture/UserAccount/',
@@ -162,7 +163,15 @@ export default {
       ]
     }
   },
+  components: {
+    SegText,
+    Comments,
+    BookComment,
+    HistoryComment,
+    BackGroundVideo
+  },
   mounted () {
+    this.initTodayBookRecommend();
     this.initTodayRecommend();
     this.initComments();
   },
@@ -218,6 +227,18 @@ export default {
       }).then(body => {
         this.info = body
         this.$store.dispatch('getTodayRecommend', this.info.data)
+      })
+    },
+    initTodayBookRecommend(){
+      this.axios({
+        method: 'post',
+        url: 'http://114.115.151.96:8666/book/findAll',
+        data: {
+        },
+        crossDomain: true
+      }).then(body => {
+        this.info = body
+        this.$store.dispatch('getTodayBookRecommend', this.info.data)
       })
     },
     initComments(){
@@ -393,12 +414,6 @@ export default {
         this.$store.commit('handleVerificationCode', newVal)
       }
     }
-  },
-  components: {
-    SegText,
-    Comments,
-    HistoryComment,
-    BackGroundVideo
   }
 }
 </script>
