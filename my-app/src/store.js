@@ -8,6 +8,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    reported:[],
     joined: false,
     selfAvatar: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2579313585,1854004294&fm=26&gp=0.jpg',
     currentId: '',
@@ -306,6 +307,9 @@ export default new Vuex.Store({
     }
   },
   mutations: {
+    handleReported (state, newVal) {
+      state.reported = newVal
+    },
     handleIsSuper (state, newVal) {
       state.isSuper = newVal
     },
@@ -531,6 +535,9 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    changeReported(context, newVal){
+      context.commit('handleReported', newVal)
+    },
     changeSuper(context){
       context.commit('changeIsSuper')
     },

@@ -45,50 +45,50 @@
 </template>
 
 <script>
-  import ScoreBar from "../components/ScoreBar";
-  export default {
-    name: "Showcard",
-    components: {ScoreBar},
-      data (){
-        return{
-            tags: [
-                {
-                    index:1,
-                    tag:"剧情"
-                },{
-                    index:2,
-                    tag:"故事"
-                },{
-                    index:3,
-                    tag:"亲情"
-                },{
-                    index:4,
-                    tag:"美国"
-                },
-            ]
+import ScoreBar from '../components/ScoreBar'
+export default {
+  name: 'Showcard',
+  components: { ScoreBar },
+  data () {
+    return {
+      tags: [
+        {
+          index: 1,
+          tag: '剧情'
+        }, {
+          index: 2,
+          tag: '故事'
+        }, {
+          index: 3,
+          tag: '亲情'
+        }, {
+          index: 4,
+          tag: '美国'
         }
-      },
-    props: {
-      poster_img:{
-        default:''
-      },
-      filmName:{
-        default:'寄生虫 기생충'
-      },
-      director:{
-        default:'导演:奉俊昊'
-      },
-      starring:{
-        default:'主演:宋康昊 李善均 赵汝贞'
-      },
-      filmTime:{
-        default:135
-      },
-      finalScore:{
-        default:23.3
-      }
+      ]
+    }
+  },
+  props: {
+    poster_img: {
+      default: ''
+    },
+    filmName: {
+      default: '寄生虫 기생충'
+    },
+    director: {
+      default: '导演:奉俊昊'
+    },
+    starring: {
+      default: '主演:宋康昊 李善均 赵汝贞'
+    },
+    filmTime: {
+      default: 135
+    },
+    finalScore: {
+      default: 23.3
     }
   }
+}
 </script>
 <style scoped>
   .card{

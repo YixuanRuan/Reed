@@ -61,7 +61,7 @@
       {{content}}
     </v-card-text>
     <div class="option-menu">
-      <v-menu bottom offset-y nudge-bottom="10" :close-on-content-click="closeOnContentClick" max-height="300" style="float:left !important" absolute open-on-click>
+      <v-menu v-if="userType !== 0" bottom offset-y nudge-bottom="10" :close-on-content-click="closeOnContentClick" max-height="300" style="float:left !important" absolute open-on-click>
         <template v-slot:activator="{ on }">
           <v-btn
             dark
@@ -73,10 +73,10 @@
         </template>
 
         <v-list style="background: #EEEEEE;padding: 2px;width: 130px">
-          <v-list-item @click="" class="card-option justify-center">举报</v-list-item>
-          <v-list-item @click="" class="card-option justify-center">删除</v-list-item>
-          <v-list-item @click="" class="card-option justify-center">置顶</v-list-item>
-          <v-list-item @click="" class="card-option justify-center">设为精华</v-list-item>
+          <v-list-item v-if="userType === 1" @click="delReport" class="card-option justify-center">忽略</v-list-item>
+          <v-list-item v-if="userType === 1" @click="delPost" class="card-option justify-center">删除</v-list-item>
+          <v-list-item v-if="userType === 2" @click="" class="card-option justify-center">置顶</v-list-item>
+          <v-list-item v-if="userType === 2" @click="" class="card-option justify-center">设为精华</v-list-item>
         </v-list>
       </v-menu>
       <v-card-actions class="justify-end" style="padding-bottom: 0px; width: 100%">
@@ -89,8 +89,8 @@
             <v-icon class="mr-1" color="white" @click="routerTo()">mdi-comment</v-icon>
             <span class="subheading mr-2">{{num_comment}}</span>
             <span class="mr-1"></span>
-            <v-icon class="mr-1" color="white">mdi-thumb-up</v-icon>
-            <span class="subheading">{{num_like}}</span>
+            <v-icon class="mr-1" color="white" v-if="userType != 1">mdi-thumb-up</v-icon>
+            <span class="subheading" v-if="userType != 1">{{num_like}}</span>
           </v-row>
         </v-list-item>
       </v-card-actions>
@@ -108,6 +108,12 @@ export default {
     console.log('avatar_img',this.avatar_img)
   },
   props: {
+    reportId:{
+      default: ''
+    },
+    userType:{
+      default: 0
+    },
     groupId:{
       default: 0
     },
@@ -137,6 +143,10 @@ export default {
     },
     id:{
       default: ''
+    },
+    onsubmit: {
+      type: Function,
+      default: null
     }
   },
   methods: {
@@ -158,6 +168,33 @@ export default {
         params: {
           postId: this.id
         }
+      })
+    },
+    delReport(){
+      console.log('reported', this.reported)
+      this.axios({
+        method: 'post',
+        url: 'http://114.115.151.96:8666/report/delete',
+        data: {
+          id: this.reportId
+        },
+        crossDomain: true
+      }).then(body => {
+        this.onsubmit();
+      })
+    },
+    delPost(){
+      console.log(111111111111111)
+      console.log(this.id)
+      this.axios({
+        method: 'post',
+        url: 'http://114.115.151.96:8666/Posting/Del',
+        data: {
+          postingId: this.id
+        },
+        crossDomain: true
+      }).then(body => {
+        this.delReport()
       })
     }
   }

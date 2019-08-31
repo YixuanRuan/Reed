@@ -14,7 +14,7 @@ export default {
     }
   },
   mounted () {
-    this.testReport()
+    this.testCollectionGet()
   },
   methods:{
     testReport(){
