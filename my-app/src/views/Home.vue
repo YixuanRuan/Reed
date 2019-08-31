@@ -39,11 +39,10 @@
               style="opacity: 0.8"
             ></v-text-field>
             <v-text-field
-              :value="Phonenumber"
+              :value="phonenumber"
               v-if="register"
-              v-model="re_password"
+              v-model="re_phonenumber"
               label="Please enter your phone number"
-              type="Password"
               filled
               background-color="#eee"
               style="opacity: 0.8"
@@ -51,11 +50,10 @@
             <v-row>
               <v-col cols="6">
               <v-text-field
-                :value="Phonenumber"
+                :value="vericode"
                 v-if="register"
-                v-model="re_password"
+                v-model="re_vericode"
                 label="Verification Code"
-                type="Password"
                 filled
                 background-color="#eee"
                 style="width:160px ;height: 60px;opacity: 0.8"
