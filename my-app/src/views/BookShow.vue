@@ -13,11 +13,15 @@
                   :like_num="like_num" :comment_num="comment_num" :avatar_img="avatar_img"/>
     <v-row>
       <v-col v-for="(data, index) in comments" :key="index">
-        <SelfComments :avatar_img="avatar_prefix + data.replyerId" :name="data.replyerId" :comment="data.content"
-                      :title="data.tilte" :id="data.id"/>
+        <SelfComments :avatar_img="avatar_prefix + data.reply.replyerId"
+                      :name="data.reply.replyerId" :comment="data.reply.content"
+                      :title="data.reply.title" :id="data.reply.id"/>
       </v-col>
     </v-row>
-    <PostReply :user_id="this.$store.state.account" :id="bm_id" :type="type" v-on:child-say="listenToMyBoy"/>
+    <PostReply v-if="$store.state.logined" :user_id="this.$store.state.account" :id="bm_id" :type="type" v-on:child-say="listenToMyBoy"/>
+    <v-row v-else>
+      <v-row cols="12"><p class="pls">请登录再评论</p></v-row>
+    </v-row>
   </div>
 </template>
 
@@ -68,7 +72,7 @@
       this.initBMInfo();
       this.initBestReply();
       this.initComments();
-      this.bm_id = this.$store.state.currentId;
+      this.bm_id = this.$store.state.currentBookId;
     },
     methods:{
       listenToMyBoy: function (somedata){
@@ -83,11 +87,13 @@
           method: 'post',
           url: 'http://114.115.151.96:8666/reply/list',
           data: {
-            id:'5d65eeccd4a370186cdac7d4'
+            id: this.$store.state.currentBookId
           },
           crossDomain: true
         }).then(body =>{
-          this.comments = body.data.replylist;
+          console.log("comments")
+          console.log(body)
+          this.comments = body.data;
         });
       },
       initBMInfo: function(){
@@ -95,7 +101,7 @@
           method: 'post',
           url: 'http://114.115.151.96:8666/book/find',
           data: {
-            id:this.$store.state.currentBookId
+            id: this.$store.state.currentBookId
           },
           crossDomain: true
         }).then(body =>{
@@ -126,7 +132,16 @@
 </script>
 
 <style scoped>
-
+  .pls{
+    color: white;
+    background-color: #CCC;
+    height: 50px;
+    margin-top:50px;
+    width: 100%;
+    display:-webkit-box;
+    -webkit-box-align:center;/* 垂直居中 */
+    -webkit-box-pack:center;/* 水平居中 */
+  }
   .left-content{
   }
 
