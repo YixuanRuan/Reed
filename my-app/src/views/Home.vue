@@ -278,6 +278,7 @@ export default {
               this.$store.dispatch('changeAC', this.info.data.user.account)
               this.$store.dispatch('changeInro', this.info.data.user.introduction)
               this.$store.dispatch('changeSelfAvatar', 'http://114.115.151.96:8666/ProfilePicture/UserAccount/' + this.info.data.user.account)
+
               this.$router.push({ path: '/selfinfo' })
             }
           })
