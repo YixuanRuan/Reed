@@ -18,6 +18,8 @@ export default new Vuex.Store({
     phoneNumber: '',
     verificationCode: '',
     true_verificationCode: 'root',
+    isgt: 'false',
+    verify: 'false',
     logined: false,
     error_img: '',
     isSuper: false,
@@ -474,6 +476,12 @@ export default new Vuex.Store({
     },
     handleVerificationCode (state, newVal) {
       state.verificationCode = newVal
+    },
+    handleisgt(state){
+      state.isgt = true;
+    },
+    handleverify(state){
+      state.verify = true;
     },
     handleError (state, newVal) {
       state.error_img = newVal
