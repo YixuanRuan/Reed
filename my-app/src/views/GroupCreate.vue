@@ -1,77 +1,80 @@
 <template>
-<div style="margin-top: 100px;">
-  <div class="resultAlert" v-if="succeed">
-  <v-row>
-    <v-col cols="5"></v-col>
-    <v-col cols="2">
-      <v-card style="margin-top: 300px;">
-        <v-card-title style="color: white; background-color: #31b0d5;
+<div>
+  <BackGroundVideo></BackGroundVideo>
+  <div class="main-part">
+    <div class="resultAlert" v-if="succeed">
+      <v-row>
+        <v-col cols="5"></v-col>
+        <v-col cols="2">
+          <v-card style="margin-top: 300px;">
+            <v-card-title style="color: white; background-color: #31b0d5;
          text-align: center;">成功创建小组</v-card-title>
-      </v-card>
-    </v-col>
-    <v-col cols="5"></v-col>
-  </v-row>
-  </div>
-  <v-row no-gutters :class="{'blur':succeed}">
-    <v-col cols="3"></v-col>
-    <v-col cols="6">
-      <v-form
-        ref="form"
-        v-model="valid"
-        :lazy-validation="lazy"
-      >
-        <p>创建小组</p>
-        <v-text-field
-          v-model="name"
-          :counter="10"
-          :rules="nameRules"
-          label="小组名称"
-          required
-        ></v-text-field>
-
-        <v-text-field
-          v-model="intro"
-          :rules="introRules"
-          label="小组介绍"
-          :counter="50"
-          required
-        ></v-text-field>
-
-        <v-row>
-          <v-col v-for="i in $store.state.groupFind.tabsNum" :key="i" cols="2">
-            <v-checkbox
-              v-model="tagsChecked[i-1]"
-              :label="$store.state.groupFind.tabNames[i-1]"
-              required
-            ></v-checkbox>
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col cols="2"/>
-          <v-col cols="4" >
-            <v-btn
-              color="error"
-              @click="reset"
-              style="width: 100%"
-            >
-              重置
-            </v-btn>
-          </v-col>
-          <v-col cols="4">
-            <v-btn
-              color="green"
-              @click="submit(tagsChecked)"
-              style="width: 100%; color: white;"
-            >
-              提交
-            </v-btn>
-          </v-col>
-          <v-col cols="2"/>
+          </v-card>
+        </v-col>
+        <v-col cols="5"></v-col>
       </v-row>
-      </v-form>
-    </v-col>
-    <v-col cols="3"></v-col>
-  </v-row>
+    </div>
+    <v-row no-gutters :class="{'blur':succeed}" style="background: rgba(232,232,232,0.7);padding-bottom: 40px;padding-top: 60px;">
+      <v-col cols="3"></v-col>
+      <v-col cols="6">
+        <v-form
+          ref="form"
+          v-model="valid"
+          :lazy-validation="lazy"
+        >
+          <p>创建小组</p>
+          <v-text-field
+            v-model="name"
+            :counter="10"
+            :rules="nameRules"
+            label="小组名称"
+            required
+          ></v-text-field>
+
+          <v-text-field
+            v-model="intro"
+            :rules="introRules"
+            label="小组介绍"
+            :counter="50"
+            required
+          ></v-text-field>
+
+          <v-row>
+            <v-col v-for="i in $store.state.groupFind.tabsNum" :key="i" cols="2">
+              <v-checkbox
+                v-model="tagsChecked[i-1]"
+                :label="$store.state.groupFind.tabNames[i-1]"
+                required
+              ></v-checkbox>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="2"/>
+            <v-col cols="4" >
+              <v-btn
+                color="error"
+                @click="reset"
+                style="width: 100%"
+              >
+                重置
+              </v-btn>
+            </v-col>
+            <v-col cols="4">
+              <v-btn
+                color="green"
+                @click="submit(tagsChecked)"
+                style="width: 100%; color: white;"
+              >
+                提交
+              </v-btn>
+            </v-col>
+            <v-col cols="2"/>
+          </v-row>
+        </v-form>
+      </v-col>
+      <v-col cols="3"></v-col>
+    </v-row>
+  </div>
 </div>
 </template>
 
@@ -145,4 +148,11 @@ export default {
 .blur{
   filter: blur(20px);
 }
+  .main-part{
+    margin-top: -80vh;
+    z-index: 2;
+    position: relative;
+    background: transparent;
+    height: 80vh;
+  }
 </style>
