@@ -2,8 +2,20 @@
   <div class="outer">
     <div class="add-swiper">
       <div class="title">添加轮播图</div>
+      <div class="swiper">
+
+      </div>
       <v-btn tile elevation="0" style="background-color: #aaa;color:#fff;margin-bottom: 20px;margin-right: 30px">上传图片</v-btn>
-      <v-btn tile elevation="0" style="background-color: #aaa;color:#fff;margin-bottom: 20px">确认</v-btn>
+      <input class="file" name="file" type="file" accept="image/png,image/gif,image/jpeg" @change="update"/>
+      <canvas ref="imgPreview"
+              height="0"
+              width="0"></canvas>
+      <v-tooltip v-model="success" right>
+        <template v-slot:activator="{ on }">
+          <v-btn tile elevation="0" style="background-color: #aaa;color:#fff;margin-bottom: 20px" @click="up_pic">确认</v-btn>
+        </template>
+        <span>上传成功</span>
+      </v-tooltip>
       <v-textarea
         background-color="white"
         color="black"
@@ -57,9 +69,11 @@
 
 <script>
 import Comments from '../components/Comments'
+import Swiper from '../components/Swiper'
 export default {
   components: {
-    Comments
+    Comments,
+    Swiper
   },
   data () {
     return {
@@ -67,6 +81,8 @@ export default {
       avatar_img: '',
       team_img: '',
       userType: 1,
+      success: false,
+      param: new FormData(),
       swipers: [
         {
           index: 1,
@@ -102,6 +118,42 @@ export default {
     }
   },
   methods: {
+    up_pic() {
+      this.$http.post('http://114.115.151.96:8666/img/addrecyclepic', this.param)
+        .then(response => {
+          console.log(response.data);
+          this.success = true
+        })
+    },
+    update(e){
+      let file = e.target.files[0];
+      this.param.append('image', file);//通过append向form对象添加数据
+      console.log(this.param.get('file')); //FormData私有类对象，访问不到，可以通过get判断值是否传进去
+      let reader = new FileReader()
+      let img = new Image()
+      // 读取图片
+      reader.readAsDataURL(file)
+      // 读取完毕后的操作
+      reader.onloadend = (e) => {
+        img.src = e.target.result
+        // 这里的e.target就是reader
+        // console.log(reader.result)
+        // reader.result就是图片的base64字符串
+      }
+      let canvas = this.$refs['imgPreview']
+      let context = canvas.getContext('2d')
+      img.onload = () => {
+        img.width = 100
+        img.height = 100
+        // 设置canvas大小
+        canvas.width = 100
+        canvas.height = 100
+        // 清空canvas
+        context.clearRect(0, 0, 100, 100)
+        // 画图
+        context.drawImage(img, 0, 0, 100, 100)
+      }
+    },
     getReport () {
       this.axios({
         method: 'post',
@@ -129,5 +181,9 @@ export default {
     padding-left: 30px;
     padding-right: 30px;
     padding-top: 30px;
+  }
+  .swiper{
+    height: 50px;
+    width: 100%;
   }
 </style>
