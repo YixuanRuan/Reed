@@ -53,49 +53,49 @@
 </template>
 
 <script>
-  import SelfComments from "../components/SelfComments";
-  export default {
-      components:{
-        SelfComments,
-      },
-      data (){
-          return {
-            swipers:[
-                {
-                    index:1,
-                    content:'某个活动1',
-                    picUrl:''
-                },{
-                    index:2,
-                    content:'某个推送2',
-                    picUrl:''
-                },{
-                    index:3,
-                    content:'某个东西3',
-                    picUrl:''
-                },{
-                    index:4,
-                    content:'某个东西4',
-                    picUrl:''
-                },
-            ],reported:[
-                  {
-                      index:1,
-                      content:'zzyy1',
-                  },{
-                      index:2,
-                      content:'yhsq2',
-                  },{
-                      index:3,
-                      content:'xxbl3',
-                  },{
-                      index:4,
-                      content:'fd4',
-                  },
-              ]
-          }
+import SelfComments from "../components/SelfComments";
+export default {
+  components:{
+    SelfComments,
+  },
+  data (){
+      return {
+        swipers:[
+            {
+                index:1,
+                content:'某个活动1',
+                picUrl:''
+            },{
+                index:2,
+                content:'某个推送2',
+                picUrl:''
+            },{
+                index:3,
+                content:'某个东西3',
+                picUrl:''
+            },{
+                index:4,
+                content:'某个东西4',
+                picUrl:''
+            },
+        ],reported:[
+              {
+                  index:1,
+                  content:'zzyy1',
+              },{
+                  index:2,
+                  content:'yhsq2',
+              },{
+                  index:3,
+                  content:'xxbl3',
+              },{
+                  index:4,
+                  content:'fd4',
+              },
+          ]
       }
   }
+}
 </script>
 
 <style scoped>

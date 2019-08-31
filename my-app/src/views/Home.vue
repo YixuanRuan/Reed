@@ -39,11 +39,9 @@
               style="opacity: 0.8"
             ></v-text-field>
             <v-text-field
-              :value="Phonenumber"
               v-if="register"
-              v-model="re_password"
+              v-model="phoneNumber"
               label="Please enter your phone number"
-              type="Password"
               filled
               background-color="#eee"
               style="opacity: 0.8"
@@ -51,11 +49,9 @@
             <v-row>
               <v-col cols="6">
               <v-text-field
-                :value="Phonenumber"
                 v-if="register"
-                v-model="re_password"
+                v-model="verificationCode"
                 label="Verification Code"
-                type="Password"
                 filled
                 background-color="#eee"
                 style="width:160px ;height: 60px;opacity: 0.8"
@@ -177,20 +173,42 @@ export default {
     })
   },
   methods: {
-    getCode(){
-      const TIME_COUNT = 60;
+    getCode () {
+      const TIME_COUNT = 60
       if (!this.timer) {
+        this.axios({
+          method: 'post',
+          url: 'http://114.115.151.96:8666/send',
+          data: {
+            phone: this.$store.state.phoneNumber
+          },
+          crossDomain: true
+        }).then(body => {
+          this.info = body
+          // 错误信息
+          if (this.info.data === 'request fail!') {
+            var that = this
+            this.password_wrong_show = true
+            this.error_img = 'request fail!'
+            setTimeout(function () {
+              that.password_wrong_show = false
+            }, 2000)
+          }
+          else {
+            this.$store.dispatch('changeCode', this.info.data)
+          }
+        })
         this.count = TIME_COUNT;
         this.show = false;
         this.timer = setInterval(() => {
           if (this.count > 0 && this.count <= TIME_COUNT) {
-          this.count--;
-        } else {
-          this.show = true;
-          clearInterval(this.timer);
-          this.timer = null;
-        }
-      }, 1000)
+            this.count--;
+          } else {
+            this.show = true;
+            clearInterval(this.timer);
+            this.timer = null;
+          }
+        }, 1000)
       }
     },
     unshow () {
@@ -223,7 +241,6 @@ export default {
             // 用户不存在
             if (this.info.data === 0) {
               this.register = true
-              this.$store.commit('clear')
             }
             // 密码错误
             else if (this.info.data === -1) {
@@ -248,8 +265,28 @@ export default {
         }
         // 处于注册态
         else {
-          // 两次密码输入正确
-          if (this.$store.state.re_password == this.$store.state.password) {
+          // 两次密码输入不相同
+          if(this.$store.state.re_password !== this.$store.state.password){
+            this.error_img = '两次密码不相同'
+            this.password_wrong_show = true
+            var that = this
+            setTimeout(function () {
+              that.password_wrong_show = false
+              that.$forceUpdate()
+            }, 2000)
+            this.$store.commit('clear')
+          }
+          // 验证码错误
+          else if(this.$store.state.verificationCode != this.$store.state.true_verificationCode){
+            var that = this
+            this.password_wrong_show = true
+            this.error_img = 'Wrong Verification Code!'
+            setTimeout(function () {
+              that.password_wrong_show = false
+            }, 2000)
+          }
+          // 注册
+          else{
             this.axios({
               method: 'post',
               url: 'http://114.115.151.96:8666/User/Add',
@@ -260,12 +297,10 @@ export default {
               crossDomain: true
             }).then(body => {
               this.info = body
-              // 注册成功
               if (this.info.data == 1) {
                 this.$store.commit('logined')
                 this.$router.push({ path: '/selfinfo' })
               }
-              // 用户名已存在
               else {
                 this.error_img = '用户已存在'
                 this.password_wrong_show = true
@@ -277,17 +312,6 @@ export default {
                 this.$store.commit('clearall')
               }
             })
-          }
-          // 两次密码输入不正确
-          else {
-            this.error_img = '两次密码不相同'
-            this.password_wrong_show = true
-            var that = this
-            setTimeout(function () {
-              that.password_wrong_show = false
-              that.$forceUpdate()
-            }, 2000)
-            this.$store.commit('clear')
           }
         }
       }
@@ -324,6 +348,22 @@ export default {
       },
       set (newVal) {
         this.$store.commit('handleRePassword', newVal)
+      }
+    },
+    phoneNumber: {
+      get () {
+        return this.$store.state.phoneNumber
+      },
+      set (newVal) {
+        this.$store.commit('handlePhoneNumber', newVal)
+      }
+    },
+    verificationCode: {
+      get () {
+        return this.$store.state.verificationCode
+      },
+      set (newVal) {
+        this.$store.commit('handleVerificationCode', newVal)
       }
     }
   },
