@@ -38,6 +38,34 @@
               background-color="#eee"
               style="opacity: 0.8"
             ></v-text-field>
+            <v-text-field
+              :value="Phonenumber"
+              v-if="register"
+              v-model="re_password"
+              label="Please enter your phone number"
+              type="Password"
+              filled
+              background-color="#eee"
+              style="opacity: 0.8"
+            ></v-text-field>
+            <v-row>
+              <v-col cols="6">
+              <v-text-field
+                :value="Phonenumber"
+                v-if="register"
+                v-model="re_password"
+                label="Verification Code"
+                type="Password"
+                filled
+                background-color="#eee"
+                style="width:160px ;height: 60px;opacity: 0.8"
+              ></v-text-field>
+              </v-col>
+              <v-col col="6">
+              <v-btn style="height: 60px" v-if="register" v-show="show" v-on:click="getCode" block color="secondary" dark>Get Code</v-btn>
+              <v-btn style="height: 60px" v-show="!show" class="count" block color="secondary" dark>{{count}} s</v-btn>
+              </v-col>
+            </v-row>
             <v-row>
               <v-col cols="12">
                 <v-btn v-on:click="login" block color="secondary" dark>Login / Register</v-btn>
@@ -54,25 +82,27 @@
 
       </v-col>
     </v-row>
-    <vue-particles
-      color="#2EC4B6"
-      :particleOpacity="0.7"
-      :particlesNumber="80"
-      shapeType="circle"
-      :particleSize="4"
-      linesColor="#2EC4B6"
-      :linesWidth="1"
-      :lineLinked="true"
-      :lineOpacity="0.4"
-      :linesDistance="150"
-      :moveSpeed="3"
-      :hoverEffect="true"
-      hoverMode="grab"
-      :clickEffect="true"
-      clickMode="push"
-      style="z-index:-1; margin-bottom: -765px;"
-    >
-    </vue-particles>
+    <div>
+      <vue-particles
+        color="#2EC4B6"
+        :particleOpacity="0.7"
+        :particlesNumber="80"
+        shapeType="circle"
+        :particleSize="4"
+        linesColor="#2EC4B6"
+        :linesWidth="1"
+        :lineLinked="true"
+        :lineOpacity="0.4"
+        :linesDistance="150"
+        :moveSpeed="3"
+        :hoverEffect="true"
+        hoverMode="grab"
+        :clickEffect="true"
+        clickMode="push"
+        style="z-index:-1;margin-bottom: -765px"
+      >
+      </vue-particles>
+    </div>
     <SegText :text="hot" class="segtext-hot"/>
     <div style="width: 100%; display:-webkit-box; -webkit-box-pack:center; background-color: white">
       <div class="hot-content">
@@ -115,6 +145,9 @@ export default {
       avatar_prefix: 'http://114.115.151.96:8666/ProfilePicture/UserAccount/',
       user_img: '',
       team_img: '',
+      show: true,
+      count: '',
+      timer: null,
       error_img: '',
       password_wrong_show: false,
       info: '',
@@ -138,6 +171,22 @@ export default {
     this.initComments();
   },
   methods: {
+    getCode(){
+      const TIME_COUNT = 60;
+      if (!this.timer) {
+        this.count = TIME_COUNT;
+        this.show = false;
+        this.timer = setInterval(() => {
+          if (this.count > 0 && this.count <= TIME_COUNT) {
+          this.count--;
+        } else {
+          this.show = true;
+          clearInterval(this.timer);
+          this.timer = null;
+        }
+      }, 1000)
+      }
+    },
     unshow () {
       this.password_wrong_show = false
     },
@@ -351,7 +400,6 @@ export default {
   .segtext-hot{
     position: relative;
     z-index: 2;
-    margin-top: 80px;
   }
 
   .comments{

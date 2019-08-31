@@ -2,6 +2,7 @@
   <div>
     <div class="swiper">
       <Swiper />
+    </div>
     <div class="outer">
       <div style="position:relative;margin-top: 50px;margin-left: 30px">
         <SideBar />
@@ -36,7 +37,6 @@
         <WonderfulComment />
       </v-col>
     </v-row>
-  </div>
   </div>
 </template>
 
