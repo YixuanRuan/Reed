@@ -30,7 +30,7 @@
       {{title}}
     </v-card-text>
 
-    <v-card v-if="reply===2" class="replay_content" elevation="0" tile>
+    <v-card v-if="type==2" class="replay_content" elevation="0" tile>
       <v-card-actions style="max-width: 200px;padding-top: 0px">
         <v-list-item class="grow">
           <v-list-item-avatar tile color="grey darken-3" style="width: 40px;height: 40px">
@@ -40,7 +40,7 @@
             ></v-img>
           </v-list-item-avatar>
           <v-list-item-content class="user-name">
-            <v-list-item-title class="user-name-text" style="color: #aaa;font-size: 20px">{{reply_name }}</v-list-item-title>
+            <v-list-item-title class="user-name-text" style="color: #aaa;font-size: 20px">{{reply_name}}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-card-actions>
@@ -79,8 +79,8 @@
             </v-list>
           </v-menu>
           <v-row justify="end" style="padding-right: 10px">
-            <v-icon class="mr-1" color="white" v-if="!bm_comment">mdi-comment</v-icon>
-            <span class="subheading mr-2" v-if="!bm_comment">{{num_comment}}</span>
+            <v-icon class="mr-1" color="white" @click="commentOther">mdi-comment</v-icon>
+            <span class="subheading mr-2">{{num_comment}}</span>
             <span class="mr-1"></span>
             <v-icon class="mr-1" :color="like_color" @click="like">mdi-thumb-up</v-icon>
             <span class="subheading">{{num_like}}</span>
@@ -92,104 +92,125 @@
 </template>
 
 <script>
-  export default {
-    name: "Comments",
-    data: () => ({
-      like_color:'white',
-    }),
-    mounted(){
-      this.isLiked();
-      this.clickLike();
+export default {
+  name: 'Comments',
+  data: () => ({
+    like_color: 'white'
+  }),
+  mounted () {
+    if (this.type == 2)
+      this.getParent()
+    this.isLiked()
+    this.clickLike()
+  },
+  methods: {
+    getParent: function(){
+      console.log(this.id)
+      this.axios({
+        method: 'post',
+        url: 'http://114.115.151.96:8666/commentreply/sectoFir',
+        data: {
+          id: this.id
+        },
+        crossDomain: true
+      }).then(body => {
+        this.reply_name = body.data.username
+        this.reply_avatar_img = this.$store.state.avatar_img_prefix + body.data.account
+        this.reply_comment = body.data.reply.content
+      })
     },
-    methods:{
-      isLiked:function(){
-        this.axios({
-          method: 'post',
-          url: 'http://114.115.151.96:8666/Like/IsLike',
-          data: {
-            account:this.$store.state.account,
-            postingId:this.id,
-            type: 4
-          },
-          crossDomain: true
-        }).then(body =>{
-          console.log(body);
-          this.like_color = body.data ? 'red' : 'white';
-        });
-      },
-      clickLike:function (){
+    isLiked: function () {
+      this.axios({
+        method: 'post',
+        url: 'http://114.115.151.96:8666/Like/IsLike',
+        data: {
+          account: this.$store.state.account,
+          postingId: this.id,
+          type: 4
+        },
+        crossDomain: true
+      }).then(body => {
+        console.log(body)
+        this.like_color = body.data ? 'red' : 'white'
+      })
+    },
+    clickLike: function () {
         this.axios({
           method: 'post',
           url: 'http://114.115.151.96:8666/Like/CountNum',
           data: {
-            postingId:this.id
+            postingId: this.id
           },
           crossDomain: true
-        }).then(body =>{
+        }).then(body => {
           this.num_like = body.data
-        });
+        })
       },
-      like: function () {
-        this.like_color = (this.like_color == 'white') ? 'red' : 'white';
-        this.axios({
-          method: 'post',
-          url: 'http://114.115.151.96:8666/Like/ChangeStatus',
-          data: {
-            account:this.$store.state.account,
-            postingId:this.id,
-            type:this.type
-          },
-          crossDomain: true
-        }).then(body =>{
-          this.clickLike();
-        });
-      }
+    like: function () {
+      this.like_color = (this.like_color == 'white') ? 'red' : 'white'
+      this.axios({
+        method: 'post',
+        url: 'http://114.115.151.96:8666/Like/ChangeStatus',
+        data: {
+          account: this.$store.state.account,
+          postingId: this.id,
+          type: this.type
+        },
+        crossDomain: true
+      }).then(body => {
+        this.clickLike()
+      })
     },
-    props: {
-      type:{
-        default: 4
-      },
-      bm_comment:{
-        default: true
-      },
-      toptag:{
-        default: 0
-      },
-      reply:{
-        default: 0
-      },
-      reply_name:{
-        default: 'logos'
-      },
-      reply_avatar_img:{
-        default: 'https://www.ruan8.com/uploadimg/image/20180813/20180813135317_70068.jpg'
-      },
-      avatar_img:{
-        default: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2579313585,1854004294&fm=26&gp=0.jpg'
-      },
-      name: {
-        default: 'Evan You'
-      },
-      comment: {
-        default: '"Turns out semicolon-less style is easier and safer in TS because most gotcha edge cases are type invalid as well."'
-      },
-      num_comment: {
-        default: 256
-      },
-      reply_comment:{
-        default: '"Turns out semicolon-less style is easier and safer in TS because most gotcha edge cases are type invalid as well."'
-      },
-      title:{
-        default: '大家更喜欢什么风格的诗呢？'
-      },
-      id:{
-        default:''
-      },
-      num_like: {
-        default:''
-      }
+    commentOther: function () {
+      this.$store.state.currentReply = this.id
+      console.log(this.$store.state.currentReply)
+    }
+  },
+  props: {
+    type: {
+      default: 4
+    },
+    bm_comment: {
+      default: true
+    },
+    toptag: {
+      default: 0
+    },
+    reply: {
+      default: 0
+    },
+    reply_name: {
+      default: 'logos'
+    },
+    reply_avatar_img: {
+      default: 'https://www.ruan8.com/uploadimg/image/20180813/20180813135317_70068.jpg'
+    },
+    avatar_img: {
+      default: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2579313585,1854004294&fm=26&gp=0.jpg'
+    },
+    name: {
+      default: 'Evan You'
+    },
+    comment: {
+      default: '"Turns out semicolon-less style is easier and safer in TS because most gotcha edge cases are type invalid as well."'
+    },
+    num_comment: {
+      default: 0
+    },
+    reply_comment: {
+      default: '"Turns out semicolon-less style is easier and safer in TS because most gotcha edge cases are type invalid as well."'
+    },
+    title: {
+      default: '大家更喜欢什么风格的诗呢？'
+    },
+    id: {
+      default: ''
+    },
+    num_like: {
+      default: ''
     }
   }
+}
 </script>
 
 <style scoped>

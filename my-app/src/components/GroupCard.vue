@@ -4,6 +4,7 @@
     <v-card-title class="heading" style="color: white">{{groupName}}</v-card-title>
     <v-card-text style="color: white">{{groupMotto}}</v-card-text>
     <v-btn v-if="inGroup" class="btn" @click="quit(groupId)">退出小组</v-btn>
+    <v-btn v-if="inGroup" class="btn" @click="groupReply(groupId)">创建帖子</v-btn>
     <v-btn v-else class="btn" @click="join(groupId)">加入小组</v-btn>
   </v-card>
 </template>
@@ -51,6 +52,13 @@ export default {
         .catch(function (error) {
           console.log(error)
         })
+    },
+    groupReply(groupId){
+      this.$router.push({
+        name: 'reply',
+        params: {
+          teamId: groupId
+        }})
     }
   },
   mounted () {

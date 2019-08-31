@@ -13,7 +13,7 @@
           <v-col cols="4" v-for="i in $store.state.myGroup.comments[page-1].length" :key="i">
             <Comments
               class="comments"
-              :group-id="$store.state.myGroup.comments[page-1][i-1]['teamId']"
+              :groupId="$store.state.myGroup.comments[page-1][i-1]['teamId']"
               :name="$store.state.myGroup.comments[page-1][i-1]['username']"
               :avatar_img="$store.state.avatar_img_prefix+$store.state.myGroup.comments[page-1][i-1]['account']"
               :team_name="$store.state.myGroup.comments[page-1][i-1]['teamName']"
@@ -45,7 +45,9 @@
           </v-row>
           <v-row style="width: 100%;">
             <v-col cols="4" v-for="i in myGroups.length" :key="i">
-              <GroupCardShort :img="$store.state.avatar_img_prefix+myGroups[i-1]['team']['id']" :groupName="myGroups[i-1]['team']['teamName']"></GroupCardShort>
+              <GroupCardShort :groupId="myGroups[i-1]['team']['id']"
+                              :img="$store.state.avatar_img_prefix+myGroups[i-1]['team']['id']"
+                              :groupName="myGroups[i-1]['team']['teamName']"></GroupCardShort>
             </v-col>
           </v-row>
           <v-row>

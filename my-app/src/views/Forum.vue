@@ -18,7 +18,10 @@
     </v-col>
   </v-row>
 
-  <PostReply :type="post_type" :user_id="this.$store.state.account" :id="postId" :onsubmit="getReply"/>
+  <PostReply v-if="$store.state.logined" :type="post_type" :user_id="this.$store.state.account" :id="postId" :onsubmit="getReply"/>
+  <v-row v-else>
+    <v-row cols="12"><p class="pls">请登录再评论</p></v-row>
+  </v-row>
 </div>
 </template>
 
@@ -47,12 +50,24 @@ export default {
     SelfComments,
     PostReply
   },
-  mounted(){
+  mounted () {
     this.getRouterData()
     this.initPost()
     this.getReply()
+    this.addHistory()
   },
   methods: {
+    addHistory () {
+      this.axios({
+        method: 'post',
+        url: 'http://114.115.151.96:8666/ViewHistory/AddPosting',
+        data: {
+          id: this.postId,
+          account: this.$store.state.account
+        },
+        crossDomain: true
+      })
+    },
     getRouterData() {
       this.postId = this.$route.params.postId
       console.log('postId', this.postId)
@@ -91,5 +106,14 @@ export default {
 </script>
 
 <style scoped>
-
+.pls{
+  color: white;
+  background-color: #CCC;
+  height: 50px;
+  margin-top:50px;
+  width: 100%;
+  display:-webkit-box;
+  -webkit-box-align:center;/* 垂直居中 */
+  -webkit-box-pack:center;/* 水平居中 */
+}
 </style>

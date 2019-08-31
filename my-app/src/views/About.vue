@@ -5,14 +5,14 @@
 </template>
 
 <script>
-  import SideBar from "./SideBar";
-  export default {
-      name: 'About',
-      components:{
-          SideBar,
-      },
-      data() {
+import SideBar from './SideBar'
+export default {
+  name: 'About',
+  components: {
+    SideBar
+  },
+  data () {
 
-      }
   }
+}
 </script>

@@ -20,6 +20,10 @@
                       :name="data.reply.replyerId" :comment="data.reply.content"
                       :title="data.reply.title" :id="data.reply.id"/>
       </v-col>
+      <v-col v-for="(data, index) in commentsReply" :key="index">
+        <SelfComments :avatar_img="avatar_prefix + data.userId" :name="data.userId" :comment="data.content"
+                      :title="data.title" :id="data.id" :type="2"/>
+      </v-col>
     </v-row>
     <PostReply v-if="$store.state.logined"
                :user_id="this.$store.state.account"
@@ -60,6 +64,10 @@ export default {
       comments: [
         {},
         {}
+      ],
+      commentsReply: [
+        {},
+        {}
       ]
     }
   },
@@ -71,12 +79,25 @@ export default {
     SelfComments
   },
   mounted () {
+    this.bm_id = this.$store.state.currentBookId
     this.initBMInfo()
     this.initBestReply()
     this.initComments()
-    this.bm_id = this.$store.state.currentBookId
+    this.initCommentsReply()
+    this.addHistory()
   },
   methods: {
+    addHistory () {
+      this.axios({
+        method: 'post',
+        url: 'http://114.115.151.96:8666/ViewHistory/AddBook',
+        data: {
+          id: this.$store.state.currentBookId,
+          account: this.$store.state.account
+        },
+        crossDomain: true
+      })
+    },
     refresh (state) {
       if (state == 'done') {
         this.initComments()
@@ -103,7 +124,21 @@ export default {
         this.comments = body.data
       })
     },
+    initCommentsReply: function () {
+      this.axios({
+        method: 'post',
+        url: 'http://114.115.151.96:8666/commentreply/findByMAB',
+        data: {
+          id: this.$store.state.currentBookId
+        },
+        crossDomain: true
+      }).then(body => {
+          console.log(body)
+        this.commentsReply = body.data
+      })
+    },
     initBMInfo: function () {
+      console.log('bminfo', this.$store.state.currentBookId)
       this.axios({
         method: 'post',
         url: 'http://114.115.151.96:8666/book/find',
@@ -112,11 +147,12 @@ export default {
         },
         crossDomain: true
       }).then(body => {
-        console.log(body)
+        console.log('information', body)
         this.info = body.data
       })
     },
     initBestReply: function () {
+      console.log('best', this.$store.state.currentBookId)
       this.axios({
         method: 'post',
         url: 'http://114.115.151.96:8666/search/likebestReply',
@@ -125,12 +161,13 @@ export default {
         },
         crossDomain: true
       }).then(body => {
-        console.log(body)
-        this.star_reply_name = body.data.reply.id
+        console.log('22222222222222222')
+        console.log('best', body)
+        this.star_reply_name = body.data.reply.replyerId
         this.reply_content = body.data.reply.content
         this.like_num = body.data.likes
         this.comment_num = '255'
-        this.avatar_img = this.$store.state.avatar_img_prefix + body.data.reply.id
+        this.avatar_img = this.$store.state.avatar_img_prefix + body.data.reply.replyerId
       })
     }
   }

@@ -20,8 +20,6 @@
               justify="end"
               class="comment-bottom"
             >
-              <v-icon class="mr-1" color="white">mdi-comment</v-icon>
-              <span class="subheading mr-2">{{comment_num}}</span>
               <v-icon class="mr-1" color="white">mdi-thumb-up</v-icon>
               <span class="subheading">{{like_num}}</span>
             </v-row>
@@ -38,29 +36,29 @@
 </template>
 
 <script>
-  export default {
-    name: "Comments",
-    data(){
+export default {
+  name: 'Comments',
+  data () {
 
+  },
+  props: {
+    avatar_img: {
+      default: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2579313585,1854004294&fm=26&gp=0.jpg'
     },
-    props:{
-      avatar_img:{
-        default: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2579313585,1854004294&fm=26&gp=0.jpg'
-      },
-      star_reply_name:{
-        default: 'logos'
-      },
-      reply_content:{
-        default: '  "Turns out semicolon-less style is easier and safer in TS because most gotcha edge cases are type invalid as well."'
-      },
-      like_num:{
-        default: 999
-      },
-      comment_num:{
-        default: '1w+'
-      }
+    star_reply_name: {
+      default: 'logos'
+    },
+    reply_content: {
+      default: '  "Turns out semicolon-less style is easier and safer in TS because most gotcha edge cases are type invalid as well."'
+    },
+    like_num: {
+      default: 999
+    },
+    comment_num: {
+      default: '1w+'
     }
   }
+}
 </script>
 
 <style scoped>

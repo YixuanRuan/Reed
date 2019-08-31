@@ -44,11 +44,11 @@
 import HistoryComment from '../components/HistoryComment'
 import WonderfulComment from '../components/WonderfulComment'
 import draggable from 'vuedraggable'
-import SideBar from './SideBar';
-import Swiper from '../components/Swiper';
+import SideBar from './SideBar'
+import Swiper from '../components/Swiper'
 
 export default {
-  name: "BMHome",
+  name: 'BMHome',
   components: {
     HistoryComment,
     WonderfulComment,
@@ -58,11 +58,11 @@ export default {
   },
   data () {
     return {
-      wonderfulComments:[
+      wonderfulComments: [
         {},
         {},
         {}
-      ],
+      ]
     }
   },
   mounted () {
@@ -113,7 +113,7 @@ export default {
       }
     },
     today_recommend_content: {
-      get() {
+      get () {
         return this.$store.state.today_recommend_content
       },
       set(newVal) {
@@ -127,9 +127,9 @@ export default {
       set (newVal) {
         this.$store.commit('changeTodayNew', newVal)
       }
-    },
+    }
   },
-  methods:{
+  methods: {
 
   }
 

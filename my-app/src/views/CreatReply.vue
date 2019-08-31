@@ -24,7 +24,7 @@
           url: 'http://114.115.151.96:8666/Posting/Add',
           data: {
             account:this.$store.state.account,
-            teamId:'5d65f9b259f000353446afbb',
+            teamId:this.$route.params.teamId,
             title: this.title_value,
             content: this.value
           },

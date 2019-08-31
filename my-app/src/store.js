@@ -12,6 +12,7 @@ export default new Vuex.Store({
     joined: false,
     selfAvatar: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2579313585,1854004294&fm=26&gp=0.jpg',
     currentId: '',
+    currentReply: '',
     currentBookId: '',
     username: '',
     password: '',

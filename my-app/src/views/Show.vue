@@ -16,7 +16,11 @@
     <v-row>
       <v-col v-for="(data, index) in comments" :key="index">
         <SelfComments :avatar_img="avatar_prefix + data.reply.replyerId" :name="data.reply.replyerId" :comment="data.reply.content"
-                      :title="data.reply.tilte" :id="data.reply.id"/>
+                      :title="data.reply.title" :id="data.reply.id"/>
+      </v-col>
+      <v-col v-for="(data, index) in commentsReply" :key="index">
+        <SelfComments :avatar_img="avatar_prefix + data.replyerId" :name="data.replyerId" :comment="data.content"
+                      :title="data.title" :id="data.id" :type="2"/>
       </v-col>
     </v-row>
     <PostReply v-if="$store.state.logined"
@@ -67,6 +71,10 @@ export default {
       comments: [
         {},
         {}
+      ],
+      commentsReply: [
+        {},
+        {}
       ]
     }
   },
@@ -84,8 +92,23 @@ export default {
     this.initBMInfo()
     this.initBestReply()
     this.initComments()
+    this.initCommentsReply()
+    this.addHistory()
   },
   methods: {
+    addHistory () {
+      console.log(1111111111111111111)
+      console.log('id', this.$store.state.currentId)
+      this.axios({
+        method: 'post',
+        url: 'http://114.115.151.96:8666/ViewHistory/AddMovie',
+        data: {
+          id: this.$store.state.currentId,
+          account: this.$store.state.account
+        },
+        crossDomain: true
+      })
+    },
     refresh (state) {
       if (state == 'done') {
         this.initComments()
@@ -103,12 +126,26 @@ export default {
         method: 'post',
         url: 'http://114.115.151.96:8666/reply/list',
         data: {
-
           id: this.$store.state.currentId
         },
         crossDomain: true
       }).then(body => {
         this.comments = body.data
+        console.log(this.comments)
+      })
+    },
+    initCommentsReply: function () {
+      this.axios({
+        method: 'post',
+        url: 'http://114.115.151.96:8666/commentreply/findByMAB',
+        data: {
+          id: this.$store.state.currentId
+        },
+        crossDomain: true
+      }).then(body => {
+        console.log("commentsReply")
+        console.log(body)
+        this.commentsReply = body.data
       })
     },
     initBMInfo: function () {
@@ -119,9 +156,7 @@ export default {
           id: this.$store.state.currentId
         },
         crossDomain: true
-      }).then(body =>{
-        console.log('movie!')
-        console.log(body)
+      }).then(body => {
         this.info = body.data
       })
     },
@@ -133,27 +168,13 @@ export default {
           id: this.$store.state.currentId
         },
         crossDomain: true
-      }).then(body =>{
-        console.log(body);
-        this.star_reply_name = body.data.reply.id;
-        this.reply_content = body.data.reply.content;
-        this.like_num = body.data.likes;
-        this.comment_num = '255';
-        this.avatar_img = this.$store.state.avatar_img_prefix + body.data.reply.id;
-      });
-    },
-    getBest(){
-      this.axios({
-        method: 'post',
-        url: 'http://114.115.151.96:8666/film/find',
-        data: {
-          id: this.$store.state.currentId
-        },
-        crossDomain: true
-      }).then(body =>{
-        console.log('movie!')
-        console.log(body)
-        this.info = body.data
+      }).then(body => {
+        console.log('best', body)
+        this.star_reply_name = body.data.reply.replyerId
+        this.reply_content = body.data.reply.content
+        this.like_num = body.data.likes
+        this.comment_num = '255'
+        this.avatar_img = this.$store.state.avatar_img_prefix + body.data.reply.replyerId
       })
     }
   }

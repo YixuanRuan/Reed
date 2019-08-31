@@ -6,6 +6,12 @@
     elevation="5"
     style="border-radius: 0; width: 400px"
   >
+    <div class="topper">
+      <div class="toptag">
+        <div v-if="toptag==1" class="topped">置顶</div>
+        <div v-if="toptag==2" class="essence">精华</div>
+      </div>
+    </div>
 
     <v-card-actions>
       <v-list-item class="grow">
@@ -50,7 +56,6 @@
           </v-col>
         </v-row>
 
-
       </v-list-item>
     </v-card-actions>
     <v-card-text class="text-title font-weight-bold" @click="goToComments">
@@ -75,8 +80,8 @@
         <v-list style="background: #EEEEEE;padding: 2px;width: 130px">
           <v-list-item v-if="userType === 1" @click="delReport" class="card-option justify-center">忽略</v-list-item>
           <v-list-item v-if="userType === 1" @click="delPost" class="card-option justify-center">删除</v-list-item>
-          <v-list-item v-if="userType === 2" @click="" class="card-option justify-center">置顶</v-list-item>
-          <v-list-item v-if="userType === 2" @click="" class="card-option justify-center">设为精华</v-list-item>
+          <v-list-item v-if="userType === 2" @click="setTop" class="card-option justify-center">置顶</v-list-item>
+          <v-list-item v-if="userType === 2" @click="setFine" class="card-option justify-center">设为精华</v-list-item>
         </v-list>
       </v-menu>
       <v-card-actions class="justify-end" style="padding-bottom: 0px; width: 100%">
@@ -89,7 +94,7 @@
             <v-icon class="mr-1" color="white" @click="routerTo()">mdi-comment</v-icon>
             <span class="subheading mr-2">{{num_comment}}</span>
             <span class="mr-1"></span>
-            <v-icon class="mr-1" color="white" v-if="userType != 1">mdi-thumb-up</v-icon>
+            <v-icon class="mr-1" :color="like_color" @click="like" v-if="userType != 1">mdi-thumb-up</v-icon>
             <span class="subheading" v-if="userType != 1">{{num_like}}</span>
           </v-row>
         </v-list-item>
@@ -100,24 +105,28 @@
 
 <script>
 export default {
-  name: "Comments",
+  name: 'Comments',
   data: () => ({
-    //
+    like_color: 'white'
   }),
-  mounted (){
-    console.log('avatar_img',this.avatar_img)
+  mounted () {
+    this.isLiked()
+    this.clickLike()
   },
   props: {
-    reportId:{
+    toptag: {
+      default: 0
+    },
+    reportId: {
       default: ''
     },
-    userType:{
+    userType: {
+      default: 2
+    },
+    groupId: {
       default: 0
     },
-    groupId:{
-      default: 0
-    },
-    avatar_img:{
+    avatar_img: {
       default: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2579313585,1854004294&fm=26&gp=0.jpg'
     },
     name: {
@@ -126,22 +135,22 @@ export default {
     team_img: {
       default: 'https://upload-images.jianshu.io/upload_images/2707438-61bec868c535b5d2.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/640/format/webp'
     },
-    team_name:{
+    team_name: {
       default: '诗和远方'
     },
-    title:{
+    title: {
       default: '大家更喜欢什么风格的诗呢？'
     },
-    content:{
+    content: {
       default: '"Turns out semicolon-less style is easier and safer in TS because most gotcha edge cases are type invalid as well."'
     },
-    num_comment:{
+    num_comment: {
       default: 256
     },
     num_like: {
       default: 45
     },
-    id:{
+    id: {
       default: ''
     },
     onsubmit: {
@@ -150,6 +159,74 @@ export default {
     }
   },
   methods: {
+    setTop () {
+      this.axios({
+        method: 'post',
+        url: 'http://114.115.151.96:8666/Posting/settop',
+        data: {
+          id: this.id,
+          status: 1
+        },
+        crossDomain: true
+      }).then(body => {
+        console.log(11111111111)
+        this.toptag = 1
+      })
+    },
+    setFine () {
+      this.axios({
+        method: 'post',
+        url: 'http://114.115.151.96:8666/Posting/setbest',
+        data: {
+          id: this.id,
+          status: 1
+        },
+        crossDomain: true
+      }).then(body => {
+        this.toptag = 2
+      })
+    },
+    clickLike: function () {
+      this.axios({
+        method: 'post',
+        url: 'http://114.115.151.96:8666/Like/CountNum',
+        data: {
+          postingId: this.id
+        },
+        crossDomain: true
+      }).then(body => {
+        this.num_like = body.data
+      })
+    },
+    like: function () {
+      this.like_color = (this.like_color == 'white') ? 'red' : 'white'
+      this.axios({
+        method: 'post',
+        url: 'http://114.115.151.96:8666/Like/ChangeStatus',
+        data: {
+          account: this.$store.state.account,
+          postingId: this.id,
+          type: 4
+        },
+        crossDomain: true
+      }).then(body => {
+        this.clickLike()
+      })
+    },
+    isLiked: function () {
+      this.axios({
+        method: 'post',
+        url: 'http://114.115.151.96:8666/Like/IsLike',
+        data: {
+          account: this.$store.state.account,
+          postingId: this.id
+        },
+        crossDomain: true
+      }).then(body => {
+        console.log(body)
+        this.like_color = body.data ? 'red' : 'white'
+      })
+    },
     goToComments () {
       this.$router.push({
         name: `forum`,
@@ -158,11 +235,11 @@ export default {
         }
       })
     },
-    goToTeam(groupId){
-      this.$store.commit("changeGroup",groupId)
+    goToTeam (groupId) {
+      this.$store.commit('changeGroup', groupId)
       this.$router.push('group')
     },
-    routerTo() {
+    routerTo () {
       this.$router.push({
         name: `forum`,
         params: {
@@ -170,7 +247,7 @@ export default {
         }
       })
     },
-    delReport(){
+    delReport () {
       console.log('reported', this.reported)
       this.axios({
         method: 'post',
@@ -180,10 +257,10 @@ export default {
         },
         crossDomain: true
       }).then(body => {
-        this.onsubmit();
+        this.onsubmit()
       })
     },
-    delPost(){
+    delPost () {
       console.log(111111111111111)
       console.log(this.id)
       this.axios({
@@ -202,6 +279,35 @@ export default {
 </script>
 
 <style scoped>
+
+  .topped,
+  .essence{
+    height: 30px;
+    font-size: 20px;
+    border-bottom-left-radius: 10px;
+    width: 100px;
+    text-align: center;
+    float: right;
+  }
+
+  .topped{
+    background: #aaa;
+    color: #fff;
+  }
+  .essence{
+    background: #fff;
+    color: #aaa;
+  }
+
+  .topper{
+    display: flex;
+    flex-direction: row;
+  }
+
+  .toptag{
+    width: 100%;
+  }
+
   .comments-card{
     margin: 20px;
 
