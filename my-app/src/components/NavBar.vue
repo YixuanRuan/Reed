@@ -14,7 +14,7 @@
         <img src= "../imgs/text-only -white.png" class="logo-header">
       </router-link>
       <div class="link-text" ><v-tab to="/" :aria-selected="grow" style="height: 100%">主页</v-tab></div>
-      <div class="link-text" ><v-tab to="/bmhome" style="height: 100%">书籍</v-tab></div>
+      <div class="link-text" ><v-tab to="/bkhome" style="height: 100%">书籍</v-tab></div>
       <div class="link-text" ><v-tab to="/bmhome" style="height: 100%">影视</v-tab></div>
       <div class="link-text" ><v-tab :to="group" style="height: 100%">小组</v-tab></div>
       <div class="link-text" ><v-tab to="/selfinfo" style="height: 100%">我的</v-tab></div>

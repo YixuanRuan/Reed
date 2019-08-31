@@ -11,6 +11,7 @@ export default new Vuex.Store({
     joined: false,
     selfAvatar: 'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=2579313585,1854004294&fm=26&gp=0.jpg',
     currentId: '',
+    currentBookId: '',
     username: '',
     password: '',
     re_password: '',
@@ -429,6 +430,9 @@ export default new Vuex.Store({
     },
     handleCurrentId (state, newVal) {
       state.currentId = newVal
+    },
+    handleCurrentBookId (state, newVal) {
+      state.currentBookId = newVal
     },
     handleSelfComments (state, newVal) {
       state.selfComments = newVal

@@ -33,9 +33,10 @@ export default {
   methods:{
     nav(type,id){
       if(type=='book'){
+        this.$store.commit("changeBook",id)
         this.$router.push()
       }else if(type=='film'){
-        // this.
+        this.$store.commit("changeFilm",id)
         this.$router.push()
       }else if(type=='team'){
         this.$store.commit("changeGroup",id)

@@ -52,12 +52,25 @@ export default new Router({
       component: () => import(/* webpackChunkName: "bmhome" */ './views/BMHome.vue')
     },
     {
+      path: '/bkhome',
+      name: 'bkhome',
+      // route level code-splitting
+      // this generates a separate chunk (about.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component: () => import(/* webpackChunkName: "bmhome" */ './views/BKHome.vue')
+    },
+    {
       path: '/bmshow',
       name: 'bmshow',
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import(/* webpackChunkName: "bmhome" */ './views/Show.vue')
+    },
+    {
+      path: '/bkshow',
+      name: 'bkshow'
+      component: () => import(/* webpackChunkName: "bmhome" */ './views/BookShow.vue')
     },
     {
       path: '/group',
