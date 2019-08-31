@@ -14,9 +14,22 @@ export default {
     }
   },
   mounted () {
-    this.testInformationGet()
+    this.testLogin()
   },
   methods:{
+    testLogin(){
+      this.axios({
+        method: 'post',
+        url: 'http://114.115.151.96:8666/User/Login',
+        data: {
+          account: 'czzssb',
+          password: 'czzssb'
+        },
+        crossDomain: true
+      }).then(body => {
+        this.info = body
+      })
+    },
     testCollectionGet(){
       this.axios({
         method: 'post',
