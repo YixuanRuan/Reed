@@ -26,10 +26,10 @@
           <div class="author-name" style="max-height: 30px;overflow: hidden">出版商：{{publisher}}</div>
           <div class="author-name">ISBN：{{isbn}}</div>
           <v-row class="vote-button" justify="start" align="end">
-            <v-btn class="ma-2" color="white" dark small elevation="0">
+            <v-btn class="ma-2" color="white" dark small elevation="0" @click="thumbDown" :disabled="voted">
               <v-icon size="28px" color="red">mdi-thumb-down</v-icon>
             </v-btn>
-            <v-btn class="ma-2" color="white" dark small elevation="0">
+            <v-btn class="ma-2" color="white" dark small elevation="0" @click="thumbUp" :disabled="voted">
               <v-icon size="28px" color="green">mdi-thumb-up</v-icon>
             </v-btn>
           </v-row>
@@ -40,17 +40,67 @@
 </template>
 
 <script>
-  import ScoreBar from "../components/ScoreBar";
-  export default {
-    name: "Showcard",
-    components: {ScoreBar},
-    data (){
-      return{
-      }
+import ScoreBar from '../components/ScoreBar'
+export default {
+  name: 'Showcard',
+  components: { ScoreBar },
+    mounted () {
+      this.getVoted()
+      this.getScore()
     },
-    props:['poster_img','bookName','author',
-      'publisher','isbn','finalScore','intro']
+   data () {
+    return {
+
+    }
+  },
+  props: ['poster_img', 'bookName', 'author',
+    'publisher', 'isbn', 'finalScore', 'intro', 'id', 'voted'],
+  methods: {
+    thumbUp: function () {
+      this.axios.post('http://114.115.151.96:8666/book/grade', {
+        account: this.$store.state.account,
+        id: this.$store.state.currentBookId,
+        grade: 1
+      }
+      )
+        .then(function (response) {
+          console.log(response)
+        })
+    },
+    thumbDown: function () {
+      this.axios.post('http://114.115.151.96:8666/book/grade', {
+        account: this.$store.state.account,
+        id: this.$store.state.currentBookId,
+        grade: 0
+      }
+      )
+        .then(function (response) {
+          console.log(response)
+        })
+    },
+    getVoted: function () {
+      this.axios.post('http://114.115.151.96:8666/isgrade', {
+        account: this.$store.state.account,
+        id: this.$store.state.currentBookId
+      }
+      )
+        .then(function (response) {
+          console.log(response)
+          this.voted = response.data
+        })
+    },
+    getScore: function() {
+      this.axios.post('http://114.115.151.96:8666/book/find', {
+          id: this.id
+        }
+      )
+      .then(function (response) {
+        console.log(response)
+        this.finalScore = response.data.score
+      })
+    },
   }
+}
 </script>
 <style scoped>
   .card{

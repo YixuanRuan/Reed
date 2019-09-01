@@ -22,8 +22,8 @@
         </v-list-item>
       </v-card-actions>
       <div class="toptag">
-        <div v-if="toptag===1" class="topped">置顶</div>
-        <div v-if="toptag===2" class="essence">精华</div>
+        <div v-if="istop===1" class="topped">置顶</div>
+        <div v-if="isbest===2" class="essence">精华</div>
       </div>
     </div>
     <v-card-text v-if="reply===0 && !bm_comment" class="text-title font-weight-bold" >
@@ -173,8 +173,11 @@ export default {
     bm_comment: {
       default: true
     },
-    toptag: {
-      default: 0
+    istop: {
+      default: false
+    },
+    isbest:{
+      default: false
     },
     reply: {
       default: 0

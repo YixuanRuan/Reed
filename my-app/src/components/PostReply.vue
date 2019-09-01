@@ -37,7 +37,7 @@ export default {
   },
   methods: {
     onClick () {
-        console.log(this.$store.state.currentReply)
+      console.log(this.$store.state.currentReply)
       if (this.$store.state.currentReply != '') {
         this.replyId = this.$store.state.currentReply
         this.hintcontent = '回复 ' + this.replyId
@@ -95,6 +95,7 @@ export default {
         this.addInformation()
         this.onsubmit()
       }
+      this.$emit('replyState', 'done')
     }
   },
   props: {

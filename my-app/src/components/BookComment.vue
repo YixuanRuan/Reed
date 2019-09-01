@@ -5,15 +5,14 @@
     max-width="100%"
     style="background: transparent"
   >
-    <div class="scoped_bookcomment" style="min-height: 250px">
+    <div style="min-height: 250px">
       <v-slide-group
         v-model="model"
-        class="pa-4 silde-c scoped_bookcomment"
+        class="pa-4 slide-c"
         active-class="success"
         show-arrows
       >
-        <draggable class="row wrap justify-space-around scoped_bookcomment" :list="card_content" group="people">
-
+        <draggable class="row wrap justify-space-around" :list="card_content" group="people">
             <v-flex
               v-for="(data, index) in card_content"
               :key="index"
@@ -56,7 +55,4 @@ export default {
 </script>
 
 <style scoped>
-.scoped_bookcomment{
-
-}
 </style>

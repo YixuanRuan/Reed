@@ -119,7 +119,7 @@
         >
           <Comments :avatar_img="avatar_prefix + data.account" :name="data.username" :team_img="avatar_prefix + data.teamId"
                     :team_name="data.teamName" :title="data.title" :content="data.content" :groupId="data.teamId"
-                    :num_comment="data.replyNum" :num_like="data.likeNum" :id="data.id"
+                    :num_comment="data.replyNum" :num_like="data.likeNum" :id="data.id" :isbest="data.isbest" :istop="data.istop"
           />
         </v-col>
 
@@ -180,6 +180,7 @@ export default {
     this.initTodayBookRecommend();
     this.initTodayRecommend();
     this.initComments();
+    console.log(this.$store.state.isSuper)
   },
   methods: {
     getCode () {
@@ -324,8 +325,9 @@ export default {
                 this.$store.dispatch('changeAC', this.info.data.user.account)
                 this.$store.dispatch('changeInro', this.info.data.user.introduction)
                 this.$store.dispatch('changeSelfAvatar', 'http://114.115.151.96:8666/ProfilePicture/UserAccount/' + this.info.data.user.account)
+                console.log('1111111111',this.info.data.user.superuser)
                 if (this.info.data.user.superuser) {
-                  this.$store.commit('IsSuper')
+                  this.$store.commit('changeIsSuper')
                   this.$router.push({path: '/manage'})
                 }
                 else {
@@ -455,7 +457,7 @@ export default {
 
 <style scoped>
   .hot-content{
-    width: 1060px;
+    width: 85%;
   }
 
   .right-content{

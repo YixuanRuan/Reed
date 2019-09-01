@@ -12,7 +12,8 @@ export default {
   name: "GroupCardShort",
   methods: {
     goToTeam(groupId){
-      this.$router.push({  path: 'group', query: { groupId: groupId}})
+      this.$store.commit('changeGroup',groupId)
+      this.$router.push('group')
     }
   },
   props: ['img', 'groupName', 'groupId']

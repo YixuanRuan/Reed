@@ -26,10 +26,10 @@
           <div class="actor-name" style="max-height: 30px;overflow: hidden">{{starring[0]}}</div>
           <div class="actor-name">时长:{{filmTime}}</div>
           <v-row class="vote-button" justify="start" align="end">
-            <v-btn class="ma-2" color="white" dark small elevation="0">
+            <v-btn class="ma-2" color="white" dark small elevation="0" @click="thumbDown" :disabled="voted">
               <v-icon size="28px" color="red">mdi-thumb-down</v-icon>
             </v-btn>
-            <v-btn class="ma-2" color="white" dark small elevation="0">
+            <v-btn class="ma-2" color="white" dark small elevation="0" @click="thumbUp" :disabled="voted">
               <v-icon size="28px" color="green">mdi-thumb-up</v-icon>
             </v-btn>
           </v-row>
@@ -49,6 +49,10 @@ import ScoreBar from '../components/ScoreBar'
 export default {
   name: 'Showcard',
   components: { ScoreBar },
+  mounted () {
+    this.getVoted()
+    this.getScore()
+  },
   data () {
     return {
       tags: [
@@ -86,6 +90,54 @@ export default {
     },
     finalScore: {
       default: 23.3
+    },
+      voted: {
+        default: false
+      }
+  },
+  methods: {
+    thumbUp: function () {
+      this.axios.post('http://114.115.151.96:8666/book/grade', {
+        account: this.$store.state.account,
+        id: this.$store.state.currentBookId,
+        grade: 1
+      }
+      )
+        .then(function (response) {
+          console.log(response)
+        })
+    },
+    thumbDown: function () {
+      this.axios.post('http://114.115.151.96:8666/book/grade', {
+        account: this.$store.state.account,
+        id: this.$store.state.currentBookId,
+        grade: 0
+      }
+      )
+        .then(function (response) {
+          console.log(response)
+        })
+    },
+    getVoted: function () {
+      this.axios.post('http://114.115.151.96:8666/isgrade', {
+        account: this.$store.state.account,
+        id: this.$store.state.currentBookId
+      }
+      )
+        .then(function (response) {
+          console.log(response)
+          this.voted = response.data
+        })
+    },
+    getScore: function () {
+      this.axios.post('http://114.115.151.96:8666/book/find', {
+        id: this.id
+      }
+      )
+        .then(function (response) {
+          console.log(response)
+          this.finalScore = response.data.score
+        })
     }
   }
 }

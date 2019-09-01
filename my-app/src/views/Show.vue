@@ -15,8 +15,8 @@
                   :like_num="like_num" :comment_num="comment_num" :avatar_img="avatar_img"/>
     <v-row>
       <v-col v-for="(data, index) in comments" :key="index">
-        <SelfComments :avatar_img="avatar_prefix + data.replyerId" :name="data.replyerId" :comment="data.content"
-                      :title="data.title" :id="data.id"/>
+        <SelfComments :avatar_img="avatar_prefix + data.reply.replyerId" :name="data.reply.replyerId" :comment="data.reply.content"
+                      :title="data.reply.title" :id="data.reply.id"/>
       </v-col>
       <v-col v-for="(data, index) in commentsReply" :key="index">
         <SelfComments :avatar_img="avatar_prefix + data.replyerId" :name="data.replyerId" :comment="data.content"
@@ -130,7 +130,7 @@ export default {
         },
         crossDomain: true
       }).then(body => {
-        this.comments = body.data.replylist
+        this.comments = body.data
         console.log(this.comments)
       })
     },
@@ -139,12 +139,10 @@ export default {
         method: 'post',
         url: 'http://114.115.151.96:8666/commentreply/findByMAB',
         data: {
-
           id: this.$store.state.currentId
         },
         crossDomain: true
       }).then(body => {
-        console.log('commentReply',body)
         this.commentsReply = body.data
       })
     },
