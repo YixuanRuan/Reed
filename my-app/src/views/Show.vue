@@ -144,7 +144,7 @@ export default {
         },
         crossDomain: true
       }).then(body => {
-        console.log(body)
+        console.log('commentReply',body)
         this.commentsReply = body.data
       })
     },
