@@ -5,7 +5,7 @@
     </div>
     <div class="outer">
       <div style="position:relative;margin-top: 50px;margin-left: 30px">
-        <SideBar />
+        <SideBar2 />
       </div>
       <div class="bm-part">
         <p class="content-title">推荐</p>
@@ -44,7 +44,7 @@
 import HistoryComment from '../components/HistoryComment'
 import WonderfulComment from '../components/WonderfulComment'
 import draggable from 'vuedraggable'
-import SideBar from './SideBar'
+import SideBar2 from './SideBar2'
 import Swiper from '../components/Swiper'
 
 export default {
@@ -53,7 +53,7 @@ export default {
     HistoryComment,
     WonderfulComment,
     draggable,
-    SideBar,
+    SideBar2,
     Swiper
   },
   data () {

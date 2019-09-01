@@ -4,7 +4,7 @@
       <div class="wordcloud-title">
         标签热度词云
       </div>
-      <TagWordcloud />
+      <TagWordcloud2 />
       <div class="wordcloud-title">
         标签热度排行
       </div>
@@ -26,45 +26,50 @@
 </template>
 
 <script>
-    import TagWordcloud from "../components/TagWordcloud";
-    export default {
-        name: 'SideBar',
-        components:{
-            TagWordcloud,
-        },
-        data() {
-            return{
-                Tag:[
-                    {
-                        "rank":1,
-                        "name":"悬疑",
-                        "view":2333,
-                        "trending":0,
-                    },{
-                        "rank":2,
-                        "name":"文艺",
-                        "view":2000,
-                        "trending":0,
-                    },{
-                        "rank":3,
-                        "name":"科幻",
-                        "view":1999,
-                        "trending":2,
-                    },{
-                        "rank":4,
-                        "name":"魔幻",
-                        "view":514,
-                        "trending":1,
-                    },{
-                        "rank":5,
-                        "name":"言情",
-                        "view":3,
-                        "trending":2,
-                    }
-                ],
-            }
-        }
+  import TagWordcloud2 from "../components/TagWordcloud2";
+  export default {
+    name: 'SideBar2',
+    components:{
+      TagWordcloud2,
+    },
+    data() {
+      return{
+        Tag:[
+          {
+            "rank":1,
+            "name":"科幻",
+            "view":4890,
+            "trending":0,
+          },{
+            "rank":2,
+            "name":"爱情",
+            "view":2300,
+            "trending":0,
+          },{
+            "rank":3,
+            "name":"动作",
+            "view":1890,
+            "trending":2,
+          },{
+            "rank":4,
+            "name":"古装",
+            "view":1200,
+            "trending":1,
+          },{
+            "rank":5,
+            "name":"都市",
+            "view":890,
+            "trending":2,
+          },{
+            "rank":6,
+            "name":"励志",
+            "view":300,
+            "trending":1,
+          }
+        ],
+      }
     }
+  }
 </script>
 
 <style scoped>

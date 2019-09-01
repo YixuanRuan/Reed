@@ -74,8 +74,8 @@ export default {
       },
       crossDomain: true
     }).then(body => {
-      this.info = body
-      this.$store.dispatch('getTodayBookHot', this.info.data)
+      // this.info = body
+      // this.$store.dispatch('getTodayBookHot', this.info.data)
       console.log(this.info.data)
     });
     this.axios({
@@ -88,6 +88,7 @@ export default {
     }).then(body => {
       this.info = body
       this.$store.dispatch('getTodayBookRecommend', this.info.data)
+      this.$store.dispatch('getTodayBookHot', this.info.data)
       console.log(this.info.data)
     });
     this.axios({
