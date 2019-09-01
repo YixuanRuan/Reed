@@ -8,8 +8,8 @@
   >
     <div class="topper">
       <div class="toptag">
-        <div v-if="toptag==1" class="topped">置顶</div>
-        <div v-if="toptag==2" class="essence">精华</div>
+        <div v-if="toptag === 1 || istop===1" class="topped">置顶</div>
+        <div v-if="toptag === 2 || isbest===2" class="essence">精华</div>
       </div>
     </div>
 
@@ -110,18 +110,32 @@ export default {
     like_color: 'white'
   }),
   mounted () {
+    if (this.type == 2)
+      this.getParent()
     this.isLiked()
     this.clickLike()
+    if(this.$store.state.isSuper === true && this.userType != 1) {
+      this.userType = 2
+    }
   },
   props: {
-    toptag: {
+    isbest:{
+      default: false
+    },
+    istop: {
+      default: false
+    },
+    isbest:{
+      default: false
+    },
+    toptag:{
       default: 0
     },
     reportId: {
       default: ''
     },
     userType: {
-      default: 2
+      default: 0
     },
     groupId: {
       default: 0
@@ -229,7 +243,7 @@ export default {
     },
     goToComments () {
       this.$router.push({
-        name: `forum`,
+        name: 'forum',
         params: {
           postId: this.id
         }
@@ -241,7 +255,7 @@ export default {
     },
     routerTo () {
       this.$router.push({
-        name: `forum`,
+        name: 'forum',
         params: {
           postId: this.id
         }

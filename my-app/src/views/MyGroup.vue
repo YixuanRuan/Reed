@@ -13,6 +13,9 @@
           <v-col cols="4" v-for="i in $store.state.myGroup.comments[page-1].length" :key="i">
             <Comments
               class="comments"
+              :num_like="$store.state.myGroup.comments[page-1][i-1]['likeNum']"
+              :num_comment="$store.state.myGroup.comments[page-1][i-1]['replyNum']"
+              :id="$store.state.myGroup.comments[page-1][i-1]['postingId']"
               :groupId="$store.state.myGroup.comments[page-1][i-1]['teamId']"
               :name="$store.state.myGroup.comments[page-1][i-1]['username']"
               :avatar_img="$store.state.avatar_img_prefix+$store.state.myGroup.comments[page-1][i-1]['account']"

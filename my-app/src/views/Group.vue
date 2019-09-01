@@ -5,7 +5,13 @@
       <v-col v-for="(data, index) in selfComments"
              :key="index"
       >
-        <SelfComments :reply="data.reply" :toptag="data.toptag" style="width: 400px;" />
+        <Comments
+          :isbest="data.posting.isbest" type="4" :istop="data.posting.istop"
+          :avatar_img="$store.state.avatar_img_prefix+data.posting.account"
+          :name="data.posting.account" :comment="data.posting.content"
+          :num_comment="data.replyNum" :title="data.posting.title"
+          :id="data.posting.id" :num_like="data.likeNum"
+          style="width: 400px;" />
       </v-col>
     </v-row>
   </div>
@@ -13,12 +19,12 @@
 
 <script>
 import GroupHead from "../components/GroupHead";
-import SelfComments from "../components/SelfComments";
+import Comments from "../components/Comments";
 export default {
   name: "Group",
   components: {
     GroupHead,
-      SelfComments
+    Comments
   },
   data () {
     return {
@@ -44,6 +50,21 @@ export default {
       ]
     }
   },
+  mounted() {
+    var that=this
+    console.log(this.$store.state.group.groupId)
+    this.axios.post('http://114.115.151.96:8666/Posting/GetPostingsByTeamId', {
+      teamId: this.$store.state.group.groupId,
+    })
+      .then(function (response) {
+        console.log("returned")
+        console.log(response.data)
+        that.selfComments = response.data
+      })
+      .catch(function (error) {
+        this.state.search.dataShow = [ { tit: error } ]
+      })
+  }
 }
 </script>
 
