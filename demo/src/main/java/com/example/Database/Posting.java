@@ -9,19 +9,38 @@ import java.util.Date;
 @Document(value = "Posting")
 public class Posting {
     @Id
-    private ObjectId id;
+    private String id;
     private String title;
     private String account;
     private String content;
+    private String teamId;
     private Date postTime;
+    private boolean istop;
+    private boolean isbest;
+
+    public boolean isIstop() {
+        return istop;
+    }
+
+    public void setIstop(boolean istop) {
+        this.istop = istop;
+    }
+
+    public boolean isIsbest() {
+        return isbest;
+    }
+
+    public void setIsbest(boolean isbest) {
+        this.isbest = isbest;
+    }
 
     public Posting() {}
 
-    public ObjectId getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(ObjectId id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -47,6 +66,14 @@ public class Posting {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getTeamId() {
+        return teamId;
+    }
+
+    public void setTeamId(String teamId) {
+        this.teamId = teamId;
     }
 
     public Date getPostTime() {

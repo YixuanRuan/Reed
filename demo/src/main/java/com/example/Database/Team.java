@@ -5,38 +5,32 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
+import java.util.Map;
 
 @Document(value = "Team")
 public class Team {
     @Id
-    private ObjectId id;
-    private String account;
-    private String power;
+    private String id;
+    private String introduction;
     private String teamName;
+    private String[] tags;
+    private Map<String,Integer> teamMember;
     private Date createTime;
 
-    public ObjectId getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(ObjectId id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public String getAccount() {
-        return account;
+    public String getIntroduction() {
+        return introduction;
     }
 
-    public void setAccount(String account) {
-        this.account = account;
-    }
-
-    public String getPower() {
-        return power;
-    }
-
-    public void setPower(String power) {
-        this.power = power;
+    public void setIntroduction(String introduction) {
+        this.introduction = introduction;
     }
 
     public String getTeamName() {
@@ -47,19 +41,27 @@ public class Team {
         this.teamName = teamName;
     }
 
+    public String[] getTags() {
+        return tags;
+    }
+
+    public void setTags(String[] tags) {
+        this.tags = tags;
+    }
+
+    public Map<String, Integer> getTeamMember() {
+        return teamMember;
+    }
+
+    public void setTeamMember(Map<String, Integer> teamMember) {
+        this.teamMember = teamMember;
+    }
+
     public Date getCreateTime() {
         return createTime;
     }
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
-    }
-
-    @Override
-    public String toString() {
-        return this.id + " " +
-                this.account + " " +
-                this.power + " " +
-                this.createTime;
     }
 }

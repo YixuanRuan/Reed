@@ -9,21 +9,30 @@ import java.util.Date;
 @Document(collection = "User")
 public class User {
     @Id
-    private ObjectId id;
+    private String id;
     private String account;
     private String password;
     private String username;
     private String introduction;
     private String gender;
     private Date joinTime;
+    private boolean superuser;
+
+    public boolean isSuperuser() {
+        return superuser;
+    }
+
+    public void setSuperuser(boolean superuser) {
+        this.superuser = superuser;
+    }
 
     public User() {}
 
-    public ObjectId getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(ObjectId id) {
+    public void setId(String id) {
         this.id = id;
     }
 

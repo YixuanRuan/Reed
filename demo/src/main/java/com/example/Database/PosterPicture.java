@@ -7,12 +7,12 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
 
-@Document(value = "ProfilePicture")
-public class ProfilePicture {
+@Document(value = "PosterPicture")
+public class PosterPicture {
 
     @Id
     private String id;
-    private String account;
+    private String srcId;
     private String name;
     private Date createdTime;
     private Binary content;
@@ -27,12 +27,12 @@ public class ProfilePicture {
         this.id = id;
     }
 
-    public String getAccount() {
-        return account;
+    public String getSrcId() {
+        return srcId;
     }
 
-    public void setAccount(String account) {
-        this.account = account;
+    public void setSrcId(String srcId) {
+        this.srcId = srcId;
     }
 
     public String getName() {

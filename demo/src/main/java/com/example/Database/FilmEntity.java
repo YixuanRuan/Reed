@@ -8,34 +8,52 @@ import java.util.Date;
 
 @Document(collection = "Film")
 public class FilmEntity {
-    public ObjectId getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(ObjectId id) {
+    public void setId(String id) {
         this.id = id;
     }
 
     @Id
-    private ObjectId id;
+    private String id;
     private String filmName;
     private String director;
-    private String screenplay;
-    private String starring;
-    private String type;
-    private String region;
-    private String language;
-    private Date date;
-    private String length;
-    private String AKA;
+    private String[] screenplay;
+    private String[] starring;
+    private String[] tags;
+    private String country;
+    private String[] language;
+    private String year;
+    private String filmTime;
+    private String[] AKA;
     private String intro;
-    private int[] score;
 
+    private String posterImg;
+    private int looked;
+    private int like;
+    private int dislike;
+    private String score;
 
     public String getFilmName() {
         return filmName;
     }
-
+    @Override
+    public boolean equals(Object obj)
+    {
+        if(this ==obj)
+            return true;
+        if(!(obj instanceof FilmEntity))
+            return false;
+        FilmEntity film=(FilmEntity) obj;
+        return  this.getId().equals(film.getId());
+    }
+    @Override
+    public int hashCode()
+    {
+        return 1;
+    }
     public void setFilmName(String filmName) {
         this.filmName = filmName;
     }
@@ -48,67 +66,67 @@ public class FilmEntity {
         this.director = director;
     }
 
-    public String getScreenplay() {
+    public String[] getScreenplay() {
         return screenplay;
     }
 
-    public void setScreenplay(String screenplay) {
+    public void setScreenplay(String[] screenplay) {
         this.screenplay = screenplay;
     }
 
-    public String getStarring() {
+    public String[] getStarring() {
         return starring;
     }
 
-    public void setStarring(String starring) {
+    public void setStarring(String[] starring) {
         this.starring = starring;
     }
 
-    public String getType() {
-        return type;
+    public String[] getTags() {
+        return tags;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setTags(String[] tags) {
+        this.tags = tags;
     }
 
-    public String getRegion() {
-        return region;
+    public String getCountry() {
+        return country;
     }
 
-    public void setRegion(String region) {
-        this.region = region;
+    public void setCountry(String country) {
+        this.country = country;
     }
 
-    public String getLanguage() {
+    public String[] getLanguage() {
         return language;
     }
 
-    public void setLanguage(String language) {
+    public void setLanguage(String[] language) {
         this.language = language;
     }
 
-    public Date getDate() {
-        return date;
+    public String getYear() {
+        return year;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setYear(String year) {
+        this.year = year;
     }
 
-    public String getLength() {
-        return length;
+    public String getFilmTime() {
+        return filmTime;
     }
 
-    public void setLength(String length) {
-        this.length = length;
+    public void setFilmTime(String filmTime) {
+        this.filmTime = filmTime;
     }
 
-    public String getAKA() {
+    public String[] getAKA() {
         return AKA;
     }
 
-    public void setAKA(String AKA) {
+    public void setAKA(String[] AKA) {
         this.AKA = AKA;
     }
 
@@ -120,11 +138,43 @@ public class FilmEntity {
         this.intro = intro;
     }
 
-    public int[] getScore() {
+    public String getPosterImg() {
+        return posterImg;
+    }
+
+    public void setPosterImg(String posterImg) {
+        this.posterImg = posterImg;
+    }
+
+    public int getLooked() {
+        return looked;
+    }
+
+    public void setLooked(int looked) {
+        this.looked = looked;
+    }
+
+    public int getLike() {
+        return like;
+    }
+
+    public void setLike(int like) {
+        this.like = like;
+    }
+
+    public int getDislike() {
+        return dislike;
+    }
+
+    public void setDislike(int dislike) {
+        this.dislike = dislike;
+    }
+
+    public String getScore() {
         return score;
     }
 
-    public void setScore(int[] score) {
+    public void setScore(String score) {
         this.score = score;
     }
 }

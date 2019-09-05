@@ -9,7 +9,7 @@ import java.util.Date;
 @Document(collection = "Music")
 public class MusicEntity {
     @Id
-    private ObjectId id;
+    private String id;
     private String performers;
     private String musicName;
     private String type;
@@ -19,13 +19,39 @@ public class MusicEntity {
     private String barCode;
     private String intro;
     private String trackes; //曲目
-    private int[] score;
+    private int like;
+    private int dislike;
+    private double score;
 
-    public ObjectId getId() {
+    public double getScore() {
+        return score;
+    }
+
+    public void setScore(double score) {
+        this.score = score;
+    }
+
+    public int getLike() {
+        return like;
+    }
+
+    public void setLike(int like) {
+        this.like = like;
+    }
+
+    public int getDislike() {
+        return dislike;
+    }
+
+    public void setDislike(int dislike) {
+        this.dislike = dislike;
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(ObjectId id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -101,11 +127,4 @@ public class MusicEntity {
         this.trackes = trackes;
     }
 
-    public int[] getScore() {
-        return score;
-    }
-
-    public void setScore(int[] score) {
-        this.score = score;
-    }
 }
