@@ -11,4 +11,11 @@ public class Static {
         calendar.add(Calendar.HOUR_OF_DAY,8);
         return calendar.getTime();
     }
+    public static String Md2Txt(String str) {
+        str = str.replaceAll("# ","");
+        str = str.replaceAll("#","");
+        str = str.replaceAll("-","");
+        str = str.replaceAll("\\*","");
+        return str;
+    }
 }

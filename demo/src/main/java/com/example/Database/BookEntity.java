@@ -3,11 +3,13 @@ package com.example.Database;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.awt.print.Book;
 import java.util.Date;
 @Document(collection = "Book")
 public class BookEntity{
     @Id
-    private ObjectId id;
+    private String id;
     private String bookName;
     private String author;
     private String publisher;
@@ -19,13 +21,53 @@ public class BookEntity{
     private String price;
     private String translator;
     private String intro;
-    private int[] score;
+    private int like;
+    private int dislike;
+    private String score;
 
-    public ObjectId getId() {
+    public String getScore() {
+        return score;
+    }
+
+    public void setScore(String score) {
+        this.score = score;
+    }
+    @Override
+    public boolean equals(Object obj)
+    {
+        if(this ==obj)
+            return true;
+        if(!(obj instanceof BookEntity))
+            return false;
+        BookEntity book=(BookEntity) obj;
+        return  this.getId().equals(book.getId());
+    }
+    @Override
+    public int hashCode()
+    {
+        return 1;
+    }
+    public int getLike() {
+        return like;
+    }
+
+    public void setLike(int like) {
+        this.like = like;
+    }
+
+    public int getDislike() {
+        return dislike;
+    }
+
+    public void setDislike(int dislike) {
+        this.dislike = dislike;
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(ObjectId id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -117,11 +159,4 @@ public class BookEntity{
         this.intro = intro;
     }
 
-    public int[] getScore() {
-        return score;
-    }
-
-    public void setScore(int[] score) {
-        this.score = score;
-    }
 }

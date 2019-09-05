@@ -13,7 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Date;
-
+@CrossOrigin(allowCredentials="true",maxAge = 3600)
 @RestController
 public class ProfilePictureController {
     @Autowired
@@ -22,6 +22,12 @@ public class ProfilePictureController {
     @Value("${com.example.mongodb.collection.ProfilePicture}")
     private String PROFILE_PICTURE_COLLECTION_NAME;
 
+    /**
+     * 上传图片
+     * @param file
+     * @param account
+     * @return String
+     */
     @PostMapping("/ProfilePicture/uploadImage")
     @ResponseBody
     public String uploadImage(@RequestParam(value = "image") MultipartFile file, @RequestParam(value = "account") String account) {
@@ -46,6 +52,11 @@ public class ProfilePictureController {
         return picId;
     }
 
+    /**
+     * 通过路由id得到图片
+     * @param id
+     * @return byte[]
+     */
     @GetMapping(value = "/ProfilePicture/imageId/{id}", produces = {MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE})
     @ResponseBody
     public byte[] FindPictureById(@PathVariable String id){
@@ -57,6 +68,11 @@ public class ProfilePictureController {
         return data;
     }
 
+    /**
+     * 通过路由account得到图片
+     * @param account
+     * @return byte[]
+     */
     @GetMapping(value = "/ProfilePicture/UserAccount/{account}", produces = {MediaType.IMAGE_JPEG_VALUE, MediaType.IMAGE_PNG_VALUE})
     @ResponseBody
     public byte[] FindPictureByAccount(@PathVariable String account){
@@ -68,5 +84,4 @@ public class ProfilePictureController {
         }
         return data;
     }
-
 }
